@@ -1,59 +1,114 @@
 package com.ssafy.smartstore.view.intro
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.ssafy.smartstore.R
+import com.ssafy.smartstore.data.local.dto.User
+import com.ssafy.smartstore.data.remote.repository.UserRepository
+import com.ssafy.smartstore.databinding.FragmentJoinBinding
+import kotlinx.coroutines.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val TAG = "JoinFragment"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [JoinFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class JoinFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class JoinFragment : Fragment(), CoroutineScope {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentJoinBinding
+
+    private val job = Job()
+    override val coroutineContext = Dispatchers.Main + job
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_join, container, false)
+        binding = FragmentJoinBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // 뷰 초기화
+        initViews()
+    }
+
+    private fun initViews() = with(binding) {
+
+        // 회원가입 버튼
+        btnJoin.setOnClickListener {
+
+            var id = etID.text.toString()
+            var pw = etPW.text.toString()
+            var name = etNickName.text.toString()
+
+            if (id.isNotEmpty() && pw.isNotEmpty() && name.isNotEmpty()) {
+                try {
+                    launch(Dispatchers.IO) {
+                        val result = UserRepository.INSTANCE.insert(User(id, name, pw)).body()!!
+                        if (result > 0) {
+                            launch(Dispatchers.Main) {
+                                Toast.makeText(requireContext(), "회원가입 성공", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        } else {
+                            launch(Dispatchers.Main) {
+                                Toast.makeText(requireContext(), "이미 등록된 회원", Toast.LENGTH_SHORT)
+                                    .show()
+
+                            }
+                        }
+                    }
+                } catch (e: Exception) {
+                    Log.d(TAG, "회원가입 실패 $e")
+                    Toast.makeText(requireContext(), "오류가 발생하였습니다", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(requireContext(), "아직 입력되지 않은 항목이 있습니다", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // 중복 검사
+        btnCheck.setOnClickListener {
+
+            var id = etID.text.toString()
+            if (id.isNotEmpty()) {
+                launch {
+                    var result = false
+
+                    UserRepository.INSTANCE.isUsedId(id).also {
+                        Log.d(TAG, "initViews: ${it}")
+                        if (it.isSuccessful) {
+                            result = it.body()!!
+                            Log.d(TAG, "initViews: ${it.body()}")
+                        }
+                    }
+
+                    withContext(Dispatchers.Main) {
+                        if (!result)
+                            Toast.makeText(
+                                requireContext(),
+                                "사용 가능한 아이디입니다",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        else
+                            Toast.makeText(requireContext(), "중복된 아이디입니다", Toast.LENGTH_SHORT)
+                                .show()
+                    }
+                }
+            }
+        }
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment JoinFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             JoinFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
                 }
             }
     }

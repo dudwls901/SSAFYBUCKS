@@ -18,7 +18,7 @@ import com.ssafy.smartstore.model.OrderInfo
 import com.ssafy.smartstore.listener.OrderListClickListener
 import com.ssafy.smartstore.util.ImageConverter
 import com.ssafy.smartstore.util.WindowState.MYPAGE
-import com.ssafy.smartstore.view.intro.LoginActivity
+import com.ssafy.smartstore.view.intro.IntroActivity
 import com.ssafy.smartstore.viewmodel.OrderViewModel
 import kotlinx.coroutines.*
 
@@ -100,7 +100,7 @@ class MyPageFragment : Fragment(), CoroutineScope, OrderListClickListener {
         editor.remove("id")
         editor.remove("name")
         editor.commit()
-        startActivity(Intent(requireContext(), LoginActivity::class.java).apply {
+        startActivity(Intent(requireContext(), IntroActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         })
