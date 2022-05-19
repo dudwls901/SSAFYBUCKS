@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.smartstore.databinding.RvOrderDetailBinding
-import com.ssafy.smartstore.dto.OrderDetail
-import com.ssafy.smartstore.dto.OrderProduct
-import com.ssafy.smartstore.global.windowState
+import com.ssafy.smartstore.model.OrderProduct
 import com.ssafy.smartstore.listener.ShoppingListDeleteClickListener
 import com.ssafy.smartstore.util.ImageConverter
+import com.ssafy.smartstore.util.WindowState.ORDERDETAIL
+import com.ssafy.smartstore.util.WindowState.SHOPPINGLIST
 
 class OrderDetailAdapter(val state: String, val shoppingListDeleteClickListener: ShoppingListDeleteClickListener)  : ListAdapter<OrderProduct, OrderDetailAdapter.ItemViewHolder>(diffUtil) {
 
@@ -46,8 +46,8 @@ class OrderDetailAdapter(val state: String, val shoppingListDeleteClickListener:
             }
 
             when (state){
-                windowState.ORDERDETAIL-> binding.btnClose.visibility = View.GONE
-                windowState.SHOPPINGLIST -> binding.btnClose.visibility = View.VISIBLE
+                ORDERDETAIL-> binding.btnClose.visibility = View.GONE
+                SHOPPINGLIST -> binding.btnClose.visibility = View.VISIBLE
             }
         }
     }

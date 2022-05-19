@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.ssafy.smartstore.fragment.HomeFragment"
+        android:name="com.ssafy.smartstore.view.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/menuDetailFragment"
-        android:name="com.ssafy.smartstore.fragment.MenuDetailFragment"
+        android:name="com.ssafy.smartstore.view.home.MenuDetailFragment"
         android:label="fragment_menu_detail"
         tools:layout="@layout/fragment_menu_detail" />
     <fragment
         android:id="@+id/myPageFragment"
-        android:name="com.ssafy.smartstore.fragment.MyPageFragment"
+        android:name="com.ssafy.smartstore.view.home.MyPageFragment"
         android:label="fragment_my_page"
         tools:layout="@layout/fragment_my_page" />
 </navigation>

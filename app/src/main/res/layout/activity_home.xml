@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/coffee_menu_back"
     android:orientation="vertical"
-    tools:context=".HomeActivity">
+    tools:context=".view.home.HomeActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"

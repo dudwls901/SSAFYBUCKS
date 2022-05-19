@@ -1,6 +1,6 @@
 package com.ssafy.smartstore.listener
 
-import com.ssafy.smartstore.dto.OrderInfo
+import com.ssafy.smartstore.model.OrderInfo
 
 interface OrderListClickListener {
     fun onOrderListClickListener(orderInfo: OrderInfo)

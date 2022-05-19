@@ -4,13 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ssafy.smartstore.local.dto.Product
-import com.ssafy.smartstore.remote.dto.Comment
-import com.ssafy.smartstore.remote.repository.CommentRepository
-import com.ssafy.smartstore.remote.repository.ProductRepository
+import com.ssafy.smartstore.data.local.dto.Product
+import com.ssafy.smartstore.data.remote.dto.Comment
+import com.ssafy.smartstore.data.remote.repository.CommentRepository
+import com.ssafy.smartstore.data.remote.repository.ProductRepository
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import retrofit2.http.Body
 
 class ProductViewModel: ViewModel() {
     private val _responseGetProductList = MutableLiveData<Response<List<Product>>>()

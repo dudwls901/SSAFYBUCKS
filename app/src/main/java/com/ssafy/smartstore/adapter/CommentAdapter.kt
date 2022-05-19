@@ -1,6 +1,5 @@
 package com.ssafy.smartstore.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,10 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.smartstore.databinding.RvCommentBinding
-import com.ssafy.smartstore.remote.dto.Comment
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.ssafy.smartstore.data.remote.dto.Comment
+
 private const val TAG = "CommentAdapter___"
 class CommentAdapter(val user_id: String) :
     ListAdapter<Comment, CommentAdapter.ItemViewHolder>(diffUtil) {

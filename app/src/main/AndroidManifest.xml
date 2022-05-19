@@ -26,7 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MapActivity"
+            android:name=".view.home.MapActivity"
             android:exported="false" />
 
         <meta-data
@@ -34,26 +34,26 @@
             android:value="@string/api_key" />
 
         <activity
-            android:name=".ShoppingListActivity"
+            android:name=".view.home.ShoppingListActivity"
             android:exported="true"
             android:launchMode="singleTop" >
         </activity>
         <activity
-            android:name=".OrderActivity"
+            android:name=".view.home.OrderActivity"
             android:exported="false"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".OrderDetailActivity"
+            android:name=".view.home.OrderDetailActivity"
             android:exported="false"
             android:launchMode="singleTop" />
         <activity
-            android:name=".JoinActivity"
+            android:name=".view.intro.JoinActivity"
             android:exported="false"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".view.home.HomeActivity"
             android:exported="true"
             android:launchMode="singleTop" >
             <intent-filter>
@@ -63,10 +63,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
-            android:exported="true"></activity>
-        <activity
-            android:name=".LoginActivity"
+            android:name=".view.intro.LoginActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan">

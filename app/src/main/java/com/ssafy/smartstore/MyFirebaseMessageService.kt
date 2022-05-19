@@ -8,7 +8,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.ssafy.smartstore.remote.repository.TokenRepository
+import com.ssafy.smartstore.data.remote.repository.TokenRepository
+import com.ssafy.smartstore.view.home.HomeActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/coffee_menu_back"
-    tools:context=".OrderActivity">
+    tools:context=".view.home.OrderActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_item"

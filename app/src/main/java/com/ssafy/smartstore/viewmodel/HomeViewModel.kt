@@ -3,9 +3,7 @@ package com.ssafy.smartstore.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ssafy.smartstore.StoreApplication
-import com.ssafy.smartstore.local.dto.Noti
-import com.ssafy.smartstore.local.repository.NotiRepository
+import com.ssafy.smartstore.data.local.dto.Noti
 
 class HomeViewModel: ViewModel() {
     private val _notiList = MutableLiveData<List<Noti>>()

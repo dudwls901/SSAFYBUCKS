@@ -1,9 +1,8 @@
 package com.ssafy.smartstore
 
 import android.app.Application
-import com.ssafy.smartstore.dto.OrderInfo
-import com.ssafy.smartstore.dto.OrderProduct
-import com.ssafy.smartstore.local.database.StoreDatabase
+import com.ssafy.smartstore.model.OrderProduct
+import com.ssafy.smartstore.data.local.database.StoreDatabase
 
 class StoreApplication : Application() {
     override fun onCreate() {

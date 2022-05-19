@@ -5,12 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.ssafy.smartstore.databinding.RvMenuItemBinding
 import com.ssafy.smartstore.databinding.RvNotiBinding
 import com.ssafy.smartstore.listener.NotiDeleteClickListener
-import com.ssafy.smartstore.listener.ShoppingListDeleteClickListener
-import com.ssafy.smartstore.local.dto.Noti
+import com.ssafy.smartstore.data.local.dto.Noti
 
 class NotiAdapter(private val notiDeleteClickListener: NotiDeleteClickListener) : ListAdapter<Noti, NotiAdapter.ItemViewHolder>(diffUtil) {
 

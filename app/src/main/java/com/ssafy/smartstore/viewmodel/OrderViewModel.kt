@@ -5,10 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ssafy.smartstore.dto.OrderInfo
-import com.ssafy.smartstore.remote.dto.OrderInfoResponse
-import com.ssafy.smartstore.remote.repository.OrderRepository
-import com.ssafy.smartstore.remote.repository.UserRepository
+import com.ssafy.smartstore.model.OrderInfo
+import com.ssafy.smartstore.data.remote.dto.OrderInfoResponse
+import com.ssafy.smartstore.data.remote.repository.OrderRepository
+import com.ssafy.smartstore.data.remote.repository.UserRepository
 import kotlinx.coroutines.launch
 import retrofit2.Response
 

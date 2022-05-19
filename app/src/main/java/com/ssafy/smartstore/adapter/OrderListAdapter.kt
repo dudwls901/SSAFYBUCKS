@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.smartstore.databinding.RvOrderItemBinding
-import com.ssafy.smartstore.dto.OrderInfo
-import com.ssafy.smartstore.global.windowState
+import com.ssafy.smartstore.model.OrderInfo
 import com.ssafy.smartstore.listener.OrderListClickListener
-import com.ssafy.smartstore.local.dto.Order
 import com.ssafy.smartstore.util.ImageConverter
+import com.ssafy.smartstore.util.WindowState.HOME
+import com.ssafy.smartstore.util.WindowState.MYPAGE
 import java.lang.Exception
 
 private const val TAG = "OrderListAdapter_싸피"
@@ -68,8 +68,8 @@ class OrderListAdapter(val state: String, val listener: OrderListClickListener) 
                 }
 
                 when (state) {
-                    windowState.HOME -> binding.btnState.visibility = View.GONE
-                    windowState.MYPAGE -> binding.ivCart.visibility = View.GONE
+                    HOME -> binding.btnState.visibility = View.GONE
+                    MYPAGE -> binding.ivCart.visibility = View.GONE
                 }
             } catch (e: Exception) {
 
