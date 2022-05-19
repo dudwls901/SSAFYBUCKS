@@ -11,8 +11,8 @@ import com.ssafy.smartstore.data.local.dto.User
 
 private const val TAG = " UserRepository_sss"
 
-class UserRepository(context: Context) {
-    private val db = StoreDatabase.getInstance(context)!!
+class UserRepository() {
+    private val db = StoreDatabase.getInstance()!!
 
     private val uDao = db.userDao()
     private val oDao = db.orderDao()
@@ -96,9 +96,9 @@ class UserRepository(context: Context) {
     companion object {
         private var INSTANCE: UserRepository? = null
 
-        fun getInstance(context: Context): UserRepository {
+        fun getInstance(): UserRepository {
             if (INSTANCE == null) {
-                INSTANCE = UserRepository(context)
+                INSTANCE = UserRepository()
             }
             return INSTANCE ?: throw IllegalStateException("초기화해주세용.")
         }

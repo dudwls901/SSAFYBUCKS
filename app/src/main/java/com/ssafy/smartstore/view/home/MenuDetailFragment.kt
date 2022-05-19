@@ -36,7 +36,7 @@ class MenuDetailFragment : Fragment(), CoroutineScope {
     ): View? {
         binding = FragmentMenuDetailBinding.inflate(inflater, container, false)
 
-        productRepo = ProductRepository.getInstance(requireContext())
+        productRepo = ProductRepository.getInstance()
 
         observeDatas()
 

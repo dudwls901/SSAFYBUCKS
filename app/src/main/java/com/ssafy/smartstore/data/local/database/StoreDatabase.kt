@@ -3,9 +3,11 @@ package com.ssafy.smartstore.data.local.database
 
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.ssafy.smartstore.StoreApplication
 import com.ssafy.smartstore.data.local.dao.*
 import com.ssafy.smartstore.data.local.dto.*
 
@@ -33,15 +35,27 @@ abstract class StoreDatabase: RoomDatabase() {
     companion object{
         var INSTANCE: StoreDatabase? = null
 
-        fun getInstance(context: Context): StoreDatabase?{
+        fun getInstance(vararg context: Context): StoreDatabase?{
             if(INSTANCE ==null){
                 synchronized(StoreDatabase::class){
-                    INSTANCE = Room.databaseBuilder(context,
+                    if(context.isNullOrEmpty()) {
+                        INSTANCE = Room.databaseBuilder(
+                            StoreApplication.INSTANCE.applicationContext,
                             StoreDatabase::class.java,
-                        "ssafy_mobile_cafe"
+                            "ssafy_mobile_cafe"
                         )
-                        .fallbackToDestructiveMigration()
-                        .build()
+                            .fallbackToDestructiveMigration()
+                            .build()
+                    }
+                    else{
+                        INSTANCE = Room.databaseBuilder(
+                            context[0],
+                            StoreDatabase::class.java,
+                            "ssafy_mobile_cafe"
+                        )
+                            .fallbackToDestructiveMigration()
+                            .build()
+                    }
                 }
             }
             return INSTANCE

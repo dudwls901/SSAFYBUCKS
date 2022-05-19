@@ -12,8 +12,8 @@ import com.ssafy.smartstore.model.OrderProduct
 
 private const val TAG = " OrderRepository_sss"
 
-class OrderRepository(context: Context) {
-    private val db = StoreDatabase.getInstance(context)!!
+class OrderRepository() {
+    private val db = StoreDatabase.getInstance()!!
 
     private val oDao = db.orderDao()
     private val odDao = db.orderDetailDao()
@@ -146,9 +146,9 @@ class OrderRepository(context: Context) {
     companion object {
         private var INSTANCE: OrderRepository? = null
 
-        fun getInstance(context: Context): OrderRepository {
+        fun getInstance(): OrderRepository {
             if (INSTANCE == null) {
-                INSTANCE = OrderRepository(context)
+                INSTANCE = OrderRepository()
             }
             return INSTANCE ?: throw IllegalStateException("초기화해주세용.")
         }

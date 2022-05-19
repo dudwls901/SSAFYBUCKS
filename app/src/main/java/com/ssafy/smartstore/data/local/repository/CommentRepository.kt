@@ -6,8 +6,8 @@ import com.ssafy.smartstore.data.local.database.StoreDatabase
 import com.ssafy.smartstore.data.local.dto.Comment
 
 private const val TAG = " CommentRepository_sss"
-class CommentRepository(context: Context) {
-    private val db = StoreDatabase.getInstance(context)!!
+class CommentRepository() {
+    private val db = StoreDatabase.getInstance()!!
 
     private val cDao = db.commentDao()
 
@@ -48,7 +48,7 @@ class CommentRepository(context: Context) {
 
         fun getInstance(context: Context): CommentRepository{
             if(INSTANCE==null){
-                INSTANCE = CommentRepository(context)
+                INSTANCE = CommentRepository()
             }
             return  INSTANCE?: throw IllegalStateException("초기화해주세용.")
         }

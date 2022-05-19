@@ -6,8 +6,8 @@ import com.ssafy.smartstore.data.local.dto.Product
 
 
 private const val TAG = " ProductRepository_sss"
-class ProductRepository(context: Context) {
-    private val db = StoreDatabase.getInstance(context)!!
+class ProductRepository() {
+    private val db = StoreDatabase.getInstance()!!
 
     private val pDao = db.productDao()
 
@@ -28,9 +28,9 @@ class ProductRepository(context: Context) {
     companion object{
         private var INSTANCE: ProductRepository? = null
 
-        fun getInstance(context: Context): ProductRepository{
+        fun getInstance(): ProductRepository{
             if(INSTANCE==null){
-                INSTANCE = ProductRepository(context)
+                INSTANCE = ProductRepository()
             }
             return  INSTANCE?: throw IllegalStateException("초기화해주세용.")
         }

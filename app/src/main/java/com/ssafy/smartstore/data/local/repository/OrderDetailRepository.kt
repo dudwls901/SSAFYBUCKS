@@ -6,8 +6,8 @@ import com.ssafy.smartstore.data.local.dto.OrderDetail
 import java.lang.IllegalStateException
 
 private const val TAG = " OrderDetailRepository_sss"
-class OrderDetailRepository(context: Context) {
-    private val db = StoreDatabase.getInstance(context)!!
+class OrderDetailRepository() {
+    private val db = StoreDatabase.getInstance()!!
 
     suspend fun insert(detail: OrderDetail): Long = db.orderDetailDao().insert(detail)
 
@@ -24,9 +24,9 @@ class OrderDetailRepository(context: Context) {
     companion object{
         private var INSTANCE: OrderDetailRepository? = null
 
-        fun getInstance(context: Context): OrderDetailRepository{
+        fun getInstance(): OrderDetailRepository{
             if(INSTANCE==null){
-                INSTANCE = OrderDetailRepository(context)
+                INSTANCE = OrderDetailRepository()
             }
             return  INSTANCE?: throw IllegalStateException("초기화해주세용.")
         }

@@ -151,7 +151,7 @@ class MyPageFragment : Fragment(), CoroutineScope, OrderListClickListener {
 
     // 유저 정보 데이터 초기화
     private fun initOrderList() {
-        launch() {
+        launch {
             getOrderInfoList()
             initListView()
         }

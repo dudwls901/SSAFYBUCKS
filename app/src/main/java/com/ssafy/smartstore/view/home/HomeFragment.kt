@@ -14,6 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.smartstore.adapter.NotiAdapter
 import com.ssafy.smartstore.adapter.OrderListAdapter
+import com.ssafy.smartstore.data.local.dto.Noti
 import com.ssafy.smartstore.databinding.FragmentHomeBinding
 import com.ssafy.smartstore.model.OrderInfo
 import com.ssafy.smartstore.model.OrderProduct
@@ -41,8 +42,8 @@ class HomeFragment : Fragment(), CoroutineScope, OrderListClickListener, NotiDel
     private lateinit var binding: FragmentHomeBinding
     private lateinit var orderAdapter: OrderListAdapter
     private lateinit var notiAdapter: NotiAdapter
-    private lateinit var notiRepo: NotiRepository
 
+    private lateinit var notiRepo: NotiRepository
 
     private val homeViewModel: HomeViewModel by activityViewModels()
     private val orderViewModel: OrderViewModel by activityViewModels()
@@ -59,9 +60,9 @@ class HomeFragment : Fragment(), CoroutineScope, OrderListClickListener, NotiDel
         userId = prefs.getString("id", "") ?: ""
         userName = prefs.getString("name", "") ?: ""
 
-        notiRepo = NotiRepository.getInstance(requireContext())
-
         notiAdapter = NotiAdapter(this@HomeFragment)
+
+        notiRepo = NotiRepository.getInstance(requireContext())
 
         observeDatas()
         return binding.root
@@ -72,6 +73,9 @@ class HomeFragment : Fragment(), CoroutineScope, OrderListClickListener, NotiDel
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.homeVM = homeViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         userId?.let {
             orderViewModel.getOrderMonth(it)
             launch {
@@ -79,89 +83,25 @@ class HomeFragment : Fragment(), CoroutineScope, OrderListClickListener, NotiDel
                 homeViewModel.updateNotiList(notiList)
             }
         }
-
-    }
-
-    private fun observeDatas() {
-        orderViewModel.responseGetOrderMonth.observe(viewLifecycleOwner) {
-            if (it.isSuccessful) {
-                val response = it.body()
-                response?.let {
-                    Log.d(TAG, "observeDatas: $it")
-                    getOrderInfoList(it)
-                }
-            } else {
-
-            }
-        }
-        Log.d(TAG, "onViewCreated: noti ${userId}")
-        homeViewModel.notiList.observe(viewLifecycleOwner) {
-            Log.d(TAG, "onCreateView: noti change ${it.joinToString()}")
-            notiAdapter.submitList(it)
-            notiAdapter.notifyDataSetChanged()
-        }
         initViews()
     }
 
-
-    fun getOrderInfoList(orderInfoResponseList: List<OrderInfoResponse>) {
-        var orderInfoList = mutableListOf<OrderInfo>()
-        val quantityMap = mutableMapOf<Int, MutableMap<Int, Int>>()
-
-        //orderList가져오기
-        var orderList = orderInfoResponseList
-        val productMap = mutableMapOf<Int, MutableMap<Int, Product>>()
-        val productList = ArrayList<Pair<Int, Product>>()
-        for (order in orderList) {
-            if (quantityMap[order.o_id].isNullOrEmpty()) {
-                quantityMap[order.o_id] = mutableMapOf()
-            }
-            quantityMap.getOrDefault(order.o_id, mutableMapOf()).apply {
-                this.put(
-                    order.p_id,
-                    this.getOrDefault(order.p_id, 0) + order.quantity
-                )
-            }
-
-            val product = Product(
-                order.p_id,
-                order.name,
-                order.type,
-                order.price,
-                order.img
-            )
-            productList.add(Pair(order.o_id, product))
-
+    private fun observeDatas() {
+        orderViewModel.orderInfoList.observe(viewLifecycleOwner) {
+            updateOrderList(it)
         }
-        orderList = orderList.distinctBy { it.o_id }
-        Log.d(TAG, "orderList: $orderList")
-        Log.e(TAG, "productList ${productList}")
-        for (order in orderList) {
-            val orderProductList = ArrayList<OrderProduct>()
-            productList.forEach {
-                val (id, product) = it
-                if (order.o_id == id) {
-                    orderProductList.add(
-                        OrderProduct(
-                            quantity = quantityMap[order.o_id]!!.getOrDefault(product.id, 0)!!,
-                            product = product
-                        )
-                    )
-                }
-            }
-            orderInfoList.add(
-                OrderInfo(
-                    id = order.o_id,
-                    date = order.order_time,
-                    orderProductList = orderProductList
-                )
-            )
+        Log.d(TAG, "onViewCreated: noti ${userId}")
+        homeViewModel.notiList.observe(viewLifecycleOwner) {
+            updateNotiList(it)
         }
-        orderViewModel.updateOrderInfoList(orderInfoList)
-        orderInfoList = if (orderInfoList.size > 5) orderInfoList.subList(0, 4) else orderInfoList
 
-        updateOrderList(orderInfoList)
+
     }
+
+    private suspend fun getNotiList() {
+        homeViewModel.updateNotiList(notiRepo.select(userId))
+    }
+
 
     //뷰들 초기화
     private fun initViews() = with(binding) {
@@ -197,6 +137,14 @@ class HomeFragment : Fragment(), CoroutineScope, OrderListClickListener, NotiDel
 
     }
 
+    private fun updateNotiList(list: List<Noti>) {
+        Log.d(TAG, "onCreateView: noti change ${list.joinToString()}")
+        notiAdapter.submitList(list)
+        notiAdapter.notifyDataSetChanged()
+    }
+
+    //listener
+
     override fun onOrderListClickListener(orderInfo: OrderInfo) {
         val bundle = Bundle()
         bundle.putParcelable("orderInfo", orderInfo)
@@ -211,7 +159,7 @@ class HomeFragment : Fragment(), CoroutineScope, OrderListClickListener, NotiDel
         startActivity(intent)
     }
 
-    override fun onNotiDeleteClickListener(id: Int) {
+    override fun onNotiDeleteClickListener(idx: Int) {
         launch {
             withContext(Dispatchers.Main) {
                 notiRepo.delete(id)

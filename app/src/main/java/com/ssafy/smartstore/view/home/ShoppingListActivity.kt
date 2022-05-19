@@ -56,7 +56,7 @@ class ShoppingListActivity : AppCompatActivity(), ShoppingListDeleteClickListene
         binding = ActivityShoppingListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        orderRepo = OrderRepository.getInstance(this)
+        orderRepo = OrderRepository.getInstance()
 
         val prefs = getSharedPreferences("data", MODE_PRIVATE)
         user_id = prefs.getString("id", "") ?: ""

@@ -102,12 +102,6 @@ class HomeActivity : AppCompatActivity(), CoroutineScope, BeaconConsumer {
 
             }
         }
-
-//            val bb : ArrayList<String> by Delegates.observable(StoreApplication.notiList){
-//                property, oldValue, newValue ->
-//                Log.d(TAG, "observer ${property}")
-//            }
-
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED
         ) {

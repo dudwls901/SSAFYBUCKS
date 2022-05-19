@@ -7,10 +7,12 @@ import com.ssafy.smartstore.data.local.database.StoreDatabase
 class StoreApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        val db = StoreDatabase.getInstance(this)
+
     }
 
     companion object {
+        val INSTANCE = StoreApplication()
+
         var orderTable: String = ""
 
         var shoppingList = ArrayList<OrderProduct>()

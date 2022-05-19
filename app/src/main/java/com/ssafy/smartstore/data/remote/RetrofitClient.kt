@@ -4,8 +4,10 @@ import com.android.volley.BuildConfig
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.ssafy.smartstore.data.remote.api.*
+import com.ssafy.smartstore.data.remote.dto.ErrorResponse
 import com.ssafy.smartstore.util.Network.BASE_URL
 import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -70,10 +72,10 @@ object RetrofitClient {
             .build()
     }
 
-//    fun getErrorResponse(errorBody: ResponseBody): String?{
-//        return getRetrofit().responseBodyConverter<String>()
-//            String::class.java,
-//            String::class.java.annotations
-//    }.convert(errorBody)
-
+    fun getErrorResponse(errorBody: ResponseBody): ErrorResponse? {
+        return getRetrofit().responseBodyConverter<ErrorResponse>(
+            ErrorResponse::class.java,
+            ErrorResponse::class.java.annotations
+        ).convert(errorBody)
+    }
 }
