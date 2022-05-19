@@ -5,22 +5,26 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.smartstore.adapter.OrderListAdapter
 import com.ssafy.smartstore.databinding.FragmentMyPageBinding
-import com.ssafy.smartstore.model.OrderInfo
 import com.ssafy.smartstore.listener.OrderListClickListener
+import com.ssafy.smartstore.model.OrderInfo
 import com.ssafy.smartstore.util.ImageConverter
 import com.ssafy.smartstore.util.WindowState.MYPAGE
 import com.ssafy.smartstore.view.intro.IntroActivity
 import com.ssafy.smartstore.viewmodel.OrderViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 private const val TAG = "MyPageFragment_싸피"
 
@@ -176,106 +180,11 @@ class MyPageFragment : Fragment(), CoroutineScope, OrderListClickListener {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
-        // 유정 정보 세팅
-//        tvName.text = user_name
-
-        // 스탬프 세팅
-//        val result = calStamp()
-//        val grade = result["grade"] as String
-//        val left = result["left"] as Int
-//        val limit = result["limit"] as Int
-//        val img = result["img"] as String
-
-//        tvSeedInfo.text = "${grade}단계"
-//
-//        if (grade.equals("나무")) {
-//            tvSeedLevelupInfo.text = "최고 단계 도달"
-//            tvSeedCount.text = "max"
-//
-//            progressBar.max = 1
-//            progressBar.progress = 1
-//
-//        } else {
-//            tvSeedLevelupInfo.text = "다음 레벨까지 ${left}잔 남았습니다"
-//            tvSeedCount.text = "${limit - left}/${limit}"
-//
-//            progressBar.max = limit
-//            progressBar.progress = limit - left
-//        }
-//
-//        ImageConverter.imageMap[img]?.let {
-//            ivGrade.setImageResource(it)
-//        }
-    }
-
-    // 스탬프 계산하는 함수
-//    fun calStamp(): Map<String, Any> {
-//        var total = data["stamp"] as Int
-//        var grade = ""
-//        var left = 0
-//        var limit = 0
-//        var img = ""
-//        if (total < 50) {
-//            val arr = arrayListOf<String>("씨앗1", "씨앗2", "씨앗3", "씨앗4", "씨앗5")
-//            val num: Int = total / 10
-//            grade = arr[num]
-//            left = 10 - total % 10
-//            limit = 10
-//            img = "seeds.png"
-//
-//        } else if (total < 125) {
-//            val arr = arrayListOf<String>("꽃1", "꽃2", "꽃3", "꽃4", "꽃5")
-//            val num: Int = (total - 50) / 15
-//            grade = arr[num]
-//            left = 15 - (total - 50) % 15
-//            limit = 15
-//            img = "flower.png"
-//
-//        } else if (total < 225) {
-//            val arr = arrayListOf<String>("열매1", "열매2", "열매3", "열매4", "열매5")
-//            val num: Int = (total - 125) / 20
-//            grade = arr[num]
-//            left = 20 - (total - 125) % 20
-//            limit = 20
-//            img = "fruit.png"
-//
-//        } else if (total < 350) {
-//            val arr = arrayListOf<String>("커피콩1", "커피콩2", "커피콩3", "커피콩4", "커피콩5")
-//            val num: Int = (total - 225) / 25
-//            grade = arr[num]
-//            left = 25 - (total - 225) % 25
-//            limit = 25
-//            img = "beans.png"
-//
-//        } else {
-//            grade = "나무"
-//            img = "tree.png"
-//
-//        }
-//
-//        val map: MutableMap<String, Any> = HashMap()
-//        map["grade"] = grade
-//        map["left"] = left
-//        map["limit"] = limit
-//        map["img"] = img
-//        return map
-//    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MyPageFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
     }
 
     override fun onOrderListClickListener(orderInfo: OrderInfo) {
-        val bundle = Bundle()
-        bundle.putParcelable("orderInfo",orderInfo)
-        val intent = Intent(requireContext(), OrderDetailActivity::class.java)
-        intent.putExtra("orderInfo", bundle)
-        startActivity(intent)
+        val action = MyPageFragmentDirections.actionMyPageFragmentToOrderDetailFragment(orderInfo)
+        findNavController().navigate(action)
     }
 
     override fun onOrderListCartClickListener(orderInfo: OrderInfo) {}

@@ -1,60 +1,74 @@
 package com.ssafy.smartstore.view.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.ssafy.smartstore.R
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.ssafy.smartstore.adapter.OrderDetailAdapter
+import com.ssafy.smartstore.databinding.FragmentOrderDetailBinding
+import com.ssafy.smartstore.listener.ShoppingListDeleteClickListener
+import com.ssafy.smartstore.model.OrderDetail
+import com.ssafy.smartstore.model.OrderInfo
+import com.ssafy.smartstore.util.WindowState
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class OrderDetailFragment : Fragment(), ShoppingListDeleteClickListener {
+    private lateinit var binding: FragmentOrderDetailBinding
 
-/**
- * A simple [Fragment] subclass.
- * Use the [OrderDetailFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class OrderDetailFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var adapter: OrderDetailAdapter
+    private lateinit var orderList: MutableList<OrderDetail>
+    private lateinit var orderInfo: OrderInfo
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_order_detail, container, false)
+        binding = FragmentOrderDetailBinding.inflate(inflater, container, false)
+
+        return binding.root
+
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment OrderDetailFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            OrderDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+//        val bundle = intent.getBundleExtra("orderInfo")
+//        orderInfo = bundle?.getParcelable<OrderInfo>("orderInfo") as OrderInfo
+        // 2가지방법 - 1. by navArgs()
+        val safeArgs: OrderDetailFragmentArgs by navArgs()
+        orderInfo = safeArgs.orderInfo
+
+        initViews()
     }
+
+
+
+    //뷰들 초기화
+    @SuppressLint("SetTextI18n")
+    private fun initViews() = with(binding) {
+
+        tvDate.text = orderInfo.date
+        var totalPrice = 0
+        orderInfo.orderProductList.forEach { orderProduct->
+            totalPrice += orderProduct.quantity * orderProduct.product.price
+        }
+        tvPrice.text = "${totalPrice}원"
+
+        // 주문 상세 리사이클러뷰 연결
+        adapter = OrderDetailAdapter(WindowState.ORDERDETAIL,this@OrderDetailFragment).apply {
+            setHasStableIds(true)
+            submitList(orderInfo.orderProductList)
+
+            rvOrderList.adapter = this
+            rvOrderList.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        }
+    }
+
+    override fun onShoppingListDeleteClickListener(position: Int) {}
 }
