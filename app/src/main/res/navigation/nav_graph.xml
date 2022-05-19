@@ -21,7 +21,12 @@
         android:id="@+id/menuDetailFragment"
         android:name="com.ssafy.smartstore.view.home.MenuDetailFragment"
         android:label="fragment_menu_detail"
-        tools:layout="@layout/fragment_menu_detail" />
+        tools:layout="@layout/fragment_menu_detail" >
+        <argument
+            android:name="productId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
     <fragment
         android:id="@+id/myPageFragment"
         android:name="com.ssafy.smartstore.view.home.MyPageFragment"
@@ -40,7 +45,11 @@
         android:id="@+id/orderDetailFragment"
         android:name="com.ssafy.smartstore.view.home.OrderDetailFragment"
         android:label="fragment_order_detail"
-        tools:layout="@layout/fragment_order_detail" />
+        tools:layout="@layout/fragment_order_detail" >
+        <argument
+            android:name="orderInfo"
+            app:argType="com.ssafy.smartstore.model.OrderInfo" />
+    </fragment>
     <fragment
         android:id="@+id/orderFragment"
         android:name="com.ssafy.smartstore.view.home.OrderFragment"

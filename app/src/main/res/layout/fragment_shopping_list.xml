@@ -1,14 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.home.ShoppingListFragment">
+    android:background="@color/coffee_menu_back"
+    tools:context=".view.home.ShoppingListActivity">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="ShoppingListFragment" />
+        android:id="@+id/tv_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/eland_choice_b"
+        android:text="장바구니"
+        android:textColor="@color/coffee_dark_brown"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_take_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/button_color"
+        android:elevation="2dp"
+        android:fontFamily="@font/eland_choice_b"
+        android:text="매장"
+        android:translationZ="1dp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_cart"
+        app:layout_constraintEnd_toStartOf="@id/btn_take_out" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_take_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/button_non_color"
+        android:elevation="2dp"
+        android:text="T-OUT"
+        android:translationZ="1dp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_cart"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_order_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@id/tv_price_sum"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_cart" />
+
+    <TextView
+        android:id="@+id/tv_order_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/eland_choice_b"
+        android:text="총 3개"
+        app:layout_constraintBottom_toTopOf="@id/btn_order"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_goneMarginStart="30dp" />
+
+    <TextView
+        android:id="@+id/tv_price_sum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/eland_choice_b"
+        android:text="12,500 원"
+        app:layout_constraintBottom_toTopOf="@id/btn_order"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_goneMarginEnd="30dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_order"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_regular"
+        android:elevation="2dp"
+        android:text="주문하기"
+        android:textColor="@color/white"
+        android:translationZ="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

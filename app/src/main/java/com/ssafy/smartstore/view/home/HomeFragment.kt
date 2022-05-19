@@ -1,7 +1,6 @@
 package com.ssafy.smartstore.view.home
 
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -11,19 +10,20 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.smartstore.adapter.NotiAdapter
 import com.ssafy.smartstore.adapter.OrderListAdapter
 import com.ssafy.smartstore.data.local.dto.Noti
+import com.ssafy.smartstore.data.local.repository.NotiRepository
 import com.ssafy.smartstore.databinding.FragmentHomeBinding
-import com.ssafy.smartstore.model.OrderInfo
-import com.ssafy.smartstore.model.OrderProduct
 import com.ssafy.smartstore.listener.NotiDeleteClickListener
 import com.ssafy.smartstore.listener.OrderListClickListener
 import com.ssafy.smartstore.data.local.dto.Product
 import com.ssafy.smartstore.data.local.repository.NotiRepository
 import com.ssafy.smartstore.data.remote.dto.OrderInfoResponse
 import com.ssafy.smartstore.data.remote.repository.ShoppingListRepository
+import com.ssafy.smartstore.model.OrderInfo
 import com.ssafy.smartstore.util.WindowState.HOME
 import com.ssafy.smartstore.viewmodel.HomeViewModel
 import com.ssafy.smartstore.viewmodel.OrderViewModel
@@ -142,11 +142,8 @@ class HomeFragment : Fragment(), CoroutineScope, OrderListClickListener, NotiDel
     //listener
 
     override fun onOrderListClickListener(orderInfo: OrderInfo) {
-        val bundle = Bundle()
-        bundle.putParcelable("orderInfo", orderInfo)
-        val intent = Intent(requireContext(), OrderDetailActivity::class.java)
-        intent.putExtra("orderInfo", bundle)
-        startActivity(intent)
+        val action = HomeFragmentDirections.actionHomeFragmentToOrderDetailFragment(orderInfo)
+        findNavController().navigate(action)
     }
 
     override fun onOrderListCartClickListener(orderInfo: OrderInfo) {
@@ -164,6 +161,8 @@ class HomeFragment : Fragment(), CoroutineScope, OrderListClickListener, NotiDel
 //        val intent = Intent(requireContext(), ShoppingListActivity::class.java)
 //        intent.putExtra("orderInfo", bundle)
 //        startActivity(intent)
+        val action = HomeFragmentDirections.actionHomeFragmentToShoppingListFragment()
+        findNavController().navigate(action)
     }
 
     override fun onNotiDeleteClickListener(idx: Int) {

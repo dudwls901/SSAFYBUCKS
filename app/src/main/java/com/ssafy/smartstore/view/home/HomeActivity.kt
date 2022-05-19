@@ -3,11 +3,15 @@ package com.ssafy.smartstore.view.home
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.app.PendingIntent
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.nfc.NdefMessage
+import android.nfc.NfcAdapter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.RemoteException
@@ -16,6 +20,7 @@ import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -26,6 +31,7 @@ import androidx.navigation.ui.NavigationUI
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ssafy.smartstore.R
+import com.ssafy.smartstore.StoreApplication
 import com.ssafy.smartstore.databinding.ActivityHomeBinding
 import com.ssafy.smartstore.data.local.dto.Noti
 import com.ssafy.smartstore.data.local.repository.NotiRepository
@@ -75,6 +81,12 @@ class HomeActivity : AppCompatActivity(), CoroutineScope, BeaconConsumer {
         Manifest.permission.ACCESS_FINE_LOCATION,
     )
 
+    //nfc
+    private lateinit var nfcAdapter: NfcAdapter
+    private lateinit var pIent: PendingIntent
+    private lateinit var filters: Array<IntentFilter>
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
@@ -83,6 +95,8 @@ class HomeActivity : AppCompatActivity(), CoroutineScope, BeaconConsumer {
         notiRepo = NotiRepository.getInstance(this)
 
         initViews()
+
+        initNFC()
 
         val prefs = this.getSharedPreferences("data", Context.MODE_PRIVATE)
         userId = prefs.getString("id", "") ?: ""
@@ -319,7 +333,71 @@ class HomeActivity : AppCompatActivity(), CoroutineScope, BeaconConsumer {
                 homeViewModel.updateNotiList(notiRepo.select(userId))
             }
         }
+        if (intent?.action != null
+            && (intent.action.equals(NfcAdapter.ACTION_NDEF_DISCOVERED)
+                    || intent.action.equals(NfcAdapter.ACTION_TAG_DISCOVERED))
+        ) {
+            processIntent(intent)
+        }
+    }
 
+    //nfc 관련
+
+    override fun onResume() {
+        super.onResume()
+        nfcAdapter.enableForegroundDispatch(this, pIent, filters, null)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        nfcAdapter.disableForegroundDispatch(this)
+    }
+
+    private fun initNFC() {
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this).apply {
+            if (this == null) finish()
+        }
+        val intent = Intent(this, HomeActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+        }
+        pIent = PendingIntent.getActivity(this, 1, intent, 0)
+        val tag_filter = IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED)
+        filters = arrayOf(tag_filter)
+    }
+
+    fun processIntent(intent: Intent) {
+
+        val action = intent.action
+
+        // 1. 인텐트에서 NdefMessage 배열 데이터를 가져온다
+        val rawMsg = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES)
+
+        // 2. Data를 변환
+        if (rawMsg != null) {
+            val msgArr = arrayOfNulls<NdefMessage>(rawMsg.size)
+
+            for (i in rawMsg.indices) {
+                msgArr[i] = rawMsg[i] as NdefMessage?
+            }
+
+            // 3. NdefMessage에서 NdefRecode -> payload
+            val recInfo = msgArr[0]!!.records[0]
+
+            // Record type check: text, uri
+            val data = recInfo.type
+            val recType = String(data)
+
+//            binding.infoTv.text = recType   // T, U
+
+            if (recType.equals("T")) {          // text인 경우
+                val payload = recInfo.payload
+                val text = String(payload, 3, payload.size - 3)
+                val num = String(payload, payload.size - 2, 2).toInt()
+                Log.d(TAG, "processIntent: $num")
+                StoreApplication.orderTable = text
+                Toast.makeText(this, "${num}번 테이블 번호가 등록 되었습니다", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     @SuppressLint("SetTextI18n")
