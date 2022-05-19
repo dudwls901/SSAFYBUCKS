@@ -57,6 +57,11 @@ create table t_comment(
     constraint fk_comment_product foreign key(product_id) references t_product(id) on delete cascade
 );
 
+create table t_user_token(
+    user_id varchar(100) primary key,
+    token varchar(300) not null,
+	constraint fk_token_user foreign key(user_id) references t_user(id) on delete cascade
+);
 
 INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy01', '김싸피', 'pass01', 5);
 INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy02', '황원태', 'pass02', 0);
@@ -127,5 +132,6 @@ INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy08', 8, 8);
 INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy09', 9, 9);
 INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy10', 10, 20);
 
+INSERT INTO t_user_token (user_id, token) VALUES ('ssafy01', 'dErQv4F1ReePgYf5xXjtzB:APA91bGAcLCiHlhbAqtGyYsqY4MV94sYBzTrCwPqgFpjZrtkihijhzvtAv8h3O8Sh1JfTjsWNdGuNFdxRWtGh-UcF5djvgjkkNYRE2A94lp7ItNszVgH9NpjI4NGptkGDelOoVvpyjLH');
 
 commit;
