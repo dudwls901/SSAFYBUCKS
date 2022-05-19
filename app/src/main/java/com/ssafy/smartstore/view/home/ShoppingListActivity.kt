@@ -38,7 +38,7 @@ class ShoppingListActivity : AppCompatActivity(), ShoppingListDeleteClickListene
 
     private lateinit var adapter: OrderDetailAdapter
     private lateinit var orderList: MutableList<OrderDetail>
-    private lateinit var orderInfo: OrderInfo
+    private var orderInfo: OrderInfo? = null
     private lateinit var orderInfo2: OrderProduct
     private lateinit var shoppingList: ArrayList<OrderProduct>
 
@@ -66,11 +66,11 @@ class ShoppingListActivity : AppCompatActivity(), ShoppingListDeleteClickListene
 
         shoppingList = StoreApplication.shoppingList
 
-        val data = intent.getSerializableExtra("orderInfo")
+        val bundle = intent.getBundleExtra("orderInfo")
+        orderInfo = bundle?.getParcelable<OrderInfo>("orderInfo") as OrderInfo
 
-        if (data != null) {
-            orderInfo = data as OrderInfo
-            shoppingList.customAdd(orderInfo.orderProductList) // List<orderProduct>
+        if (orderInfo != null) {
+            shoppingList.customAdd(orderInfo!!.orderProductList) // List<orderProduct>
         }
 
         val data2 = intent.getSerializableExtra("orderProduct")

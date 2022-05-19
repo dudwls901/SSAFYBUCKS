@@ -95,11 +95,6 @@ class HomeFragment : Fragment(), CoroutineScope, OrderListClickListener, NotiDel
             updateNotiList(it)
         }
 
-
-    }
-
-    private suspend fun getNotiList() {
-        homeViewModel.updateNotiList(notiRepo.select(userId))
     }
 
 
@@ -154,8 +149,10 @@ class HomeFragment : Fragment(), CoroutineScope, OrderListClickListener, NotiDel
     }
 
     override fun onOrderListCartClickListener(orderInfo: OrderInfo) {
+        val bundle = Bundle()
+        bundle.putParcelable("orderInfo", orderInfo)
         val intent = Intent(requireContext(), ShoppingListActivity::class.java)
-        intent.putExtra("orderInfo", orderInfo)
+        intent.putExtra("orderInfo", bundle)
         startActivity(intent)
     }
 
