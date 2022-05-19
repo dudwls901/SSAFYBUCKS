@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".HomeActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/textview_regular"
+        android:text="아래 버튼을 눌러 각 액티비티로 이동하세요."
+        android:textColor="@color/coffee_dark_brown" />
+
+    <Button
+        android:id="@+id/btn_join"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_color"
+        android:text="JoinActivity"
+        android:textAllCaps="false"
+        android:textColor="@color/coffee_dark_brown" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_go_order"
+        android:text="LoginActivity"
+        android:textAllCaps="false"
+        android:textColor="@color/coffee_dark_brown" />
+
+    <Button
+        android:id="@+id/btn_menu_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_non_color"
+        android:text="MenuDetailActivity - x"
+        android:textAllCaps="false"
+        android:textColor="@color/coffee_dark_brown" />
+
+    <Button
+        android:id="@+id/btn_my_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_regular"
+        android:text="MyPageActivity - x"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="OrderActivity"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/btn_order_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="OrderDetailActivity"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/btn_shopping_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ShoppingListActivity"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/btn_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="HomeActivity"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+
+</LinearLayout>

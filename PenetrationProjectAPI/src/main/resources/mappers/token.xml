@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.cafe.model.dao.TokenDao">
+
+	<!-- token 추가 -->
+	<insert id="insert" parameterType="Token">
+		insert into t_user_token(user_id, token)
+		values (#{userId}, #{token})
+		ON DUPLICATE KEY UPDATE token = VALUES(token)
+	</insert>
+	
+	<!-- userId와 일치하는 token 조회 -->
+	<select id="selectByUser" parameterType="String" resultType="String">
+		select token
+		from t_user_token
+		where user_id= #{userId}
+	</select>
+	
+	<!-- 모든 token 리스트 조회 -->
+	<select id="selectAll" resultType="Token">
+		select *
+		from t_user_token
+	</select>
+
+	<!-- userId와 일치하는 token 삭제 -->
+	<delete id="delete" parameterType="String">
+		delete from t_user_token
+		where user_id = #{userId}
+	</delete>
+</mapper>

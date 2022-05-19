@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:colorBackground">@color/white</item>
+        <item name="android:statusBarColor">@color/coffee_brown</item>
+        <item name="android:textColor">@color/coffee_dark_brown</item>
+    </style>
+
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="background">@drawable/background_box_white</item>
+    </style>
+</resources>

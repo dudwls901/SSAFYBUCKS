@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.cafe.model.dao.CommentDao">
+
+	<!-- comment 추가 -->
+	<insert id="insert" parameterType="Comment" useGeneratedKeys="true" keyProperty="id">
+		insert into t_comment(user_id, product_id, rating, comment)
+		values (#{userId}, #{productId}, #{rating}, #{comment})
+	</insert>
+
+	<!-- productId와 일치하는 comment리스트 조회 -->
+	<select id="selectByProduct" parameterType="Integer" resultType="Comment">
+		select *
+		from t_comment
+		where product_id= #{productId}
+		order by id desc
+	</select>
+	
+	<!-- id와 일치하는 comment 조회 -->
+	<select id="select" parameterType="Integer" resultType="Comment">
+		select *
+		from t_comment
+		where id= #{id}
+	</select>
+	
+	<!-- 모든 comment 리스트 조회 -->
+	<select id="selectAll" resultType="Comment">
+		select *
+		from t_comment
+		order by id desc
+	</select>
+	
+	<!-- Id와 일치하는 comment 수정 -->
+	<update id="update" parameterType="Comment">
+		update t_comment
+		set
+			rating = #{rating},
+			comment = #{comment}
+		where id = #{id}
+	</update>
+
+	<!-- Id와 일치하는 comment 삭제 -->
+	<delete id="delete" parameterType="Integer">
+		delete from t_comment
+		where id = #{id}
+	</delete>
+	
+</mapper>
