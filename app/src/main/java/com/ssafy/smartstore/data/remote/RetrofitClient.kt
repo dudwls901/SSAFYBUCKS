@@ -19,7 +19,7 @@ object RetrofitClient {
     val productService: ProductService by lazy {
         getRetrofit().create(ProductService::class.java)
     }
-    val orderService: OrderService by lazy{
+    val orderService: OrderService by lazy {
         getRetrofit().create(OrderService::class.java)
     }
 
@@ -35,7 +35,9 @@ object RetrofitClient {
         getRetrofit().create(TokenService::class.java)
     }
 
-
+    val shoppingListService: ShoppingListService by lazy {
+        getRetrofit().create(ShoppingListService::class.java)
+    }
 
 
     private fun getRetrofit(): Retrofit {
@@ -56,13 +58,12 @@ object RetrofitClient {
     }
 
     //okHttp 로그
-    private fun buildOkHttpClient(): OkHttpClient{
+    private fun buildOkHttpClient(): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
 
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        }
-        else{
+        } else {
             loggingInterceptor.level = HttpLoggingInterceptor.Level.NONE
         }
 

@@ -10,6 +10,7 @@ object Network {
     const val ORDER = "order"
     const val COMMENT = "comment"
     const val TOKEN = "token"
+    const val SHOPPING_LIST = "shopping_list"
 }
 
 

@@ -23,6 +23,7 @@ import com.ssafy.smartstore.listener.OrderListClickListener
 import com.ssafy.smartstore.data.local.dto.Product
 import com.ssafy.smartstore.data.local.repository.NotiRepository
 import com.ssafy.smartstore.data.remote.dto.OrderInfoResponse
+import com.ssafy.smartstore.data.remote.repository.ShoppingListRepository
 import com.ssafy.smartstore.util.WindowState.HOME
 import com.ssafy.smartstore.viewmodel.HomeViewModel
 import com.ssafy.smartstore.viewmodel.OrderViewModel
@@ -149,11 +150,20 @@ class HomeFragment : Fragment(), CoroutineScope, OrderListClickListener, NotiDel
     }
 
     override fun onOrderListCartClickListener(orderInfo: OrderInfo) {
-        val bundle = Bundle()
-        bundle.putParcelable("orderInfo", orderInfo)
-        val intent = Intent(requireContext(), ShoppingListActivity::class.java)
-        intent.putExtra("orderInfo", bundle)
-        startActivity(intent)
+        val map = HashMap<String, Any>()
+        map.put("userId",userId)
+        map.put("type","list")
+        map.put("orderProductList", orderInfo.orderProductList)
+        launch {
+            val result = ShoppingListRepository.INSTANCE.addShoppingList(map)
+
+            Log.d(TAG, "onOrderListCartClickListener: ${result.body()}")
+        }
+//        val bundle = Bundle()
+//        bundle.putParcelable("orderInfo", orderInfo)
+//        val intent = Intent(requireContext(), ShoppingListActivity::class.java)
+//        intent.putExtra("orderInfo", bundle)
+//        startActivity(intent)
     }
 
     override fun onNotiDeleteClickListener(idx: Int) {

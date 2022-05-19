@@ -11,6 +11,7 @@ import com.ssafy.smartstore.data.remote.RetrofitClient
 import com.ssafy.smartstore.model.OrderInfo
 import com.ssafy.smartstore.data.remote.dto.OrderInfoResponse
 import com.ssafy.smartstore.data.remote.repository.OrderRepository
+import com.ssafy.smartstore.data.remote.repository.ShoppingListRepository
 import com.ssafy.smartstore.data.remote.repository.UserRepository
 import com.ssafy.smartstore.model.OrderProduct
 import kotlinx.coroutines.*
@@ -40,15 +41,20 @@ class OrderViewModel : ViewModel() {
     val orderInfoList: LiveData<List<OrderInfo>>
         get() = _orderInfoList
 
+
     //    private val _responseGetProduct = MutableLiveData<Response<List<MutableMap<String,Any>>>>()
     private val _responseUserInfo = MutableLiveData<Response<Map<String, Any>>>()
-
 
     val responseUserInfo: LiveData<Response<Map<String, Any>>>
         get() = _responseUserInfo
 
+    private val _shoppingList = MutableLiveData<List<OrderProduct>>()
+    val shoppingList: LiveData<List<OrderProduct>>
+        get() = _shoppingList
+
     init {
         _orderInfoList.value = emptyList()
+        _shoppingList.value = emptyList()
     }
 
     fun getOrderMonth(id: String) = viewModelScope.launch {
@@ -165,6 +171,35 @@ class OrderViewModel : ViewModel() {
 //    fun getProduct(productId: Int) = viewModelScope.launch {
 //        _responseGetProduct.value = ProductRepository.INSTANCE.getProduct(productId)
 //    }
+
+    fun getShoppingList(userId: String) = viewModelScope.launch {
+        _loading.postValue(true)
+        var response: Response<List<OrderProduct>>? = null
+        job = launch(Dispatchers.Main + exceptionHandler) {
+            response = ShoppingListRepository.INSTANCE.selectByUser(userId)
+        }
+        job?.join()
+
+        response?.let {
+            if (it.isSuccessful) {
+                it.body()?.let { result ->
+                    when (it.code()) {
+                        200 -> {
+                            _shoppingList.postValue(result)
+                            _loading.postValue(false)
+                        }
+                        else -> onError(it.message())
+                    }
+                }
+            } else {
+                it.errorBody()?.let { errorBody ->
+                    RetrofitClient.getErrorResponse(errorBody)?.let {
+                        onError(it.message)
+                    }
+                }
+            }
+        }
+    }
 
     private fun onError(message: String) {
         _errorMessage.value = message
