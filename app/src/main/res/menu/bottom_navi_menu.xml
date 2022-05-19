@@ -6,7 +6,7 @@
         android:icon="@drawable/home_24"
         android:title="Home" />
     <item
-        android:id="@+id/menuDetailFragment"
+        android:id="@+id/orderFragment"
         android:icon="@drawable/order_24"
         android:title="Order" />
     <item
