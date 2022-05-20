@@ -46,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
 		String type = "out";
 
 		// 매장(in)에서 주문한 경우
-		if (map.get("type") != null) {
+		if (map.get("type") != null && ((String) map.get("type")).equals("in")) {
 			type = "in";
 			ObjectMapper mapper = new ObjectMapper();
 			order = mapper.convertValue(map.get("order"), new TypeReference<Order>() {
