@@ -1,6 +1,7 @@
 package com.ssafy.smartstore.viewmodel
 
 import android.os.Build
+import android.util.Log
 import androidx.lifecycle.*
 import com.ssafy.smartstore.StoreApplication
 import com.ssafy.smartstore.data.local.dto.Product
@@ -87,6 +88,11 @@ class OrderViewModel : ViewModel() {
     val priceSum: LiveData<String>
         get() = _priceSum
 
+
+    // 장바구니 데이터
+    private val _canCallBootPay = MutableLiveData<Event<Boolean>>()
+    val canCallBootPay: LiveData<Event<Boolean>>
+        get() = _canCallBootPay
 
     init {
         _orderInfoList.value = emptyList()
@@ -343,67 +349,69 @@ class OrderViewModel : ViewModel() {
         }
     }
 
+    //주문 완료되면 주문 내역 생성
+    fun updateOrderDetails(userId: String) = viewModelScope.launch{
+
+        val data = _shoppingList.value
+        val order = Order(userId, StoreApplication.orderTable)
+        val orderDetails =
+            mutableListOf<OrderDetail>()
+        data?.forEach {
+            val orderDetail =
+                OrderDetail(it.product.id, it.quantity)
+            orderDetails.add(orderDetail)
+        }
+        order.details = orderDetails
+
+        _loading.postValue(true)
+        OrderRepository.INSTANCE.makeOrder(order)
+
+        var response: Response<List<OrderProduct>>? = null
+        job = launch(Dispatchers.Main + exceptionHandler) {
+            response = ShoppingListRepository.INSTANCE.deleteByUser(userId)
+        }
+        job?.join()
+
+        response?.let {
+            if (it.isSuccessful) {
+                it.body()?.let { result ->
+                    when (it.code()) {
+                        200 -> {
+                            _shoppingList.postValue(result)
+                            _toastMessage.value = Event("주문이 완료되었습니다")
+                            Log.d("observer", "updateOrderDetails: ${toastMessage.value}")
+                            _loading.postValue(false)
+                        }
+                        else -> onError(it.message())
+                    }
+                }
+            } else {
+                it.errorBody()?.let { errorBody ->
+                    RetrofitClient.getErrorResponse(errorBody)?.let {
+                        onError(it.message)
+                    }
+                }
+            }
+        }
+
+    }
+
     // 주문하기
-    fun makeOrder(userId: String) = viewModelScope.async {
+    fun makeOrder(){
         // {orders=[{id=1, name=coffee1, type=coffee, price=1, img=coffee1.png, count=2}, {id=5, name=coffee5, type=coffee, price=5, img=coffee5.png, count=3}], userId=123}
         // orders의 id : prodcutId, count : quantity
-
+        // 결제 불가
         if (!_shoppingList.value?.isEmpty()!!) {
-            val data = _shoppingList.value
-
+            //결제 불가
             if (StoreApplication.orderTable == "") {
                 _dialogMessage.value =
                     Event(hashMapOf(Pair("title", "알림"), Pair("message", "Table NFC를 먼저 찍어주세요")))
-
-                false
-            } else {
-                val order = Order(userId, StoreApplication.orderTable)
-                val orderDetails =
-                    mutableListOf<OrderDetail>()
-                data?.forEach {
-                    val orderDetail =
-                        OrderDetail(it.product.id, it.quantity)
-                    orderDetails.add(orderDetail)
-                }
-                order.details = orderDetails
-
-                _loading.postValue(true)
-                OrderRepository.INSTANCE.makeOrder(order)
-
-                var response: Response<List<OrderProduct>>? = null
-                job = launch(Dispatchers.Main + exceptionHandler) {
-                    response = ShoppingListRepository.INSTANCE.deleteByUser(userId)
-                }
-                job?.join()
-
-                response?.let {
-                    if (it.isSuccessful) {
-                        it.body()?.let { result ->
-                            when (it.code()) {
-                                200 -> {
-                                    _shoppingList.postValue(result)
-                                    _loading.postValue(false)
-                                }
-                                else -> onError(it.message())
-                            }
-                        }
-                    } else {
-                        it.errorBody()?.let { errorBody ->
-                            RetrofitClient.getErrorResponse(errorBody)?.let {
-                                onError(it.message)
-                            }
-                        }
-                    }
-                }
-
-                _toastMessage.value = Event("주문이 완료되었습니다")
-
-                true
+            } else { // 결제 가능
+                _canCallBootPay.postValue(Event(true))
             }
-        } else {
+        } else { //결제 불가
             _toastMessage.value = Event("상품을 담아주세요")
 
-            false
         }
     }
 

@@ -112,7 +112,9 @@ dependencies {
     //logging
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.2'
 
-
     // Beacon
     implementation group: 'org.altbeacon', name: 'android-beacon-library', version: '2.18'
+
+    //BootPay
+    implementation 'com.github.bootpay:client_android_java:3.3.04'
 }

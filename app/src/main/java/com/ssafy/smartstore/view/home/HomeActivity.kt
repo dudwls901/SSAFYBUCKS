@@ -94,6 +94,8 @@ class HomeActivity : AppCompatActivity(), CoroutineScope, BeaconConsumer {
 
         notiRepo = NotiRepository.getInstance(this)
 
+        observeDatas()
+
         initViews()
 
         initNFC()
@@ -305,6 +307,17 @@ class HomeActivity : AppCompatActivity(), CoroutineScope, BeaconConsumer {
         if (isEnableBLEService()) {
             needBLERequest = false
             startScan()
+        }
+    }
+
+
+    private fun observeDatas(){
+
+        orderViewModel.toastMessage.observe(this) { event ->
+            event.getContentIfNotHandled()?.let{ message ->
+                Log.d(TAG, "observeDatas: toast ${message}")
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
