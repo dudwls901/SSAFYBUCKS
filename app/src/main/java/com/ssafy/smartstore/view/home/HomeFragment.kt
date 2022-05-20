@@ -144,20 +144,7 @@ class HomeFragment : Fragment(), CoroutineScope, OrderListClickListener, NotiDel
     }
 
     override fun onOrderListCartClickListener(orderInfo: OrderInfo) {
-        val map = HashMap<String, Any>()
-        map.put("userId",userId)
-        map.put("type","list")
-        map.put("orderProductList", orderInfo.orderProductList)
-        launch {
-            val result = ShoppingListRepository.INSTANCE.addShoppingList(map)
-
-            Log.d(TAG, "onOrderListCartClickListener: ${result.body()}")
-        }
-//        val bundle = Bundle()
-//        bundle.putParcelable("orderInfo", orderInfo)
-//        val intent = Intent(requireContext(), ShoppingListActivity::class.java)
-//        intent.putExtra("orderInfo", bundle)
-//        startActivity(intent)
+        orderViewModel.addItem(orderInfo, userId, "list")
         val action = HomeFragmentDirections.actionHomeFragmentToShoppingListFragment()
         findNavController().navigate(action)
     }

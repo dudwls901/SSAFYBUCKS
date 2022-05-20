@@ -44,8 +44,6 @@ class MenuDetailFragment : Fragment(), CoroutineScope {
     private lateinit var product: Product
     private var commentList: List<Comment> = arrayListOf()
 
-//    private lateinit var commentRepo: CommentRepository
-
     private var user_id = ""
 
     private val productViewModel: ProductViewModel by viewModels()

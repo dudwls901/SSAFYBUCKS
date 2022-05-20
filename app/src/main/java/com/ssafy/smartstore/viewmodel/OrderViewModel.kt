@@ -208,11 +208,117 @@ class OrderViewModel : ViewModel() {
 //        _responseGetProduct.value = ProductRepository.INSTANCE.getProduct(productId)
 //    }
 
+    // 장바구니 정보 얻어오기
     fun getShoppingList(userId: String) = viewModelScope.launch {
         _loading.postValue(true)
         var response: Response<List<OrderProduct>>? = null
         job = launch(Dispatchers.Main + exceptionHandler) {
             response = ShoppingListRepository.INSTANCE.selectByUser(userId)
+        }
+        job?.join()
+
+        response?.let {
+            if (it.isSuccessful) {
+                it.body()?.let { result ->
+                    when (it.code()) {
+                        200 -> {
+                            _shoppingList.postValue(result)
+                            _loading.postValue(false)
+                        }
+                        else -> onError(it.message())
+                    }
+                }
+            } else {
+                it.errorBody()?.let { errorBody ->
+                    RetrofitClient.getErrorResponse(errorBody)?.let {
+                        onError(it.message)
+                    }
+                }
+            }
+        }
+    }
+
+    // 장바구니에 아이템들 추가
+    fun addItems(orderInfo: OrderInfo, userId: String, type: String) = viewModelScope.launch {
+        val map = HashMap<String, Any>()
+        map.put("userId", userId)
+        map.put("type", "list")
+        map.put("orderProductList", orderInfo.orderProductList)
+
+        _loading.postValue(true)
+        var response: Response<List<OrderProduct>>? = null
+        job = launch(Dispatchers.Main + exceptionHandler) {
+            response = ShoppingListRepository.INSTANCE.addShoppingList(map)
+        }
+        job?.join()
+
+        response?.let {
+            if (it.isSuccessful) {
+                it.body()?.let { result ->
+                    when (it.code()) {
+                        200 -> {
+                            _shoppingList.postValue(result)
+                            _loading.postValue(false)
+                        }
+                        else -> onError(it.message())
+                    }
+                }
+            } else {
+                it.errorBody()?.let { errorBody ->
+                    RetrofitClient.getErrorResponse(errorBody)?.let {
+                        onError(it.message)
+                    }
+                }
+            }
+        }
+    }
+
+    // 장바구니에 아이템들 추가
+    fun addItem(item: Any, userId: String, type: String) = viewModelScope.launch {
+        val map = HashMap<String, Any>()
+        map.put("userId", userId)
+        map.put("type", "list")
+        if (item is OrderInfo) {
+            map.put("orderProductList", item.orderProductList)
+        } else if (item is OrderProduct) {
+            map.put("product", item.product)
+            map.put("quantity", item.quantity)
+        }
+
+        _loading.postValue(true)
+        var response: Response<List<OrderProduct>>? = null
+        job = launch(Dispatchers.Main + exceptionHandler) {
+            response = ShoppingListRepository.INSTANCE.addShoppingList(map)
+        }
+        job?.join()
+
+        response?.let {
+            if (it.isSuccessful) {
+                it.body()?.let { result ->
+                    when (it.code()) {
+                        200 -> {
+                            _shoppingList.postValue(result)
+                            _loading.postValue(false)
+                        }
+                        else -> onError(it.message())
+                    }
+                }
+            } else {
+                it.errorBody()?.let { errorBody ->
+                    RetrofitClient.getErrorResponse(errorBody)?.let {
+                        onError(it.message)
+                    }
+                }
+            }
+        }
+    }
+
+    // 장바구니 아이템 하나 삭제
+    fun deleteOneItem(map: HashMap<String, Any>) = viewModelScope.launch {
+        _loading.postValue(true)
+        var response: Response<List<OrderProduct>>? = null
+        job = launch(Dispatchers.Main + exceptionHandler) {
+            response = ShoppingListRepository.INSTANCE.deleteOneItem(map)
         }
         job?.join()
 
@@ -298,36 +404,6 @@ class OrderViewModel : ViewModel() {
             _toastMessage.value = Event("상품을 담아주세요")
 
             false
-        }
-    }
-
-    // 장바구니 아이템 하나 삭제
-    fun deleteOneItem(map: HashMap<String, Any>) = viewModelScope.launch {
-        _loading.postValue(true)
-        var response: Response<List<OrderProduct>>? = null
-        job = launch(Dispatchers.Main + exceptionHandler) {
-            response = ShoppingListRepository.INSTANCE.deleteOneItem(map)
-        }
-        job?.join()
-
-        response?.let {
-            if (it.isSuccessful) {
-                it.body()?.let { result ->
-                    when (it.code()) {
-                        200 -> {
-                            _shoppingList.postValue(result)
-                            _loading.postValue(false)
-                        }
-                        else -> onError(it.message())
-                    }
-                }
-            } else {
-                it.errorBody()?.let { errorBody ->
-                    RetrofitClient.getErrorResponse(errorBody)?.let {
-                        onError(it.message)
-                    }
-                }
-            }
         }
     }
 
