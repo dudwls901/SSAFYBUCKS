@@ -31,6 +31,7 @@ public class ShoppingListServiceImpl implements ShoppingListService {
 		String type = (String) map.get("type");
 
 		if (type != null && type.equals("list")) {
+			slDao.deleteByUser(userId);
 			List<Map<String, Object>> orderProductList = (List<Map<String, Object>>) map.get("orderProductList");
 
 			for (Map<String, Object> orderProduct : orderProductList) {

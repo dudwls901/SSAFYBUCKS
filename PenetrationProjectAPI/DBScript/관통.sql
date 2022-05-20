@@ -72,6 +72,11 @@ create table t_shopping_list(
     constraint fk_shopping_list_product foreign key(product_id) references t_product(id) on delete cascade
 );
 
+create table t_order_type(
+	order_id integer primary key,
+    type varchar(20) default 'out',
+    constraint fk_order_type_order foreign key(order_id) references t_order(o_id) on delete cascade
+);
 
 INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy01', '김싸피', 'pass01', 5);
 INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy02', '황원태', 'pass02', 0);
@@ -149,5 +154,16 @@ INSERT INTO t_shopping_list (user_id, product_id, quantity) VALUES ('ssafy01', 2
 INSERT INTO t_shopping_list (user_id, product_id, quantity) VALUES ('ssafy01', 3 ,1);
 INSERT INTO t_shopping_list (user_id, product_id, quantity) VALUES ('ssafy01', 4 ,1);
 INSERT INTO t_shopping_list (user_id, product_id, quantity) VALUES ('ssafy01', 5 ,1);
+
+INSERT INTO t_order_type (order_id, type) VALUES (1 ,'in');
+INSERT INTO t_order_type (order_id) VALUES (2);
+INSERT INTO t_order_type (order_id, type) VALUES (3 ,'in');
+INSERT INTO t_order_type (order_id, type) VALUES (4 ,'in');
+INSERT INTO t_order_type (order_id, type) VALUES (5 ,'in');
+INSERT INTO t_order_type (order_id, type) VALUES (6 ,'in');
+INSERT INTO t_order_type (order_id, type) VALUES (7 ,'in');
+INSERT INTO t_order_type (order_id, type) VALUES (8 ,'in');
+INSERT INTO t_order_type (order_id) VALUES (9);
+INSERT INTO t_order_type (order_id) VALUES (10);
 
 commit;

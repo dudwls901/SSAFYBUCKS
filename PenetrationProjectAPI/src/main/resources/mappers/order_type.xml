@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.cafe.model.dao.OrderTypeDao">
+
+	<!-- orderType 추가 -->
+	<insert id="insert" parameterType="OrderType">
+		insert into t_order_type (order_id, type)
+		values (#{orderId}, #{type})
+	</insert>
+	
+	<!-- 기본값("out")으로 orderType 추가 -->
+	<insert id="insertWithOrderId" parameterType="Integer">
+		insert into t_order_type (order_id)
+		values (#{orderId})
+	</insert>
+	
+
+	<!-- orderId와 일치하는 orderType 조회 -->
+	<select id="selectByOrder" parameterType="Integer" resultType="OrderType">
+		select *
+		from t_order_type
+		where order_id= #{orderId}
+	</select>
+	
+	<!-- 모든 orderType 리스트 조회 -->
+	<select id="selectAll" resultType="OrderType">
+		select *
+		from t_order_type
+	</select>
+	
+</mapper>
