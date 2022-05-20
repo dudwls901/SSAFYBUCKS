@@ -46,7 +46,6 @@ class HomeFragment : Fragment(), CoroutineScope, OrderListClickListener, NotiDel
     private val homeViewModel: HomeViewModel by activityViewModels()
     private val orderViewModel: OrderViewModel by activityViewModels()
 
-    //todo noti 삭제 확인
     //todo fragment 백스택
 
     @RequiresApi(Build.VERSION_CODES.N)
