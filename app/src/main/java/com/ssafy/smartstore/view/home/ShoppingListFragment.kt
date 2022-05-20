@@ -1,73 +1,78 @@
 package com.ssafy.smartstore.view.home
 
-import android.app.PendingIntent
-import android.content.Intent
-import android.content.IntentFilter
-import android.nfc.NfcAdapter
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.smartstore.R
-import com.ssafy.smartstore.StoreApplication
 import com.ssafy.smartstore.adapter.OrderDetailAdapter
-import com.ssafy.smartstore.data.local.repository.OrderRepository
-import com.ssafy.smartstore.data.remote.dto.Order
 import com.ssafy.smartstore.databinding.FragmentShoppingListBinding
 import com.ssafy.smartstore.listener.ShoppingListDeleteClickListener
-import com.ssafy.smartstore.model.OrderDetail
-import com.ssafy.smartstore.model.OrderInfo
 import com.ssafy.smartstore.model.OrderProduct
 import com.ssafy.smartstore.util.WindowState
+import com.ssafy.smartstore.viewmodel.OrderViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class ShoppingListFragment : Fragment(), ShoppingListDeleteClickListener {
+private const val TAG = "ShoppingListFragment"
+
+class ShoppingListFragment : Fragment(), CoroutineScope, ShoppingListDeleteClickListener {
+
+    private val job = Job()
+    override val coroutineContext = Dispatchers.Main + job
+
+    private lateinit var userId: String
     private lateinit var binding: FragmentShoppingListBinding
-
     private lateinit var adapter: OrderDetailAdapter
-    private lateinit var orderList: MutableList<OrderDetail>
-    private var orderInfo: OrderInfo? = null
-    private var orderProduct: OrderProduct? = null
-    private lateinit var shoppingList: ArrayList<OrderProduct>
 
-    private lateinit var orderRepo: OrderRepository
+    private val orderViewModel: OrderViewModel by activityViewModels()
 
-    private var user_id = ""
+    private lateinit var callback: OnBackPressedCallback
 
-    private lateinit var nfcAdapter: NfcAdapter
-    private lateinit var pIent: PendingIntent
-    private lateinit var filters: Array<IntentFilter>
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().popBackStack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentShoppingListBinding.inflate(inflater, container, false)
 
+        val prefs = requireActivity().getSharedPreferences("data", Context.MODE_PRIVATE)
+        userId = prefs.getString("id", "") ?: ""
+
+        observeDatas()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        orderRepo = OrderRepository.getInstance()
+        binding.orderVM = orderViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
-        val prefs = requireActivity().getSharedPreferences("data", AppCompatActivity.MODE_PRIVATE)
-        user_id = prefs.getString("id", "") ?: ""
+        userId?.let {
+            orderViewModel.getShoppingList(it)
+        }
 
-        initOrderDetailList()
-
-
-        shoppingList = StoreApplication.shoppingList
-
+        initViews()
 
 //        // 2가지방법 - 1. by navArgs()
 //        val safeArgs: ShoppingListFragmentArgs by navArgs()
@@ -80,40 +85,49 @@ class ShoppingListFragment : Fragment(), ShoppingListDeleteClickListener {
 //        if (orderProduct != null) {
 //            shoppingList.customAdd(orderProduct!!)
 //        }
-
-        initViews()
-
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
+    }
 
-    private fun initOrderDetailList() {
-        orderList = mutableListOf(
-            OrderDetail(1, "아메리카노", 4000, 2),
-            OrderDetail(2, "아메리카", 5000, 3),
-            OrderDetail(3, "아메리", 6000, 1),
-            OrderDetail(4, "아메", 7000, 3),
-            OrderDetail(5, "아", 8000, 2),
-        )
+    private fun observeDatas() {
+        orderViewModel.shoppingList.observe(viewLifecycleOwner) {
+            updateShoppingList(it)
+        }
+
+        orderViewModel.toastMessage.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { message ->
+                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        orderViewModel.dialogMessage.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { message ->
+                createDialog(message)
+            }
+        }
+    }
+
+    // 다이얼로그 띄우는 함수
+    private fun createDialog(message: Map<String, Any>) {
+        val builder =
+            AlertDialog.Builder(requireContext(), R.style.MyDialogTheme)
+        builder.setTitle(message.get("title") as String)
+        builder.setMessage(message.get("message") as String)
+        builder.setIcon(R.mipmap.ic_launcher)
+
+        builder.setPositiveButton("확인", null)
+        builder.show()
     }
 
     //뷰들 초기화
     private fun initViews() = with(binding) {
 
-        var priceSum = 0
-        var orderCount = 0
-
-        for (orderProduct in shoppingList) {
-            orderCount += orderProduct.quantity
-            priceSum += orderProduct.quantity * orderProduct.product.price
-        }
-
-        tvPriceSum.text = "총 ${orderCount}개"
-        tvOrderCount.text = "${priceSum}원"
-
         // 주문상세 리사이클러뷰 연결
         adapter = OrderDetailAdapter(WindowState.SHOPPINGLIST, this@ShoppingListFragment).apply {
-            setHasStableIds(true)
-            submitList(shoppingList)
+            setHasStableIds(false)
 
             rvOrderList.adapter = this
             rvOrderList.layoutManager =
@@ -122,65 +136,25 @@ class ShoppingListFragment : Fragment(), ShoppingListDeleteClickListener {
 
         // 주문하기 버튼
         btnOrder.setOnClickListener {
-            // {orders=[{id=1, name=coffee1, type=coffee, price=1, img=coffee1.png, count=2}, {id=5, name=coffee5, type=coffee, price=5, img=coffee5.png, count=3}], userId=123}
-            // orders의 id : prodcutId, count : quantity
-            if (!StoreApplication.shoppingList.isEmpty()) {
-                val data = StoreApplication.shoppingList
-
-                if (StoreApplication.orderTable == "") {
-                    val builder =
-                        AlertDialog.Builder(requireContext(), R.style.MyDialogTheme)
-                    builder.setTitle("알림")
-                    builder.setMessage("Table NFC를 먼저 찍어주세요")
-                    builder.setIcon(R.mipmap.ic_launcher)
-
-                    builder.setPositiveButton("확인", null)
-                    builder.show()
-                } else {
-                    val order = Order(user_id, StoreApplication.orderTable)
-                    val orderDetails =
-                        mutableListOf<com.ssafy.smartstore.data.remote.dto.OrderDetail>()
-                    data.forEach {
-                        val orderDetail =
-                            com.ssafy.smartstore.data.remote.dto.OrderDetail(
-                                it.product.id,
-                                it.quantity
-                            )
-                        orderDetails.add(orderDetail)
-                    }
-                    order.details = orderDetails
-
-                    StoreApplication.shoppingList = ArrayList<OrderProduct>()
-
-                    CoroutineScope(Dispatchers.Main).launch {
-                        com.ssafy.smartstore.data.remote.repository.OrderRepository.INSTANCE.makeOrder(
-                            order
-                        )
-                        Toast.makeText(requireContext(), "주문이 완료되었습니다", Toast.LENGTH_SHORT)
-                            .show()
-//                        finish()
-                    }
-
-                    Intent(requireContext(), HomeActivity::class.java).apply {
-                        putExtra("refresh", true)
-                        startActivity(this)
-//                        finish()
-                    }
+            launch {
+                val result = orderViewModel.makeOrder(userId).await()
+                if (result) {
+                    findNavController().popBackStack()
                 }
-            } else {
-                Toast.makeText(requireContext(), "상품을 담아주세요", Toast.LENGTH_SHORT)
-                    .show()
-//                finish()
             }
         }
     }
 
-
-    override fun onShoppingListDeleteClickListener(position: Int) {
-        shoppingList.removeAt(position)
-
-        initViews()
-
+    // 장바구니 리스트 데이터 업데이트
+    private fun updateShoppingList(shoppingList: List<OrderProduct>) {
+        //어댑터 갱신
+        adapter.submitList(shoppingList)
+        binding.rvOrderList.adapter = adapter
     }
 
+    // 아이템 삭제 버튼 클릭시
+    override fun onShoppingListDeleteClickListener(productId: Int) {
+        val map = hashMapOf<String, Any>(Pair("userId", userId), Pair("productId", productId))
+        orderViewModel.deleteOneItem(map)
+    }
 }
