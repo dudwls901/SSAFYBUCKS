@@ -89,10 +89,16 @@ class OrderViewModel : ViewModel() {
         get() = _priceSum
 
 
-    // 장바구니 데이터
+    //결제창 호출할 수 있는지 여부
     private val _canCallBootPay = MutableLiveData<Event<Boolean>>()
     val canCallBootPay: LiveData<Event<Boolean>>
         get() = _canCallBootPay
+
+    //주문(결제)성공 여부
+    private val _orderComplete = MutableLiveData<Event<Boolean>>()
+    val orderComplete: LiveData<Event<Boolean>>
+        get() = _orderComplete
+
 
     init {
         _orderInfoList.value = emptyList()
@@ -346,6 +352,7 @@ class OrderViewModel : ViewModel() {
                             _toastMessage.value = Event("주문이 완료되었습니다")
                             Log.d("observer", "updateOrderDetails: ${toastMessage.value}")
                             _loading.postValue(false)
+                            _orderComplete.postValue(Event(true))
                         }
                         else -> onError(it.message())
                     }

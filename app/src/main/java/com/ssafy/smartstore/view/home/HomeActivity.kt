@@ -37,6 +37,7 @@ import com.ssafy.smartstore.databinding.ActivityHomeBinding
 import com.ssafy.smartstore.data.local.dto.Noti
 import com.ssafy.smartstore.data.local.repository.NotiRepository
 import com.ssafy.smartstore.data.remote.repository.TokenRepository
+import com.ssafy.smartstore.event.EventObserver
 import com.ssafy.smartstore.util.ImageConverter
 import com.ssafy.smartstore.viewmodel.HomeViewModel
 import com.ssafy.smartstore.viewmodel.OrderViewModel
@@ -134,9 +135,6 @@ class HomeActivity : AppCompatActivity(), CoroutineScope, BeaconConsumer {
         bluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
         bluetoothAdapter = bluetoothManager.adapter
 
-        startScan()
-
-
         // FCM 토큰 수신
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
@@ -166,10 +164,15 @@ class HomeActivity : AppCompatActivity(), CoroutineScope, BeaconConsumer {
     // 꼭 Destroy를 시켜서 beacon scan을 중지 시켜야 한다.
     // beacon scan을 중지 하지 않으면 일정 시간 이후 다시 scan이 가능하다.
     override fun onDestroy() {
+        unConnectBLE()
+        super.onDestroy()
+    }
+
+
+    private fun unConnectBLE() {
         beaconManager.stopMonitoringBeaconsInRegion(region)
         beaconManager.stopRangingBeaconsInRegion(region)
         beaconManager.unbind(this)
-        super.onDestroy()
     }
 
     @SuppressLint("SetTextI18n")
@@ -212,25 +215,27 @@ class HomeActivity : AppCompatActivity(), CoroutineScope, BeaconConsumer {
                     runOnUiThread {
 
                         if (!isOnDialog) {
-                            if (beacon.distance > 1.0) {
-//                                binding.distanceTextView.text = "가맹점을 찾을 수 없습니다."
-                            } else {
-                                isOnDialog = true
-                                orderViewModel.orderInfoList.value?.get(0)?.let {
-                                    it.orderProductList?.let {
-                                        it[0]?.let {
-                                            showStoreDialog(
-                                                it.product.name,
-                                                it.product.img,
-                                                it.product.price
-                                            )
-
-                                        }
+//                            if (beacon.distance > 1.0) {
+////                                binding.distanceTextView.text = "가맹점을 찾을 수 없습니다."
+//                            } else {
+                            isOnDialog = true
+                            orderViewModel.orderInfoList.value?.get(0)?.let {
+                                it.orderProductList?.let {
+                                    it[0]?.let {
+                                        showStoreDialog(
+                                            it.product.name,
+                                            it.product.img,
+                                            it.product.price
+                                        )
+                                        //한 번 띄우고 끝
+                                        //ble 연결 해제
+                                        unConnectBLE()
                                     }
                                 }
-//                                binding.distanceTextView.text =
-//                                    "거리 : ${String.format("%.5f", beacon.distance)}m"
                             }
+//                                binding.distanceTextView.text =
+                            Log.d(TAG, "거리 : ${String.format("%.5f", beacon.distance)}m")
+//                            }
                         }
                     }
                 }
@@ -257,6 +262,7 @@ class HomeActivity : AppCompatActivity(), CoroutineScope, BeaconConsumer {
 //                beacon.id3.toString() == BEACON_MINOR &&
 //                beacon.distance <= STORE_DISTANCE
 //                )
+        Log.d(TAG, "isYourBeacon: ${STORE_DISTANCE} ${beacon.distance}")
         return (beacon.distance <= STORE_DISTANCE)
     }
 
@@ -312,14 +318,23 @@ class HomeActivity : AppCompatActivity(), CoroutineScope, BeaconConsumer {
     }
 
 
-    private fun observeDatas(){
+    private fun observeDatas() {
 
         orderViewModel.toastMessage.observe(this) { event ->
-            event.getContentIfNotHandled()?.let{ message ->
+            event.getContentIfNotHandled()?.let { message ->
                 Log.d(TAG, "observeDatas: toast ${message}")
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             }
         }
+
+        orderViewModel.orderComplete.observe(this, EventObserver {
+            //주문 완료한 이후에 팝업 띄워주기
+            if (it) {
+                //이미 한 번 팝업 뜬 적 있다면
+                if (StoreApplication.alertedBeaconDialog) return@EventObserver
+                startScan()
+            }
+        })
     }
 
     //뷰들 초기화
