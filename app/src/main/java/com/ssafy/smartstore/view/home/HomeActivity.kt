@@ -313,7 +313,7 @@ class HomeActivity : AppCompatActivity(), CoroutineScope, BeaconConsumer {
 
         // 바텀 네비게이션 초기 설정
         val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+            supportFragmentManager.findFragmentById(R.id.home_nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         NavigationUI.setupWithNavController(bottomNavi, navController)
     }

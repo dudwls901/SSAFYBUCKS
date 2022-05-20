@@ -33,7 +33,7 @@ class LoginFragment : Fragment(), CoroutineScope {
     override val coroutineContext = Dispatchers.Main + job
 
     private lateinit var prefs: SharedPreferences
-
+    private var notiData: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +47,8 @@ class LoginFragment : Fragment(), CoroutineScope {
         super.onViewCreated(view, savedInstanceState)
 
         prefs = requireActivity().getSharedPreferences("data", AppCompatActivity.MODE_PRIVATE)
+
+        notiData = arguments?.getString("notiData")
 
         //자동로그인
         autoLogin()
@@ -85,33 +87,37 @@ class LoginFragment : Fragment(), CoroutineScope {
         if (id.isNotEmpty() && pw.isNotEmpty()) {
 
             launch {
-                val user = UserRepository.INSTANCE.login(User(id, pw)).body()
+                var user: User? = null
+                val job = launch {
+                    user = UserRepository.INSTANCE.login(User(id, pw)).body()
+                }
+                job.join()
                 Log.d(TAG, "login: ${user}")
                 if (user == null) {
-                    launch(Dispatchers.Main) {
-                        Toast.makeText(
-                            requireContext(),
-                            "아이디, 비밀번호를 확인해주세요",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+
+                    Toast.makeText(
+                        requireContext(),
+                        "아이디, 비밀번호를 확인해주세요",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
                 } else {
                     // Preferences에 유저정보 저장
                     val editor = prefs.edit()
-                    editor.putString("id", user.id)
-                    editor.putString("name", user.name)
-                    editor.putString("password", user.pass)
+                    editor.putString("id", user!!.id)
+                    editor.putString("name", user!!.name)
+                    editor.putString("password", user!!.pass)
                     editor.commit()
 
-                    launch(Dispatchers.Main) {
-                        Toast.makeText(requireContext(), "로그인 성공", Toast.LENGTH_SHORT)
-                            .show()
-                    }
+//                    launch(Dispatchers.Main) {
+                    Toast.makeText(requireContext(), "로그인 성공", Toast.LENGTH_SHORT)
+                        .show()
+//                    }
 
-                    Intent(
-                        requireActivity(),
+                    Intent(requireContext(),
                         HomeActivity::class.java
                     ).apply {
+                        putExtra("notiData",notiData)
                         addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(this)
@@ -120,20 +126,11 @@ class LoginFragment : Fragment(), CoroutineScope {
                 }
             }
         } else {
-            launch(Dispatchers.Main) {
-                Toast.makeText(requireContext(), "아직 입력되지 않은 항목이 있습니다", Toast.LENGTH_SHORT)
-                    .show()
-            }
+//            launch(Dispatchers.Main) {
+            Toast.makeText(requireContext(), "아직 입력되지 않은 항목이 있습니다", Toast.LENGTH_SHORT)
+                .show()
+//            }
         }
     }
 
-    companion object {
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LoginFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
-    }
 }

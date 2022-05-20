@@ -45,6 +45,8 @@ class HomeFragment : Fragment(), CoroutineScope, OrderListClickListener, NotiDel
     private val homeViewModel: HomeViewModel by activityViewModels()
     private val orderViewModel: OrderViewModel by activityViewModels()
 
+    //todo noti 삭제 확인
+    //todo fragment 백스택
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
@@ -131,8 +133,10 @@ class HomeFragment : Fragment(), CoroutineScope, OrderListClickListener, NotiDel
 
     private fun updateNotiList(list: List<Noti>) {
         Log.d(TAG, "onCreateView: noti change ${list.joinToString()}")
-        notiAdapter.submitList(list)
-        notiAdapter.notifyDataSetChanged()
+        list.forEach{
+            Log.d(TAG, "updateNotiList: ${it.id} ${it.u_id} ${it.data}")
+        }
+        notiAdapter.submitList(list.toMutableList())
     }
 
     //listener
@@ -150,9 +154,10 @@ class HomeFragment : Fragment(), CoroutineScope, OrderListClickListener, NotiDel
     override fun onNotiDeleteClickListener(idx: Int) {
         launch {
             withContext(Dispatchers.Main) {
-                notiRepo.delete(id)
+                notiRepo.delete(idx)
             }
             val notiList = notiRepo.select(userId)
+            Log.d(TAG, "onNotiDeleteClickListener:$idx ${notiList}")
             homeViewModel.updateNotiList(notiList)
         }
     }

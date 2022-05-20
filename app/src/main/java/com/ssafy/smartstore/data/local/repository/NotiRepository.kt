@@ -1,6 +1,7 @@
 package com.ssafy.smartstore.data.local.repository
 
 import android.content.Context
+import android.util.Log
 import com.ssafy.smartstore.data.local.database.StoreDatabase
 import com.ssafy.smartstore.data.local.dto.*
 
@@ -23,6 +24,7 @@ class NotiRepository(context: Context) {
     }
 
     suspend fun delete(id: Int): Int{
+        Log.d(TAG, "noti delete: $id")
         nDao.delete(id)
         return 0
     }
