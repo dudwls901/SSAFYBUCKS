@@ -1,18 +1,18 @@
 package com.ssafy.smartstore.viewmodel
 
 import android.os.Build
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.ssafy.smartstore.StoreApplication
 import com.ssafy.smartstore.data.local.dto.Product
 import com.ssafy.smartstore.data.remote.RetrofitClient
+import com.ssafy.smartstore.data.remote.dto.Order
+import com.ssafy.smartstore.data.remote.dto.OrderDetail
 import com.ssafy.smartstore.model.OrderInfo
 import com.ssafy.smartstore.data.remote.dto.OrderInfoResponse
 import com.ssafy.smartstore.data.remote.repository.OrderRepository
 import com.ssafy.smartstore.data.remote.repository.ShoppingListRepository
 import com.ssafy.smartstore.data.remote.repository.UserRepository
+import com.ssafy.smartstore.event.Event
 import com.ssafy.smartstore.model.OrderProduct
 import kotlinx.coroutines.*
 import retrofit2.Response
@@ -25,6 +25,14 @@ class OrderViewModel : ViewModel() {
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Exception handled: ${throwable.localizedMessage}")
     }
+
+    // 토스트 메시지 내용
+    private val _toastMessage = MutableLiveData<Event<String>>()
+    val toastMessage: LiveData<Event<String>> = _toastMessage
+
+    // 다이얼로그 메시지 내용
+    private val _dialogMessage = MutableLiveData<Event<Map<String, Any>>>()
+    val dialogMessage: LiveData<Event<Map<String, Any>>> = _dialogMessage
 
     private var _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?>
@@ -45,12 +53,40 @@ class OrderViewModel : ViewModel() {
     //    private val _responseGetProduct = MutableLiveData<Response<List<MutableMap<String,Any>>>>()
     private val _responseUserInfo = MutableLiveData<Response<Map<String, Any>>>()
 
+    // 유저 정보 데이터 - grade 정보
     val responseUserInfo: LiveData<Response<Map<String, Any>>>
         get() = _responseUserInfo
 
+    // 장바구니 데이터
     private val _shoppingList = MutableLiveData<List<OrderProduct>>()
     val shoppingList: LiveData<List<OrderProduct>>
         get() = _shoppingList
+
+    // 장바구니 총 아이템 개수
+    private val _orderCount = Transformations.map(_shoppingList) {
+        var orderCount = 0
+        for (orderProduct in it) {
+            orderCount += orderProduct.quantity
+        }
+        "총 ${orderCount}개"
+    }
+    val orderCount: LiveData<String>
+        get() = _orderCount
+
+    // 장바구니 총 금액
+    private val _priceSum = Transformations.map(_shoppingList) {
+        var priceSum = 0
+        var orderCount = 0
+
+        for (orderProduct in it) {
+            orderCount += orderProduct.quantity
+            priceSum += orderProduct.quantity * orderProduct.product.price
+        }
+        "${priceSum}원"
+    }
+    val priceSum: LiveData<String>
+        get() = _priceSum
+
 
     init {
         _orderInfoList.value = emptyList()
@@ -177,6 +213,100 @@ class OrderViewModel : ViewModel() {
         var response: Response<List<OrderProduct>>? = null
         job = launch(Dispatchers.Main + exceptionHandler) {
             response = ShoppingListRepository.INSTANCE.selectByUser(userId)
+        }
+        job?.join()
+
+        response?.let {
+            if (it.isSuccessful) {
+                it.body()?.let { result ->
+                    when (it.code()) {
+                        200 -> {
+                            _shoppingList.postValue(result)
+                            _loading.postValue(false)
+                        }
+                        else -> onError(it.message())
+                    }
+                }
+            } else {
+                it.errorBody()?.let { errorBody ->
+                    RetrofitClient.getErrorResponse(errorBody)?.let {
+                        onError(it.message)
+                    }
+                }
+            }
+        }
+    }
+
+    // 주문하기
+    fun makeOrder(userId: String) = viewModelScope.async {
+        // {orders=[{id=1, name=coffee1, type=coffee, price=1, img=coffee1.png, count=2}, {id=5, name=coffee5, type=coffee, price=5, img=coffee5.png, count=3}], userId=123}
+        // orders의 id : prodcutId, count : quantity
+
+        if (!_shoppingList.value?.isEmpty()!!) {
+            val data = _shoppingList.value
+
+            if (StoreApplication.orderTable == "") {
+                _dialogMessage.value =
+                    Event(hashMapOf(Pair("title", "알림"), Pair("message", "Table NFC를 먼저 찍어주세요")))
+
+                false
+            } else {
+                val order = Order(userId, StoreApplication.orderTable)
+                val orderDetails =
+                    mutableListOf<OrderDetail>()
+                data?.forEach {
+                    val orderDetail =
+                        OrderDetail(it.product.id, it.quantity)
+                    orderDetails.add(orderDetail)
+                }
+                order.details = orderDetails
+
+                _loading.postValue(true)
+                OrderRepository.INSTANCE.makeOrder(order)
+
+                var response: Response<List<OrderProduct>>? = null
+                job = launch(Dispatchers.Main + exceptionHandler) {
+                    response = ShoppingListRepository.INSTANCE.deleteByUser(userId)
+                }
+                job?.join()
+
+                response?.let {
+                    if (it.isSuccessful) {
+                        it.body()?.let { result ->
+                            when (it.code()) {
+                                200 -> {
+                                    _shoppingList.postValue(result)
+                                    _loading.postValue(false)
+                                }
+                                else -> onError(it.message())
+                            }
+                        }
+                    } else {
+                        it.errorBody()?.let { errorBody ->
+                            RetrofitClient.getErrorResponse(errorBody)?.let {
+                                onError(it.message)
+                            }
+                        }
+                    }
+                }
+
+                _toastMessage.value = Event("주문이 완료되었습니다")
+
+                true
+            }
+        } else {
+            _toastMessage.value = Event("상품을 담아주세요")
+
+            false
+        }
+    }
+
+    // 장바구니 아이템 하나 삭제
+    fun deleteOneItem(map: HashMap<String, Any>) = viewModelScope.launch {
+        _loading.postValue(true)
+        var response: Response<List<OrderProduct>>? = null
+        job = launch(Dispatchers.Main + exceptionHandler) {
+            response = ShoppingListRepository.INSTANCE.deleteOneItem(map)
         }
         job?.join()
 

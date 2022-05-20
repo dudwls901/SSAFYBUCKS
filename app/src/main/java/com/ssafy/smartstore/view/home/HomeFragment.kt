@@ -19,9 +19,6 @@ import com.ssafy.smartstore.data.local.repository.NotiRepository
 import com.ssafy.smartstore.databinding.FragmentHomeBinding
 import com.ssafy.smartstore.listener.NotiDeleteClickListener
 import com.ssafy.smartstore.listener.OrderListClickListener
-import com.ssafy.smartstore.data.local.dto.Product
-import com.ssafy.smartstore.data.local.repository.NotiRepository
-import com.ssafy.smartstore.data.remote.dto.OrderInfoResponse
 import com.ssafy.smartstore.data.remote.repository.ShoppingListRepository
 import com.ssafy.smartstore.model.OrderInfo
 import com.ssafy.smartstore.util.WindowState.HOME

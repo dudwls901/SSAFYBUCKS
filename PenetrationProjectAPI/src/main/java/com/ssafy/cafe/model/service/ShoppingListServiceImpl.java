@@ -77,10 +77,23 @@ public class ShoppingListServiceImpl implements ShoppingListService {
 	}
 
 	@Override
-	public boolean remove(ShoppingList shoppingList) {
+	@Transactional
+	public List<Map<String, Object>> removeByUser(String userId) {
 
-		slDao.deleteByUser(shoppingList);
-		return true;
+		slDao.deleteByUser(userId);
+		return selectByUser(userId);
+	}
+
+	@Override
+	@Transactional
+	public List<Map<String, Object>> removeOne(Map<String, Object> map) {
+		String userId = (String) map.get("userId");
+		Integer productId = (Integer) map.get("productId");
+
+		ShoppingList shoppingList = new ShoppingList(userId, productId);
+
+		slDao.deleteOne(shoppingList);
+		return selectByUser(userId);
 	}
 
 	@Override

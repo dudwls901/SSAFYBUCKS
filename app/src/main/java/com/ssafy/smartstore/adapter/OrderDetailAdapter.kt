@@ -40,7 +40,7 @@ class OrderDetailAdapter(val state: String, val shoppingListDeleteClickListener:
                 )
 
                 binding.btnClose.setOnClickListener {
-                    shoppingListDeleteClickListener.onShoppingListDeleteClickListener(position)
+                    shoppingListDeleteClickListener.onShoppingListDeleteClickListener(orderProduct.product.id)
                 }
 
             }

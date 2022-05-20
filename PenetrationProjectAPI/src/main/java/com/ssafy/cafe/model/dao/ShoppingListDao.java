@@ -10,7 +10,9 @@ public interface ShoppingListDao {
 
 	int update(ShoppingList shoppingList);
 
-	int deleteByUser(ShoppingList shoppingList);
+	int deleteByUser(String userId);
+	
+	int deleteOne(ShoppingList shoppingList);
 
 	ShoppingList select(ShoppingList shoppingList);
 

@@ -28,5 +28,11 @@ public class ShoppingList {
 		this.productId = productId;
 		this.quantity = quantity;
 	}
+	
+	public ShoppingList(String user_id, Integer productId) {
+		super();
+		this.userId = user_id;
+		this.productId = productId;
+	}
 
 }

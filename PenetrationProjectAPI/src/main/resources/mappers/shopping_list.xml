@@ -15,7 +15,12 @@
 		AND product_id = #{productId}
 	</update>
 
-	<delete id="deleteByUser" parameterType="ShoppingList">
+	<delete id="deleteByUser" parameterType="String">
+		DELETE FROM t_shopping_list
+		WHERE user_id = #{userId}
+	</delete>
+	
+	<delete id="deleteOne" parameterType="ShoppingList">
 		DELETE FROM t_shopping_list
 		WHERE user_id = #{userId}
 		AND product_id = #{productId}
