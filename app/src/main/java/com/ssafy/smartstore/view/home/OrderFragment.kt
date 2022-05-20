@@ -25,6 +25,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.model.Place
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
+import com.ssafy.smartstore.StoreApplication.Companion.places
 import com.ssafy.smartstore.adapter.OrderAdapter
 import com.ssafy.smartstore.data.local.dto.Product
 import com.ssafy.smartstore.databinding.FragmentOrderBinding
@@ -51,8 +52,6 @@ class OrderFragment : Fragment(), CoroutineScope {
         requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
     }
 
-    private lateinit var places: MutableList<Place>
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -67,13 +66,6 @@ class OrderFragment : Fragment(), CoroutineScope {
         super.onViewCreated(view, savedInstanceState)
 
         productViewModel.getProductList()
-
-        places = arrayListOf()
-        places.add(
-            Place.builder()
-                .setLatLng(LatLng(37.41, 126.66))
-                .build()
-        )
 
         checkPermission()
 

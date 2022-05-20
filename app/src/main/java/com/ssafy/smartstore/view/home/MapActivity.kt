@@ -32,6 +32,7 @@ import com.google.android.libraries.places.api.model.TimeOfWeek
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import com.ssafy.smartstore.R
+import com.ssafy.smartstore.StoreApplication.Companion.places
 import com.ssafy.smartstore.databinding.ActivityMapBinding
 import com.ssafy.smartstore.util.ImageConverter
 import java.io.IOException
@@ -60,7 +61,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var currentPosition: LatLng
 
     /** places 검색 추가.**/
-    private lateinit var places: MutableList<Place>
     private lateinit var exMarker: MutableSet<Marker>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,19 +82,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        places = arrayListOf()
-        places.add(
-            Place.builder()
-                .setLatLng(LatLng(37.41, 126.66))
-                .setName("싸피벅스")
-                .setPhoneNumber("010-1234-5678")
-                .setIconUrl("logo.png")
-                .setOpeningHours(
-                    OpeningHours.builder()
-                        .setWeekdayText(arrayListOf("주중 : 07:00~20:30", "주말 : 09:00~22:00")).build()
-                )
-                .build()
-        )
         exMarker = HashSet<Marker>()
     }
 
@@ -226,7 +213,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 //        )!!.toBitmap(100, 100, null)
 //        val marker = Bitmap.createScaledBitmap(bitmapdraw, 480, 480, false)
 
-        for ((index, place) in places!!.withIndex()) {
+        for ((index, place) in places.withIndex()) {
             val markerSnippet = getCurrentAddress(place.latLng)
             val markerOptions = MarkerOptions()
             markerOptions.position(place.latLng)
