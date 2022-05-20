@@ -11,9 +11,10 @@ public interface OrderService {
 	 * Order와 OrderDetail에 정보를 추가한다.
 	 * [심화]User 테이블에 사용자의 Stamp 개수를 업데이트 한다.
 	 * [심화]Stamp 테이블에 Stamp 이력을 추가한다.
-	 * @param order
+	 * @param map
+	 * @return 
 	 */
-	public void makeOrder(Order order);
+	public int makeOrder(Map<String, Object> map);
 
 	/**
 	 * orderId에 대한 Order를 반환한다.

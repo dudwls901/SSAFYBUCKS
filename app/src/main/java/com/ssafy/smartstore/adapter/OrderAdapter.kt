@@ -12,18 +12,18 @@ import com.ssafy.smartstore.util.ImageConverter
 
 private const val TAG = "MenuDetailAdapter___"
 
-class MenuDetailAdapter() : ListAdapter<Product, MenuDetailAdapter.ItemViewHolder>(diffUtil) {
+class OrderAdapter() : ListAdapter<Product, OrderAdapter.ItemViewHolder>(diffUtil) {
 
     lateinit var itemOnClickListener: ItemOnClickListener
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): MenuDetailAdapter.ItemViewHolder = ItemViewHolder(
+    ): OrderAdapter.ItemViewHolder = ItemViewHolder(
         RvMenuItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
 
-    override fun onBindViewHolder(holder: MenuDetailAdapter.ItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: OrderAdapter.ItemViewHolder, position: Int) {
         holder.bind(currentList[position])
         holder.itemView.setOnClickListener {
             itemOnClickListener.onClick(holder.itemView,position)

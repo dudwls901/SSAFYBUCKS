@@ -10,7 +10,7 @@ class Order {
     var userId: String
     @SerializedName("orderTable")
     var orderTable: String
-    var orderTime: Date = Date()
+    var orderTime: Date? = null
     var completed: Char = 'N'
     var details: List<OrderDetail> = arrayListOf()
     var stamp: Stamp? = null

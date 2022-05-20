@@ -29,10 +29,11 @@ public class OrderRestController {
 	@PostMapping
 	@ApiOperation(value = "order 객체를 저장하고 추가된 Order의 id를 반환한다.", response = Integer.class)
 	@Transactional
-	public Integer makeOrder(@RequestBody Order order) {
-		System.out.println(order.getOrderTable());
-		oService.makeOrder(order);
-		return order.getId();
+	public int makeOrder(@RequestBody Map<String, Object> map) {
+//		System.out.println(order.getOrderTable());
+		System.out.println(map);
+		
+		return oService.makeOrder(map);
 	}
 
 	@GetMapping("/{orderId}")
