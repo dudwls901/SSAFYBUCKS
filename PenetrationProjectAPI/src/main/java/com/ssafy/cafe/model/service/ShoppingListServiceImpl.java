@@ -30,7 +30,7 @@ public class ShoppingListServiceImpl implements ShoppingListService {
 		String userId = (String) map.get("userId");
 		String type = (String) map.get("type");
 
-		if (type.equals("list")) {
+		if (type != null && type.equals("list")) {
 			List<Map<String, Object>> orderProductList = (List<Map<String, Object>>) map.get("orderProductList");
 
 			for (Map<String, Object> orderProduct : orderProductList) {
@@ -51,9 +51,9 @@ public class ShoppingListServiceImpl implements ShoppingListService {
 			}
 
 		} else {
-			Product product = (Product) map.get("product");
+			Integer productId = (Integer) ((Map<String,Object>) map.get("product")).get("id");
 			int quantity = (int) map.get("quantity");
-			ShoppingList shoppingList = new ShoppingList(userId, product.getId(), quantity);
+			ShoppingList shoppingList = new ShoppingList(userId, productId, quantity);
 
 			ShoppingList preShoppingList = slDao.select(shoppingList);
 			if (preShoppingList == null) {

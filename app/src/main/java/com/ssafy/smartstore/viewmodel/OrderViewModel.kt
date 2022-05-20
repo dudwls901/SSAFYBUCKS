@@ -239,46 +239,11 @@ class OrderViewModel : ViewModel() {
     }
 
     // 장바구니에 아이템들 추가
-    fun addItems(orderInfo: OrderInfo, userId: String, type: String) = viewModelScope.launch {
-        val map = HashMap<String, Any>()
-        map.put("userId", userId)
-        map.put("type", "list")
-        map.put("orderProductList", orderInfo.orderProductList)
-
-        _loading.postValue(true)
-        var response: Response<List<OrderProduct>>? = null
-        job = launch(Dispatchers.Main + exceptionHandler) {
-            response = ShoppingListRepository.INSTANCE.addShoppingList(map)
-        }
-        job?.join()
-
-        response?.let {
-            if (it.isSuccessful) {
-                it.body()?.let { result ->
-                    when (it.code()) {
-                        200 -> {
-                            _shoppingList.postValue(result)
-                            _loading.postValue(false)
-                        }
-                        else -> onError(it.message())
-                    }
-                }
-            } else {
-                it.errorBody()?.let { errorBody ->
-                    RetrofitClient.getErrorResponse(errorBody)?.let {
-                        onError(it.message)
-                    }
-                }
-            }
-        }
-    }
-
-    // 장바구니에 아이템들 추가
     fun addItem(item: Any, userId: String, type: String) = viewModelScope.launch {
         val map = HashMap<String, Any>()
         map.put("userId", userId)
-        map.put("type", "list")
         if (item is OrderInfo) {
+            map.put("type", "list")
             map.put("orderProductList", item.orderProductList)
         } else if (item is OrderProduct) {
             map.put("product", item.product)

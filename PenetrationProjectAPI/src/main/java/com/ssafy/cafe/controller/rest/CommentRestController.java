@@ -64,7 +64,9 @@ public class CommentRestController {
 	@ApiOperation(value = "코멘트를 삭제한다", response = List.class)
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteComment(@PathVariable Integer id) {
+		System.out.println(id);
 		Comment comment = cService.selectComment(id);
+		System.out.println(comment);
 
 		cService.removeComment(id);
 		List<Comment> comments = cService.selectByProduct(comment.getProductId());

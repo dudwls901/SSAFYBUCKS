@@ -23,9 +23,8 @@
         android:label="fragment_menu_detail"
         tools:layout="@layout/fragment_menu_detail" >
         <argument
-            android:name="productId"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:name="product"
+            app:argType="com.ssafy.smartstore.data.local.dto.Product"/>
     </fragment>
     <fragment
         android:id="@+id/myPageFragment"
