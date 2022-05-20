@@ -37,18 +37,6 @@ class ShoppingListFragment : Fragment(), CoroutineScope, ShoppingListDeleteClick
 
     private val orderViewModel: OrderViewModel by activityViewModels()
 
-    private lateinit var callback: OnBackPressedCallback
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().popBackStack()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -85,11 +73,6 @@ class ShoppingListFragment : Fragment(), CoroutineScope, ShoppingListDeleteClick
 //        if (orderProduct != null) {
 //            shoppingList.customAdd(orderProduct!!)
 //        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        callback.remove()
     }
 
     private fun observeDatas() {
