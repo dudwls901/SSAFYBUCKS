@@ -27,6 +27,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.google.android.gms.tasks.OnCompleteListener
@@ -64,6 +65,7 @@ class HomeActivity : AppCompatActivity(), CoroutineScope, BeaconConsumer {
     private val homeViewModel: HomeViewModel by viewModels()
     private val orderViewModel: OrderViewModel by viewModels()
 
+    private lateinit var navController: NavController
 
     //비콘관련
     private val STORE_ID = 1
@@ -343,7 +345,7 @@ class HomeActivity : AppCompatActivity(), CoroutineScope, BeaconConsumer {
         // 바텀 네비게이션 초기 설정
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.home_nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
         NavigationUI.setupWithNavController(bottomNavi, navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -465,6 +467,32 @@ class HomeActivity : AppCompatActivity(), CoroutineScope, BeaconConsumer {
                 isOnDialog = false
                 dialogView.dismiss()
             }
+        }
+    }
+
+    private var backButtonTime = 0L
+
+    override fun onBackPressed() {
+        val currentTime = System.currentTimeMillis()
+        val gapTime = currentTime - backButtonTime
+//        val currentFragment = supportFragmentManager.findFragmentById(galleryFragment.id)
+        //첫 화면(바텀 네비 화면들)이면 뒤로가기 시 앱 종료
+        if (navController.currentDestination!!.id == R.id.orderFragment ||
+            navController.currentDestination!!.id == R.id.homeFragment ||
+            navController.currentDestination!!.id == R.id.myPageFragment
+        ) {
+            if (gapTime in 0..2000) {
+                //2초 안에 두 번 뒤로가기 누를 시 앱 종료
+                finishAndRemoveTask()
+            } else {
+                backButtonTime = currentTime
+                Toast.makeText(this, "뒤로가기 버튼을 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+        //첫 화면(바텀 네비 화면들)이 아니면
+        else {
+            //Navigation의 스택에서 pop 됨(원래 동작)
+            super.onBackPressed()
         }
     }
 
