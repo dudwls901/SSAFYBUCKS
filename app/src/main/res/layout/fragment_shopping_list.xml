@@ -33,31 +33,56 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_take_in"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:background="@drawable/button_color"
-            android:elevation="2dp"
-            android:fontFamily="@font/eland_choice_b"
-            android:text="매장"
-            android:translationZ="1dp"
+            android:layout_marginEnd="20dp"
             app:layout_constraintBottom_toBottomOf="@id/tv_cart"
-            app:layout_constraintEnd_toStartOf="@id/btn_take_out" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_cart"
+            app:singleSelection="true">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_take_out"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/button_non_color"
-            android:elevation="2dp"
-            android:text="T-OUT"
-            android:translationZ="1dp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_cart"
-            app:layout_constraintEnd_toEndOf="parent" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_in"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:elevation="2dp"
+                android:fontFamily="@font/eland_choice_b"
+                android:minHeight="50dp"
+                android:text="매장"
+                android:textColor="@color/selector_chip_text"
+                android:textSize="16dp"
+                android:translationZ="1dp"
+                app:chipBackgroundColor="@color/selector_chip"
+                app:chipEndPadding="10dp"
+                app:chipStartPadding="10dp"
+                app:chipStrokeColor="@color/coffee_brown"
+                app:chipStrokeWidth="1dp"
+                app:rippleColor="@color/coffee_dark_brown" />
 
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_out"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:elevation="2dp"
+                android:fontFamily="@font/eland_choice_b"
+                android:minHeight="50dp"
+                android:text="T-OUT"
+                android:textColor="@color/selector_chip_text"
+                android:textSize="16dp"
+                android:translationZ="1dp"
+                app:chipBackgroundColor="@color/selector_chip"
+                app:chipEndPadding="10dp"
+                app:chipStartPadding="10dp"
+                app:chipStrokeColor="@color/coffee_brown"
+                app:chipStrokeWidth="1dp"
+                app:rippleColor="@color/coffee_dark_brown" />
+        </com.google.android.material.chip.ChipGroup>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_order_list"

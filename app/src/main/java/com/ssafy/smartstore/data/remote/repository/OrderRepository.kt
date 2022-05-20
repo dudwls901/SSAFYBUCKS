@@ -15,8 +15,8 @@ class OrderRepository {
         return RetrofitClient.orderService.getOrderMonth(id)
     }
 
-    suspend fun makeOrder(order: Order): Response<Int> {
-        return RetrofitClient.orderService.makeOrder(order)
+    suspend fun makeOrder(map: HashMap<String, Any>): Response<Int> {
+        return RetrofitClient.orderService.makeOrder(map)
     }
 
 //    suspend fun getProduct(productId: Int): Response<List<MutableMap<String,Any>>> {

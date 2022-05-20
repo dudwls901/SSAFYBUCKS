@@ -16,7 +16,7 @@ interface OrderService {
     suspend fun getOrderMonth(@Query("id") id: String): Response<List<OrderInfoResponse>>
 
     @POST(ORDER)
-    suspend fun makeOrder(@Body order: Order): Response<Int>
+    suspend fun makeOrder(@Body map: HashMap<String, Any>): Response<Int>
 
 //    @GET("${GET_PRODUCT}/{productId}")
 //    suspend fun getProduct(@Path("productId") productId: Int): Response<List<MutableMap<String,Any>>>

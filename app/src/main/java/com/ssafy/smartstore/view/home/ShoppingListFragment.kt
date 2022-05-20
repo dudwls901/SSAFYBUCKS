@@ -140,11 +140,19 @@ class ShoppingListFragment : Fragment(), CoroutineScope, ShoppingListDeleteClick
         }
 
         //결제창 띄우기
-        orderViewModel.canCallBootPay.observe(viewLifecycleOwner, EventObserver{
-            if(it){
+        orderViewModel.canCallBootPay.observe(viewLifecycleOwner, EventObserver {
+            if (it) {
                 goBootpayRequest()
             }
         })
+//
+//        // 매장인지 테이크아웃인지
+//        orderViewModel.chipValue.observe(viewLifecycleOwner) {
+//            when (it) {
+//                "in" -> binding.chips.check(R.id.chip_in)
+//                "out" -> binding.chips.check(R.id.chip_out)
+//            }
+//        }
     }
 
     // 다이얼로그 띄우는 함수
@@ -161,6 +169,25 @@ class ShoppingListFragment : Fragment(), CoroutineScope, ShoppingListDeleteClick
 
     //뷰들 초기화
     private fun initViews() = with(binding) {
+
+        chips.setOnCheckedChangeListener { group, checkedId ->
+            Log.d(TAG, "initViews: $checkedId")
+            when (checkedId) {
+                R.id.chip_in -> {
+                    orderViewModel.setChipValue("in")
+
+                }
+                R.id.chip_out -> {
+                    orderViewModel.setChipValue("out")
+                }
+                -1 -> { // 선택 취소 못하게 막음
+                    when (orderViewModel.chipValue.value) {
+                        "in" -> binding.chips.check(R.id.chip_in)
+                        "out" -> binding.chips.check(R.id.chip_out)
+                    }
+                }
+            }
+        }
 
         // 주문상세 리사이클러뷰 연결
         adapter = OrderDetailAdapter(WindowState.SHOPPINGLIST, this@ShoppingListFragment).apply {

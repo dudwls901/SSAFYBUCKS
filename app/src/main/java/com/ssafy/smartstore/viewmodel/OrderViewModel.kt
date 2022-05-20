@@ -3,6 +3,7 @@ package com.ssafy.smartstore.viewmodel
 import android.os.Build
 import android.util.Log
 import androidx.lifecycle.*
+import com.ssafy.smartstore.R
 import com.ssafy.smartstore.StoreApplication
 import com.ssafy.smartstore.data.local.dto.Product
 import com.ssafy.smartstore.data.remote.RetrofitClient
@@ -99,10 +100,20 @@ class OrderViewModel : ViewModel() {
     val orderComplete: LiveData<Event<Boolean>>
         get() = _orderComplete
 
+    // 매장인지 테이크아웃인지
+    private val _chipValue = MutableLiveData<String>().apply {
+        value = "in"
+    }
+    val chipValue: LiveData<String>
+        get() = _chipValue
 
     init {
         _orderInfoList.value = emptyList()
         _shoppingList.value = emptyList()
+    }
+
+    fun setChipValue(s: String) {
+        _chipValue.value = s
     }
 
     fun getOrderMonth(id: String) = viewModelScope.launch {
@@ -321,7 +332,7 @@ class OrderViewModel : ViewModel() {
     }
 
     //주문 완료되면 주문 내역 생성
-    fun updateOrderDetails(userId: String) = viewModelScope.launch{
+    fun updateOrderDetails(userId: String) = viewModelScope.launch {
 
         val data = _shoppingList.value
         val order = Order(userId, StoreApplication.orderTable)
@@ -334,8 +345,10 @@ class OrderViewModel : ViewModel() {
         }
         order.details = orderDetails
 
+        val map = hashMapOf<String, Any>(Pair("order", order), Pair("type", _chipValue.value!!))
+
         _loading.postValue(true)
-        OrderRepository.INSTANCE.makeOrder(order)
+        OrderRepository.INSTANCE.makeOrder(map)
 
         var response: Response<List<OrderProduct>>? = null
         job = launch(Dispatchers.Main + exceptionHandler) {
@@ -369,18 +382,34 @@ class OrderViewModel : ViewModel() {
     }
 
     // 주문하기
-    fun makeOrder(){
+    fun makeOrder() {
         // {orders=[{id=1, name=coffee1, type=coffee, price=1, img=coffee1.png, count=2}, {id=5, name=coffee5, type=coffee, price=5, img=coffee5.png, count=3}], userId=123}
         // orders의 id : prodcutId, count : quantity
         // 결제 불가
         if (!_shoppingList.value?.isEmpty()!!) {
-            //결제 불가
-            if (StoreApplication.orderTable == "") {
-                _dialogMessage.value =
-                    Event(hashMapOf(Pair("title", "알림"), Pair("message", "Table NFC를 먼저 찍어주세요")))
-            } else { // 결제 가능
-                _canCallBootPay.postValue(Event(true))
+
+            // 매장에서 주문하는 경우
+            if (_chipValue.value!! == "in") {
+                //결제 불가
+                if (StoreApplication.orderTable == "") {
+                    _dialogMessage.value =
+                        Event(
+                            hashMapOf(
+                                Pair("title", "알림"),
+                                Pair("message", "Table NFC를 먼저 찍어주세요")
+                            )
+                        )
+                } else { // 결제 가능
+//                    _canCallBootPay.postValue(Event(true))
+                    updateOrderDetails("ssafy01")
+                }
             }
+            // 테이크 아웃인 경우
+            else {
+//                _canCallBootPay.postValue(Event(true))
+                updateOrderDetails("ssafy01")
+            }
+
         } else { //결제 불가
             _toastMessage.value = Event("상품을 담아주세요")
 

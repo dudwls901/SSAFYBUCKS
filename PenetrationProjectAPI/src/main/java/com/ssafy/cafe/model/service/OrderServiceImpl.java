@@ -53,8 +53,10 @@ public class OrderServiceImpl implements OrderService {
 			});
 		} else {
 			ObjectMapper mapper = new ObjectMapper();
-			order = mapper.convertValue(map, new TypeReference<Order>() {
+			order = mapper.convertValue(map.get("order"), new TypeReference<Order>() {
 			});
+//			order = mapper.convertValue(map, new TypeReference<Order>() {
+//			});
 		}
 
 		// 주문 및 주문 상세 테이블 저장
