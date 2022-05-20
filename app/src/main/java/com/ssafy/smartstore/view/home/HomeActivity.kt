@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.RemoteException
 import android.util.Log
+import android.view.View
 import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
@@ -316,6 +317,14 @@ class HomeActivity : AppCompatActivity(), CoroutineScope, BeaconConsumer {
             supportFragmentManager.findFragmentById(R.id.home_nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         NavigationUI.setupWithNavController(bottomNavi, navController)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.homeFragment || destination.id == R.id.orderFragment || destination.id == R.id.myPageFragment) {
+                bottomNavi.visibility = View.VISIBLE
+            } else {
+                bottomNavi.visibility = View.GONE
+            }
+        }
     }
 
     //foreground push
