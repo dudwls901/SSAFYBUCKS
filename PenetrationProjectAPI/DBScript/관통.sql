@@ -63,6 +63,16 @@ create table t_user_token(
 	constraint fk_token_user foreign key(user_id) references t_user(id) on delete cascade
 );
 
+create table t_shopping_list(
+    id integer auto_increment primary key,
+    user_id varchar(100) not null,
+    product_id integer not null,
+    quantity integer not null default 1,
+	constraint fk_shopping_list_user foreign key(user_id) references t_user(id) on delete cascade,
+    constraint fk_shopping_list_product foreign key(product_id) references t_product(id) on delete cascade
+);
+
+
 INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy01', '김싸피', 'pass01', 5);
 INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy02', '황원태', 'pass02', 0);
 INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy03', '한정일', 'pass03', 3);
@@ -133,5 +143,11 @@ INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy09', 9, 9);
 INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy10', 10, 20);
 
 INSERT INTO t_user_token (user_id, token) VALUES ('ssafy01', 'dErQv4F1ReePgYf5xXjtzB:APA91bGAcLCiHlhbAqtGyYsqY4MV94sYBzTrCwPqgFpjZrtkihijhzvtAv8h3O8Sh1JfTjsWNdGuNFdxRWtGh-UcF5djvgjkkNYRE2A94lp7ItNszVgH9NpjI4NGptkGDelOoVvpyjLH');
+
+INSERT INTO t_shopping_list (user_id, product_id, quantity) VALUES ('ssafy01', 1 ,1);
+INSERT INTO t_shopping_list (user_id, product_id, quantity) VALUES ('ssafy01', 2 ,1);
+INSERT INTO t_shopping_list (user_id, product_id, quantity) VALUES ('ssafy01', 3 ,1);
+INSERT INTO t_shopping_list (user_id, product_id, quantity) VALUES ('ssafy01', 4 ,1);
+INSERT INTO t_shopping_list (user_id, product_id, quantity) VALUES ('ssafy01', 5 ,1);
 
 commit;
