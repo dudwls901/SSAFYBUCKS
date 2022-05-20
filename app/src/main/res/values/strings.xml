@@ -9,4 +9,5 @@
 
     <string name="api_key">AIzaSyBiZOctxlvNhDpvKJoFLogzfAB8eXk8RaA</string>
     <string name="default_notification_channel_id">ssafy_id</string>
+    <string name="nfc_use_notice">1.매장내 이용시 테이블의\n NFC를 태그하면 해당 테이블로\n 음료를 가져다 드립니다.</string>
 </resources>

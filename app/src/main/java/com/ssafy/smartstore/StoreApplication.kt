@@ -18,6 +18,9 @@ class StoreApplication : Application() {
 
         var orderTable: String = ""
 
+        //비콘으로 팝업 띄운적 있다면 더 이상 안 띄우기
+        var alertedBeaconDialog = false
+
         var places = arrayListOf<Place>(
             Place.builder()
                 .setLatLng(LatLng(37.41, 126.66))

@@ -139,10 +139,6 @@ class ShoppingListFragment : Fragment(), CoroutineScope, ShoppingListDeleteClick
             }
         }
 
-//        orderViewModel.dialogMessage.observe(viewLifecycleOwner, EventObserver{
-//
-//        })
-
         //결제창 띄우기
         orderViewModel.canCallBootPay.observe(viewLifecycleOwner, EventObserver{
             if(it){
