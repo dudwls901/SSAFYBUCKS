@@ -117,4 +117,7 @@ dependencies {
 
     //BootPay
     implementation 'com.github.bootpay:client_android_java:3.3.04'
+
+    // BottomNavigationCircles-Android
+    implementation 'com.github.Kwasow:BottomNavigationCircles-Android:1.2'
 }
