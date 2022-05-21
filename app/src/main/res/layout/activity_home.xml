@@ -44,4 +44,22 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+    <com.ssafy.smartstore.util.MovableFloatingActionButton
+        android:id="@+id/fab_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:elevation="10dp"
+        android:translationZ="1dp"
+        app:button_color="@color/coffee_brown"
+        app:button_colorPressed="@color/coffee_dark_brown"
+        app:hide_animation="@anim/fab_scale_down"
+        app:image="@drawable/shopping_cart"
+        app:layout_constraintBottom_toTopOf="@id/container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:show_animation="@anim/fab_scale_up"
+        app:stroke_color="@color/coffee_light_brown"
+        app:stroke_width="1.0dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

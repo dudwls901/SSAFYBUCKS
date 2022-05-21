@@ -127,12 +127,6 @@ class OrderFragment : Fragment(), CoroutineScope {
             rvMenu.layoutManager = GridLayoutManager(requireContext(), 3)
         }
 
-        // 장바구니 버튼
-        fabCart.setOnClickListener {
-            val action = OrderFragmentDirections.actionOrderFragmentToShoppingListFragment()
-            findNavController().navigate(action)
-        }
-
         // 지도 버튼
         ivMap.setOnClickListener {
             Intent(requireContext(), MapActivity::class.java).apply {

@@ -32,6 +32,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
+import com.scalified.fab.ActionButton
 import com.ssafy.smartstore.R
 import com.ssafy.smartstore.StoreApplication
 import com.ssafy.smartstore.databinding.ActivityHomeBinding
@@ -354,6 +355,16 @@ class HomeActivity : AppCompatActivity(), CoroutineScope, BeaconConsumer {
             } else {
                 bottomNavi.visibility = View.GONE
             }
+            if (destination.id == R.id.shoppingListFragment) {
+                fabCart.hide()
+            } else {
+                fabCart.show()
+            }
+        }
+
+        // 장바구니 버튼 설정
+        fabCart.setOnClickListener {
+            navController.navigate(R.id.shoppingListFragment)
         }
     }
 

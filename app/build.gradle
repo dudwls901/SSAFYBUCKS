@@ -120,4 +120,7 @@ dependencies {
 
     // BottomNavigationCircles-Android
     implementation 'com.github.Kwasow:BottomNavigationCircles-Android:1.2'
+
+    // Floating Action Button Library for Android
+    implementation 'com.scalified:fab:1.1.3'
 }
