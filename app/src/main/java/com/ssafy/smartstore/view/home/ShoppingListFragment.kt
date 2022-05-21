@@ -145,14 +145,14 @@ class ShoppingListFragment : Fragment(), CoroutineScope, ShoppingListDeleteClick
                 goBootpayRequest()
             }
         })
-//
-//        // 매장인지 테이크아웃인지
-//        orderViewModel.chipValue.observe(viewLifecycleOwner) {
-//            when (it) {
-//                "in" -> binding.chips.check(R.id.chip_in)
-//                "out" -> binding.chips.check(R.id.chip_out)
-//            }
-//        }
+
+        // 매장인지 테이크아웃인지
+        orderViewModel.chipValue.observe(viewLifecycleOwner) {
+            when (it) {
+                "in" -> binding.chips.check(R.id.chip_in)
+                "out" -> binding.chips.check(R.id.chip_out)
+            }
+        }
     }
 
     // 다이얼로그 띄우는 함수
