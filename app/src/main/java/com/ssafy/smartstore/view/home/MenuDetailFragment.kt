@@ -7,10 +7,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.RatingBar
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -24,6 +27,7 @@ import com.ssafy.smartstore.data.remote.dto.Comment
 import com.ssafy.smartstore.databinding.FragmentMenuDetailBinding
 import com.ssafy.smartstore.model.OrderProduct
 import com.ssafy.smartstore.util.ImageConverter
+import com.ssafy.smartstore.util.MovableFloatingActionButton
 import com.ssafy.smartstore.viewmodel.OrderViewModel
 import com.ssafy.smartstore.viewmodel.ProductViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -44,6 +48,27 @@ class MenuDetailFragment : Fragment(), CoroutineScope {
 
     private val orderViewModel: OrderViewModel by activityViewModels()
     private val productViewModel: ProductViewModel by viewModels()
+
+    private lateinit var callback: OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (binding.containerInfo.progress == 1.0F) {
+                    binding.containerInfo.transitionToStart()
+                } else {
+                    findNavController().popBackStack()
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -161,6 +186,60 @@ class MenuDetailFragment : Fragment(), CoroutineScope {
                     .show()
             }
         }
+
+        etComment.setOnFocusChangeListener { view, b ->
+            if (b) {
+                containerInfo.transitionToEnd()
+            }
+        }
+
+        // 모션레이아웃 설정
+        containerInfo.addTransitionListener(object : MotionLayout.TransitionListener {
+            override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {}
+
+            override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {}
+
+            override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
+                if (p0?.progress == 1.0F) {
+                    requireActivity().findViewById<MovableFloatingActionButton>(R.id.fab_cart)
+                        .hide()
+                    btnPut.visibility = View.GONE
+                    ivArrow.setImageResource(R.drawable.ic_baseline_keyboard_double_arrow_down_40)
+                    commentAdapter.state = true
+                    commentAdapter.submitList(arrayListOf())
+                    updateCommentList(productViewModel.commentList.value!!)
+                } else if (p0?.progress == 0.0F) {
+                    requireActivity().findViewById<MovableFloatingActionButton>(R.id.fab_cart)
+                        .show()
+                    btnPut.visibility = View.VISIBLE
+                    ivArrow.setImageResource(R.drawable.ic_baseline_keyboard_double_arrow_up_40)
+                    etComment.apply {
+                        clearFocus()
+                        downKeyboard(this)
+                    }
+                    commentAdapter.state = false
+                    commentAdapter.submitList(arrayListOf())
+                    updateCommentList(productViewModel.commentList.value!!)
+                }
+            }
+
+            override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {}
+
+        })
+    }
+
+    // 키보드 내리기
+    private fun downKeyboard(etText: EditText) {
+        val inputMethodManager =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(etText.windowToken, 0)
+    }
+
+    // 키보드 올리기
+    private fun UpKeyboard(etText: EditText) {
+        val inputMethodManager =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.showSoftInput(etText, 0)
     }
 
     private fun updateComment(comment: Comment) {

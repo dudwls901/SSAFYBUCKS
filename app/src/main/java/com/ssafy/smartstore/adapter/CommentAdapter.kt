@@ -10,7 +10,8 @@ import com.ssafy.smartstore.databinding.RvCommentBinding
 import com.ssafy.smartstore.data.remote.dto.Comment
 
 private const val TAG = "CommentAdapter___"
-class CommentAdapter(val user_id: String) :
+
+class CommentAdapter(val user_id: String, var state: Boolean = false) :
     ListAdapter<Comment, CommentAdapter.ItemViewHolder>(diffUtil) {
 
     lateinit var onItemClickListener: OnItemClickListener
@@ -23,13 +24,20 @@ class CommentAdapter(val user_id: String) :
     )
 
     override fun onBindViewHolder(holder: CommentAdapter.ItemViewHolder, position: Int) {
-        holder.bind(currentList[position])
+        if (!state) holder.bind(currentList[position])
+        else holder.bindUser(currentList[position])
     }
 
     inner class ItemViewHolder(private val binding: RvCommentBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(comment: Comment) {
             binding.tvComment.text = comment.comment
+
+            if (!state) {
+                binding.tvId.visibility = View.GONE
+                binding.ratingBar.visibility = View.GONE
+            }
+
             if (user_id != comment.userId) {
                 binding.btnUpdateComment.visibility = View.GONE
                 binding.btnDeleteComment.visibility = View.GONE
@@ -43,6 +51,12 @@ class CommentAdapter(val user_id: String) :
             binding.btnDeleteComment.setOnClickListener {
                 onItemClickListener.onDelete(comment, adapterPosition)
             }
+        }
+
+        fun bindUser(comment: Comment) {
+            bind(comment)
+            binding.tvId.text = comment.userId
+            binding.ratingBar.rating = comment.rating
         }
     }
 

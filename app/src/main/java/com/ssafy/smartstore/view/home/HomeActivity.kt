@@ -16,12 +16,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.RemoteException
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.Window
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -505,6 +504,20 @@ class HomeActivity : AppCompatActivity(), CoroutineScope, BeaconConsumer {
             //Navigation의 스택에서 pop 됨(원래 동작)
             super.onBackPressed()
         }
+    }
+
+    // EditText가 아닌 다른 곳 터치시 키보드 숨기기
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        val view = currentFocus
+
+        if (view != null && view is EditText) {
+            val inputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+            view.clearFocus()
+        }
+
+        return super.dispatchTouchEvent(ev)
     }
 
 }

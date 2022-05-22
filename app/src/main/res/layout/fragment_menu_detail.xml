@@ -26,7 +26,6 @@
             android:layout_marginTop="20dp"
             android:adjustViewBounds="true"
             android:src="@drawable/coffee1"
-            app:layout_constraintBottom_toTopOf="@id/container_info"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toStartOf="@+id/tv_name"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,12 +39,13 @@
             android:fontFamily="@font/eland_choice_b"
             android:text='@{productVM.product.name}'
             android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@+id/container_info"
+            app:layout_constraintBottom_toBottomOf="@id/iv_item"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_item"
             tools:text="아메리카노" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+        <androidx.constraintlayout.motion.widget.MotionLayout
             android:id="@+id/container_info"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -54,144 +54,159 @@
             android:background="@drawable/background_box_white_top_radius"
             android:elevation="2dp"
             android:translationZ="1dp"
+            app:layoutDescription="@xml/fragment_menu_detail_scene"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_item">
-
-            <TextView
-                android:id="@+id/tv_header_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginStart="80dp"
-                android:layout_marginTop="30dp"
-                android:fontFamily="@font/eland_choice_b"
-                android:text="가격"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginEnd="80dp"
-                android:fontFamily="@font/eland_choice_b"
-                android:text='@{productVM.product.price + " 원"}'
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_header_price"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_header_price"
-                tools:text="4000원" />
-
-            <TextView
-                android:id="@+id/tv_header_quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginStart="80dp"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/eland_choice_b"
-                android:text="수량"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_header_price" />
-
-            <ImageView
-                android:id="@+id/iv_minus"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginHorizontal="20dp"
-                android:elevation="2dp"
-                android:src="@drawable/minus"
-                android:translationZ="1dp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_header_quantity"
-                app:layout_constraintEnd_toStartOf="@id/tv_quantity"
-                app:layout_constraintTop_toTopOf="@id/tv_quantity" />
-
-            <TextView
-                android:id="@+id/tv_quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:fontFamily="@font/eland_choice_b"
-                android:text="1"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_header_quantity"
-                app:layout_constraintEnd_toStartOf="@+id/iv_plus"
-                app:layout_constraintTop_toTopOf="@id/tv_header_quantity" />
-
-            <ImageView
-                android:id="@+id/iv_plus"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginEnd="80dp"
-                android:elevation="2dp"
-                android:src="@drawable/add"
-                android:translationZ="1dp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_header_quantity"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_quantity" />
+            app:layout_constraintTop_toBottomOf="@id/iv_item"
+            app:layout_constraintVertical_bias="0">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/container_rating"
+                android:id="@+id/container_info2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="40dp"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/background_box_white"
-                android:elevation="2dp"
-                android:paddingHorizontal="20dp"
-                android:paddingVertical="10dp"
-                android:translationZ="1dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_header_quantity">
+                app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_header_rating"
+                <TextView
+                    android:id="@+id/tv_header_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginStart="80dp"
+                    android:layout_marginTop="30dp"
                     android:fontFamily="@font/eland_choice_b"
-                    android:text="평점"
+                    android:text="가격"
                     android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_rating"
+                <TextView
+                    android:id="@+id/tv_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text='@{productVM.ratingAvg.isNaN() ? "없음" : productVM.ratingAvg+"점"}'
-                    android:textColor="#8B8E93"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginEnd="80dp"
+                    android:fontFamily="@font/eland_choice_b"
+                    android:text='@{productVM.product.price + " 원"}'
                     android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tv_header_rating"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="4.4점" />
+                    app:layout_constraintBottom_toBottomOf="@id/tv_header_price"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_header_price"
+                    tools:text="4000원" />
 
-                <androidx.appcompat.widget.AppCompatRatingBar
-                    android:id="@+id/rating_bar"
-                    style="@style/Widget.AppCompat.RatingBar.Indicator"
+                <TextView
+                    android:id="@+id/tv_header_quantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:progressBackgroundTint="@color/coffee_light_brown"
-                    android:progressTint="@color/coffee_dark_brown"
-                    android:rating='@{productVM.ratingAvg}'
-                    android:secondaryProgressTint="@color/coffee_menu_back"
-                    android:stepSize="0.1"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginStart="80dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/eland_choice_b"
+                    android:text="수량"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_header_price" />
+
+                <ImageView
+                    android:id="@+id/iv_minus"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:elevation="2dp"
+                    android:src="@drawable/minus"
+                    android:translationZ="1dp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_header_quantity"
+                    app:layout_constraintEnd_toStartOf="@id/tv_quantity"
+                    app:layout_constraintTop_toTopOf="@id/tv_quantity" />
+
+                <TextView
+                    android:id="@+id/tv_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:fontFamily="@font/eland_choice_b"
+                    android:text="1"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_header_quantity"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_plus"
+                    app:layout_constraintTop_toTopOf="@id/tv_header_quantity" />
+
+                <ImageView
+                    android:id="@+id/iv_plus"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginEnd="80dp"
+                    android:elevation="2dp"
+                    android:src="@drawable/add"
+                    android:translationZ="1dp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_header_quantity"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:rating="4.4" />
+                    app:layout_constraintTop_toTopOf="@id/tv_quantity" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/container_rating"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="40dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/background_box_white"
+                    android:elevation="2dp"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="10dp"
+                    android:translationZ="1dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_header_quantity">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_header_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/eland_choice_b"
+                        android:text="평점"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text='@{productVM.ratingAvg.isNaN() ? "없음" : productVM.ratingAvg+"점"}'
+                        android:textColor="#8B8E93"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_header_rating"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="4.4점" />
+
+                    <androidx.appcompat.widget.AppCompatRatingBar
+                        android:id="@+id/rating_bar"
+                        style="@style/Widget.AppCompat.RatingBar.Indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:progressBackgroundTint="@color/coffee_light_brown"
+                        android:progressTint="@color/coffee_dark_brown"
+                        android:rating='@{productVM.ratingAvg}'
+                        android:secondaryProgressTint="@color/coffee_menu_back"
+                        android:stepSize="0.1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:rating="4.4" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/container_comment"
@@ -206,7 +221,17 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/container_rating">
+                app:layout_constraintTop_toBottomOf="@id/container_info2">
+
+                <ImageView
+                    android:id="@+id/iv_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/ic_baseline_keyboard_double_arrow_up_40"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"></ImageView>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tl_comment"
@@ -214,7 +239,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="4dp"
                     android:background="@color/white"
                     android:backgroundTint="@color/white"
                     android:textColorHint="@color/coffee_brown"
@@ -223,7 +248,7 @@
                     app:hintTextColor="@color/coffee_dark_brown"
                     app:layout_constraintEnd_toStartOf="@id/btn_register_comment"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toBottomOf="@id/iv_arrow">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_comment"
@@ -254,6 +279,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginTop="20dp"
+                    android:nestedScrollingEnabled="false"
                     app:layout_constraintBottom_toTopOf="@id/btn_put"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -279,7 +305,8 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.motion.widget.MotionLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

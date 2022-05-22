@@ -12,6 +12,32 @@
     android:paddingVertical="8dp"
     android:translationZ="1dp">
 
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="4dp"
+        android:fontFamily="@font/eland_choice_m"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="김싸피" />
+
+    <androidx.appcompat.widget.AppCompatRatingBar
+        android:id="@+id/rating_bar"
+        style="@style/Widget.AppCompat.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:progressBackgroundTint="@color/coffee_light_brown"
+        android:progressTint="@color/coffee_dark_brown"
+        android:secondaryProgressTint="@color/coffee_menu_back"
+        android:stepSize="0.1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:rating="4.4" />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_comment"
         android:layout_width="wrap_content"
@@ -21,7 +47,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_id"
         tools:text="너무 맛있어요" />
 
     <ImageView
