@@ -4,7 +4,8 @@
     <b-form>
       <b-form-group :label="'아이디:'" label-for="input-1">
         <b-form-input id="input-1" v-model="form.id" type="text" required></b-form-input>
-        <span class="error" v-show="isRegistered">다른 아이디를 사용해주세요</span>
+        <span class="error" v-show="isRegistered==1">중복된 아이디 입니다</span>
+        <span class="success" v-show="isRegistered==-1">사용 가능한 아이디 입니다</span>
       </b-form-group>
 
       <b-form-group :label="'이름:'" label-for="input-2">
@@ -36,12 +37,32 @@
       }
     },
     created() {
-      this.$store.commit("SET_ISREGISTERED_FALSE")
+      this.$store.commit("SET_ISREGISTERED_NONE")
     },
     computed: {
       isRegistered() {
         return this.$store.getters.getIsRegistered
       }
+    },
+    watch: {
+      'form.id': function (val, oldVal) {
+        console.log(oldVal);
+        if(val==""){
+          this.$store.commit("SET_ISREGISTERED_NONE")
+        }else{
+        let store = this.$store;
+        this.$store.dispatch('isUsedId', {
+          data: val,
+          success: function () {
+            store.commit("SET_ISREGISTERED_FALSE")
+          },
+          fail: function () {
+            store.commit("SET_ISREGISTERED_TRUE")
+          }
+        });
+        }
+        
+      },
     },
     methods: {
       register() {
@@ -66,11 +87,11 @@
         this.$store.dispatch('registerUser', {
           data: this.form,
           success: function () {
-              alert("회원가입이 완료되었습니다")
-              router.replace({ name: "product-list-view" });
+            alert("회원가입이 완료되었습니다")
+            router.replace({ name: "product-list-view" });
           },
           fail: function () {
-              store.commit("SET_ISREGISTERED_TRUE")
+            store.commit("SET_ISREGISTERED_TRUE")
           }
         });
       },
@@ -90,5 +111,8 @@
 <style scoped>
   .error {
     color: red;
+  }
+  .success {
+    color: greenyellow;
   }
 </style>

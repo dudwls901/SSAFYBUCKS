@@ -3,6 +3,8 @@ package com.ssafy.cafe;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
 import com.ssafy.cafe.model.dao.OrderDao;
@@ -17,12 +19,25 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-@MapperScan(basePackageClasses = OrderDao.class)
-public class MobileThrowProjectApplication {
+@MapperScan(basePackages = {"com.ssafy.cafe.vue.repo","com.ssafy.cafe.model.dao"})
+public class MobileThrowProjectApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MobileThrowProjectApplication.class, args);
+//		SpringApplication.run(MobileThrowProjectApplication.class, args);
+		
+		CustomBeanNameGenerator beanNameGenerator = new CustomBeanNameGenerator();
+        beanNameGenerator.addBasePackages("com.ssafy.cafe");
+ 
+        new SpringApplicationBuilder(MobileThrowProjectApplication.class)
+                .beanNameGenerator(beanNameGenerator)
+                .run(args);
 	}
+	
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(MobileThrowProjectApplication.class);
+	}
+	
 
 	@Bean
 	public Docket postsApi() {
