@@ -20,7 +20,6 @@
 	
 	<select id="selectAll" resultMap="OrderDetailBasic">
 		SELECT * FROM t_order_detail
-		ORDER BY d_id DESC
 	</select>
 
 	<resultMap type="OrderDetail" id="OrderDetailBasic">

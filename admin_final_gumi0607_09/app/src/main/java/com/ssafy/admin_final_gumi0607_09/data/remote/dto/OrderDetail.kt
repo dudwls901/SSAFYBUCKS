@@ -3,11 +3,11 @@ package com.ssafy.smartstore.data.remote.dto
 import com.google.gson.annotations.SerializedName
 
 class OrderDetail {
-    private var id: Int? = null
-    private var orderId: Int? = null
+    var id: Int? = null
+    var orderId: Int? = null
     @SerializedName("productId")
-    private var productId: Int
-    private var quantity: Int
+    var productId: Int
+    var quantity: Int
 
     constructor(id: Int?, orderId: Int?, productId: Int, quantity: Int) : super() {
         this.id = id

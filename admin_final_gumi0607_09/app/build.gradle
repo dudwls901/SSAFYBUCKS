@@ -93,7 +93,6 @@ dependencies {
     // BottomNavigationCircles-Android
     implementation 'com.github.Kwasow:BottomNavigationCircles-Android:1.2'
 
-    // MPAndroidChart
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-
+    // AnyChart for Android
+    implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
 }

@@ -1,19 +1,16 @@
 package com.ssafy.admin_final_gumi0607_09.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.util.Log
+import androidx.collection.arrayMapOf
+import androidx.lifecycle.*
 import com.ssafy.admin_final_gumi0607_09.data.remote.dto.Product
 import com.ssafy.smartstore.data.remote.dto.OrderDetail
 import com.ssafy.smartstore.data.remote.repository.OrderRepository
 import com.ssafy.smartstore.data.remote.repository.ProductRepository
 import com.ssafy.smartstore.data.remote.repository.UserRepository
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import retrofit2.Response
+import java.util.*
 
 class SaleViewModel : ViewModel() {
 
@@ -38,11 +35,31 @@ class SaleViewModel : ViewModel() {
     val productList: LiveData<List<Product>>
         get() = _productList
 
-    private val _orderDetailList = MutableLiveData<List<OrderDetail>>()
+    private val _orderDetailList =
+        MutableLiveData<List<OrderDetail>>()
     val orderDetailList: LiveData<List<OrderDetail>>
         get() = _orderDetailList
 
-    fun getProductList() = viewModelScope.launch {
+    // 제품별 판매량
+    private val _productQuantity =
+        MutableLiveData<MutableMap<String, Int>>()
+    val productQuantity: LiveData<MutableMap<String, Int>>
+        get() = _productQuantity
+
+    // 제품 중 최고 판매량
+    private val _highQuantity = Transformations.map(_productQuantity) {
+        Collections.max(it.values)
+    }
+    val highQuantity: LiveData<Int>
+        get() = _highQuantity
+
+    // 제품별 매출
+    private val _productSales =
+        MutableLiveData<MutableMap<String, Int>>()
+    val productSales: LiveData<MutableMap<String, Int>>
+        get() = _productSales
+
+    fun getProductANDDeatilList() = viewModelScope.launch {
         var response: Response<List<Product>>? = null
         job = launch(Dispatchers.Main + exceptionHandler) {
             response = ProductRepository.INSTANCE.getProductList()
@@ -52,22 +69,44 @@ class SaleViewModel : ViewModel() {
         response?.let {
             it.body()?.let { result ->
                 _productList.postValue(result)
+                Log.d("TAG", "getProductList: $result")
+            }
+        }
+
+        var response2: Response<List<OrderDetail>>? = null
+        job = launch(Dispatchers.Main + exceptionHandler) {
+            response2 = OrderRepository.INSTANCE.getAllOrderDetail()
+        }
+        job?.join()
+
+        response2?.let {
+            it.body()?.let { result ->
+                _orderDetailList.postValue(result)
+                Log.d("TAG", "getProductList: $result")
             }
         }
     }
 
-    fun getOrderDeatilList() = viewModelScope.launch {
-        var response: Response<List<OrderDetail>>? = null
-        job = launch(Dispatchers.Main + exceptionHandler) {
-            response = OrderRepository.INSTANCE.getAllOrderDetail()
-        }
-        job?.join()
+    fun getProductQuantityANDSales() {
+        val result = mutableMapOf<String, Int>()
+        val result2 = mutableMapOf<String, Int>()
 
-        response?.let {
-            it.body()?.let { result ->
-                _orderDetailList.postValue(result)
+        for (item in _productList.value!!) {
+            val price = item.price
+            val productId = item.id
+            var total = 0
+            var totalsales = 0
+            _orderDetailList.value!!.filter {
+                it.productId == productId
+            }.forEach {
+                total += it.quantity
+                totalsales += it.quantity * price
             }
+            result.put("$productId", total)
+            result2.put("$productId", totalsales)
         }
+        _productQuantity.value = result
+        _productSales.value = result2
     }
 
     private fun onError(message: String) {
