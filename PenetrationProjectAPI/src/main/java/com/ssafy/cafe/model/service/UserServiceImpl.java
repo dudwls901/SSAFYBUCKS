@@ -1,5 +1,7 @@
 package com.ssafy.cafe.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +13,8 @@ public class UserServiceImpl implements UserService {
 
 	private static UserServiceImpl instance = new UserServiceImpl();
 
-	private UserServiceImpl() {}
+	private UserServiceImpl() {
+	}
 
 	public static UserServiceImpl getInstance() {
 		return instance;
@@ -32,11 +35,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User login(String id, String pass) {
 		User user = userDao.select(id);
-		
+
 		if (user != null && user.getPass().equals(pass)) {
 			return user;
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
@@ -44,11 +46,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User info(String id) {
 		User user = userDao.select(id);
-		
+
 		if (user != null) {
 			return user;
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
@@ -61,5 +62,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean isUsedId(String id) {
 		return userDao.select(id) != null;
+	}
+
+	@Override
+	public List<User> selectAll() {
+		return userDao.selectAll();
 	}
 }

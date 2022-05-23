@@ -34,4 +34,9 @@ class UserRepository {
     suspend fun getInfo(id: String): Response<Map<String,Any>> {
         return RetrofitClient.userService.getInfo(id)
     }
+
+    // 모든 유저의 스탬프 등급 반환
+    suspend fun getInfos(): Response<List<HashMap<String, Any>>> {
+        return RetrofitClient.userService.getInfos()
+    }
 }

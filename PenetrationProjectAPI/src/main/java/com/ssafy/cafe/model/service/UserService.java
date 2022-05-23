@@ -1,5 +1,7 @@
 package com.ssafy.cafe.model.service;
 
+import java.util.List;
+
 import com.ssafy.cafe.model.dto.User;
 
 
@@ -43,5 +45,7 @@ public interface UserService {
      * @return
      */
     public boolean isUsedId(String id);
+    
+    public List<User> selectAll();
 
 }
