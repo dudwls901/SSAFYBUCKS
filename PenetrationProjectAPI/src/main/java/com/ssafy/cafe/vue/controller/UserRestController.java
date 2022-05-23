@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -119,4 +120,17 @@ public class UserRestController {
 		return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
 	}
 
+	
+	@ApiOperation(value = "아이디 중복 검사", response = Boolean.class)
+	@GetMapping("/user/check/{id}")
+	public ResponseEntity<?> check(@PathVariable String id) {
+		System.out.println(id);
+		boolean result = uService.isUsedId(id);
+		System.out.println(result);
+		if (!result) {
+			return new ResponseEntity<User>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+		}
+	}
 }

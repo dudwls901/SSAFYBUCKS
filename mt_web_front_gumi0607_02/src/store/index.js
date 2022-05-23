@@ -7,7 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         loginUser: {},          // 로그인한 유저 정보
-        isRegistered: false,    // 이미 가입된 회원인지 체크할 값
+        isRegistered: 0,    // 이미 가입된 회원인지 체크할 값
         products: [],           // 전체 상품 리스트
     },
     getters: {
@@ -35,14 +35,19 @@ export default new Vuex.Store({
             state.loginUser = payload
         },
 
+        // 회원 등록 여부 미표시
+        SET_ISREGISTERED_NONE(state) {
+            state.isRegistered = 0;
+        },
+
         // 이미 등록된 회원이라고 설정
         SET_ISREGISTERED_TRUE(state) {
-            state.isRegistered = true;
+            state.isRegistered = 1;
         },
 
         // 이미 등록된 회원이 아니라고 설정
         SET_ISREGISTERED_FALSE(state) {
-            state.isRegistered = false;
+            state.isRegistered = -1;
         },
 
         // 상품 리스트를 동기화
@@ -89,6 +94,21 @@ export default new Vuex.Store({
                 })
                 .catch((error) => {
                     console.log(error);
+                    payload.fail();
+                });
+        },
+
+        // 아이디 중복 검사
+        isUsedId({ commit }, payload) {
+            http.get(`/user/check/${payload.data}`)
+                .then((response) => {
+                    console.log(response.data);
+                    commit("DO_MUTATION")
+                    payload.success();
+                })
+                .catch((error) => {
+                    console.log(error);
+                    commit("DO_MUTATION")
                     payload.fail();
                 });
         },
