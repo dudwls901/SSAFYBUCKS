@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.bootpay:client_android_java:3.3.04@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/ffee7c3390c39a4d1209d0e828ff170f/transformed/jetified-client_android_java-3.3.04/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/ffee7c3390c39a4d1209d0e828ff170f/transformed/jetified-client_android_java-3.3.04/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/ffee7c3390c39a4d1209d0e828ff170f/transformed/jetified-client_android_java-3.3.04/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.bootpay/client_android_java/3.3.04/2c8aceea742bebbd27286f67dc103e82dd5e99fe/client_android_java-3.3.04-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

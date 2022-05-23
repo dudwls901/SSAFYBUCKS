@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.MainActivity">
+
+        <LinearLayout
+            android:id="@+id/topBar"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="end"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <FrameLayout
+                android:layout_marginEnd="8dp"
+                android:id="@+id/main_fl_noti"
+                android:layout_width="60dp"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/main_ib_noti"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_baseline_notifications_none_24" />
+
+                <TextView
+                    android:id="@+id/main_tv_noti"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="36dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/maplestory_bold"
+                    android:text="13"
+                    android:textColor="#FF0300" />
+            </FrameLayout>
+
+
+        </LinearLayout>
+
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/main_nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toTopOf="@id/bottom_navi"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topBar"
+            app:navGraph="@navigation/nav_graph" />
+
+        <com.github.kwasow.bottomnavigationcircles.BottomNavigationCircles
+            android:id="@+id/bottom_navi"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginHorizontal="1dp"
+            android:background="@drawable/background_box_coffee_top_radius"
+            android:elevation="2dp"
+            android:translationZ="1dp"
+            app:circleColor="@color/coffee_dark_brown"
+            app:itemIconTint="@color/menu_selector_color"
+            app:itemTextColor="@color/menu_selector_color"
+            app:labelVisibilityMode="labeled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/bottom_navi_menu" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
