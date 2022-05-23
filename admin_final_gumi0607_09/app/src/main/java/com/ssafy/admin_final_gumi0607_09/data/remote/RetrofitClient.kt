@@ -3,6 +3,7 @@ package com.ssafy.smartstore.data.remote
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.ssafy.admin_final_gumi0607_09.BuildConfig
+import com.ssafy.admin_final_gumi0607_09.data.remote.api.CommentService
 import com.ssafy.admin_final_gumi0607_09.data.remote.api.OrderService
 import com.ssafy.admin_final_gumi0607_09.data.remote.api.ProductService
 import com.ssafy.smartstore.data.remote.api.*
@@ -32,6 +33,10 @@ object RetrofitClient {
     }
     val orderService: OrderService by lazy {
         getRetrofit().create(OrderService::class.java)
+    }
+
+    val commentService: CommentService by lazy {
+        getRetrofit().create(CommentService::class.java)
     }
 
 

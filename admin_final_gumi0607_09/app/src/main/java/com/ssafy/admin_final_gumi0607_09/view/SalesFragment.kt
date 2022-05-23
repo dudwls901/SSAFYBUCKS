@@ -1,21 +1,14 @@
 package com.ssafy.admin_final_gumi0607_09.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
-import com.anychart.AnyChart
-import com.anychart.chart.common.dataentry.DataEntry
-import com.anychart.chart.common.dataentry.ValueDataEntry
-import com.anychart.core.cartesian.series.Bar
-import com.anychart.core.cartesian.series.JumpLine
-import com.anychart.data.Set
-import com.anychart.enums.HoverMode
-import com.anychart.enums.TooltipDisplayMode
-import com.anychart.enums.TooltipPositionMode
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.ssafy.admin_final_gumi0607_09.databinding.FragmentSalesBinding
 import com.ssafy.admin_final_gumi0607_09.viewmodel.SaleViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -38,8 +31,6 @@ class SalesFragment : Fragment(), CoroutineScope {
     ): View? {
         binding = FragmentSalesBinding.inflate(inflater, container, false)
 
-        observeDatas()
-
         return binding.root
     }
 
@@ -47,69 +38,74 @@ class SalesFragment : Fragment(), CoroutineScope {
         super.onViewCreated(view, savedInstanceState)
 
         salesViewModel.getProductANDDeatilList()
+
+        initViews()
     }
 
-    private fun observeDatas() {
-        salesViewModel.orderDetailList.observe(viewLifecycleOwner) {
-            salesViewModel.getProductQuantityANDSales()
-        }
-        salesViewModel.productSales.observe(viewLifecycleOwner) {
-            initViews()
-        }
-    }
 
     //뷰들 초기화
     private fun initViews() = with(binding) {
-        val vertical = AnyChart.vertical()
+        val pagerAdapter = ScreenSlidePagerAdapter(requireActivity())
+        viewPager.adapter = pagerAdapter
+        viewPager.setPageTransformer(ZoomOutPageTransformer())
 
-        vertical.animation(true)
-
-        val data: MutableList<DataEntry> = ArrayList()
-        salesViewModel.productSales.value!!.forEach { map ->
-            val name = salesViewModel.productList.value!!.find { it.id == map.key.toInt() }!!.name
-            val quantity = salesViewModel.productQuantity.value!!.filter {
-                it.key == map.key
-            }.map { it.value }.get(0)
-            Log.d("quantity", "initViews: $quantity")
-            data.add(CustomDataEntry("${name}", map.value, quantity))
-        }
-
-        val set = Set.instantiate()
-        set.data(data)
-        val barData = set.mapAs("{ x: 'x', value: 'value' }")
-        val jumpLineData = set.mapAs("{ x: 'x', value: 'jumpLine' }")
-
-        val bar: Bar = vertical.bar(barData)
-        bar.labels().format("{%Value}")
-        val jumpLine: JumpLine = vertical.jumpLine(jumpLineData)
-        jumpLine.labels().enabled(false)
-
-        vertical.yScale().minimum(0.0)
-        vertical.labels(true)
-
-        vertical.tooltip()
-            .displayMode(TooltipDisplayMode.UNION)
-            .positionMode(TooltipPositionMode.POINT)
-            .unionFormat(
-                """function() {
-                  return '판매량: '+ this.points[1].value + ' 개' +
-                    '\n' + '메출: ' + this.points[0].value + ' 원';
-                }"""
-            )
-
-        vertical.interactivity().hoverMode(HoverMode.BY_X)
-
-        vertical.xAxis(true)
-        vertical.yAxis(true)
-        vertical.yAxis(0).labels().format("{%Value} 원")
-
-        chart.setChart(vertical)
+        indicator.attachTo(viewPager)
     }
 
-    inner class CustomDataEntry(x: String?, value: Number?, jumpLine: Number?) :
-        ValueDataEntry(x, value) {
-        init {
-            setValue("jumpLine", jumpLine)
+    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+        override fun getItemCount(): Int = 2
+
+        override fun createFragment(position: Int): Fragment {
+            when (position) {
+                0 -> {
+                    return ChartVerticalFragment()
+                }
+                else -> {
+                    return ChartTagCloudFragment()
+                }
+            }
+        }
+    }
+
+    private inner class ZoomOutPageTransformer : ViewPager2.PageTransformer {
+
+        private val MIN_SCALE = 0.85f
+        private val MIN_ALPHA = 0.5f
+
+        override fun transformPage(view: View, position: Float) {
+            view.apply {
+                val pageWidth = width
+                val pageHeight = height
+                when {
+                    position < -1 -> { // [-Infinity,-1)
+                        // This page is way off-screen to the left.
+                        alpha = 0f
+                    }
+                    position <= 1 -> { // [-1,1]
+                        // Modify the default slide transition to shrink the page as well
+                        val scaleFactor = Math.max(MIN_SCALE, 1 - Math.abs(position))
+                        val vertMargin = pageHeight * (1 - scaleFactor) / 2
+                        val horzMargin = pageWidth * (1 - scaleFactor) / 2
+                        translationX = if (position < 0) {
+                            horzMargin - vertMargin / 2
+                        } else {
+                            horzMargin + vertMargin / 2
+                        }
+
+                        // Scale the page down (between MIN_SCALE and 1)
+                        scaleX = scaleFactor
+                        scaleY = scaleFactor
+
+                        // Fade the page relative to its size.
+                        alpha = (MIN_ALPHA +
+                                (((scaleFactor - MIN_SCALE) / (1 - MIN_SCALE)) * (1 - MIN_ALPHA)))
+                    }
+                    else -> { // (1,+Infinity]
+                        // This page is way off-screen to the right.
+                        alpha = 0f
+                    }
+                }
+            }
         }
     }
 }

@@ -45,4 +45,9 @@ public class CommentServiceImpl implements CommentService {
 		return cDao.select(id);
 	}
 
+	@Override
+	public List<Comment> selectAll() {
+		return cDao.selectAll();
+	}
+
 }

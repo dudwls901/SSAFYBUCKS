@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.collection.arrayMapOf
 import androidx.lifecycle.*
 import com.ssafy.admin_final_gumi0607_09.data.remote.dto.Product
+import com.ssafy.admin_final_gumi0607_09.data.remote.repository.CommentRepository
+import com.ssafy.smartstore.data.remote.dto.Comment
 import com.ssafy.smartstore.data.remote.dto.OrderDetail
 import com.ssafy.smartstore.data.remote.repository.OrderRepository
 import com.ssafy.smartstore.data.remote.repository.ProductRepository
@@ -39,6 +41,10 @@ class SaleViewModel : ViewModel() {
         MutableLiveData<List<OrderDetail>>()
     val orderDetailList: LiveData<List<OrderDetail>>
         get() = _orderDetailList
+
+    private val _commenttList = MutableLiveData<List<Comment>>()
+    val commenttList: LiveData<List<Comment>>
+        get() = _commenttList
 
     // 제품별 판매량
     private val _productQuantity =
@@ -83,6 +89,20 @@ class SaleViewModel : ViewModel() {
             it.body()?.let { result ->
                 _orderDetailList.postValue(result)
                 Log.d("TAG", "getProductList: $result")
+            }
+        }
+    }
+
+    fun getCommentList() = viewModelScope.launch {
+        var response: Response<List<Comment>>? = null
+        job = launch(Dispatchers.Main + exceptionHandler) {
+            response = CommentRepository.INSTANCE.selectAll()
+        }
+        job?.join()
+
+        response?.let {
+            it.body()?.let { result ->
+                _commenttList.postValue(result)
             }
         }
     }

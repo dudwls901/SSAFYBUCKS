@@ -95,4 +95,7 @@ dependencies {
 
     // AnyChart for Android
     implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
+
+    // Material View Pager Dots Indicator
+    implementation("com.tbuonomo:dotsindicator:4.3")
 }
