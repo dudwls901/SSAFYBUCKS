@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+//        supportActionBar?.hide()
         uploadDeviceToken()
 
         // 바텀 네비게이션 초기 설정
