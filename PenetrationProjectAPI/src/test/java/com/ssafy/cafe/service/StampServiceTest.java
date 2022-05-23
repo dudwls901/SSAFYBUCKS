@@ -29,14 +29,14 @@ class StampServiceTest extends AbstractServiceTest {
 		details.add(new OrderDetail(2, 2));
 		order.setDetails(details);
 
-		orderService.makeOrder(order);
+//		orderService.makeOrder(order);
 
 		order = new Order(testUser.getId(), "table_test", new Date(), 'N');
 		details = new ArrayList<>();
 		details.add(new OrderDetail(1, 1));
 		order.setDetails(details);
 
-		orderService.makeOrder(order);
+//		orderService.makeOrder(order);
 
 		User selected = userService.login(testUser.getId(), testUser.getPass());
 		assertEquals(selected.getStamps(), 6);

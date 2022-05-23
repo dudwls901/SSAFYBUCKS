@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ssafy.cafe.vue.repo.StampRepo">
+	
+	<!-- stamp 추가 -->
+	<insert id="insert" parameterType="StampVue" useGeneratedKeys="true" keyProperty="id">
+		insert into t_stamp(user_id, order_id, quantity)
+		values (#{userId}, #{orderId}, #{quantity})
+	</insert>
+	
+	<!-- 모든 stamp 리스트 조회 -->
+	<select id="selectAll" resultType="StampVue">
+		select *
+		from t_stamp
+	</select>
+	
+	<!-- id에 해당하는 stamp 조회 -->
+	<select id="select" parameterType="Integer"  resultType="StampVue">
+		select *
+		from t_stamp
+		where id = #{stampId}
+	</select>
+	
+	<!-- user_id에 해당하는 모든 stamp 리스트 조회 -->
+	<select id="selectByUserId" parameterType="String"  resultType="StampVue">
+		select *
+		from t_stamp
+		where user_id = #{userId}
+		ORDER BY id desc
+	</select>
+	
+</mapper>

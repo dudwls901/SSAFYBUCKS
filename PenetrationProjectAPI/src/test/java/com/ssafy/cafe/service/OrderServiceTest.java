@@ -25,7 +25,7 @@ class OrderServiceTest extends AbstractServiceTest {
 		details.add(new OrderDetail(2, 2));
 		order.setDetails(details);
 
-		orderService.makeOrder(order);
+//		orderService.makeOrder(order);
 	}
 
 	static Order last;

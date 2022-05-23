@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ssafy.cafe.vue.repo.UserRepo">
+
+	<!-- user 추가 -->
+	<insert id="insert" parameterType="UserVue" useGeneratedKeys="true" keyProperty="id">
+		insert into t_user (id, name, pass) 
+		values (#{id}, #{name}, #{pass})
+	</insert>
+	
+	<!--  모든 유저 정보 리스트 조회 -->
+	<select id="selectAll" resultType="UserVue">
+		select id, name, stamps
+		from t_user
+	</select>
+	
+	
+	<!-- id로 유저 정보 조회 -->
+	<select id="select" parameterType="string" resultType="UserVue">
+		select *
+		from t_user
+		where id = #{id}
+	</select>
+	
+	<!-- user정보업데이트 -->
+	<update id="update" parameterType="UserVue">
+		update t_user
+		set 
+			name = #{ name },
+			pass = #{ pass },
+			stamps = #{ stamps }
+		where id = #{ id }
+	</update>
+	
+	<!-- user의 stamp 업데이트 -->
+	<update id="updateStamp" parameterType="UserVue">
+		update t_user
+		set stamps = (select sum(quantity) from t_stamp where user_id = #{ id })
+		where id = #{ id }
+	</update>
+	
+	<!-- id와 일치하는 user 삭제 -->
+	<delete id="delete" parameterType="String">
+		delete from t_user
+		where id = #{id}
+	</delete>
+	
+</mapper>

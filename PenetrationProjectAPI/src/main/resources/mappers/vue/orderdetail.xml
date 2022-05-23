@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.cafe.vue.repo.OrderDetailRepo">
+
+	<!-- 주문 상세를 추가 -->
+	<insert id="insert" parameterType="OrderDetailVue"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO
+		t_order_detail(order_id, product_id, quantity)
+		VALUES (#{orderId}, #{productId}, #{quantity})
+	</insert>
+	
+	<!-- d_id의 주문 상세를 조회 -->
+	<select id="OrderDetail" parameterType="Integer" resultType="OrderDetailVue">
+		select d_id AS id, order_id, product_id, quantity
+		from t_order_detail
+		where d_id= #{detailId}
+	</select>
+	
+	<!-- 모든 주문 상세 리스트를 조회 -->
+	<select id="selectAll" resultType="OrderDetailVue">
+		select d_id AS id, order_id, product_id, quantity
+		from t_order_detail
+		ORDER BY d_id desc
+	</select>
+
+	<!-- product_id의 모든 주문 상세 리스트를 조회 -->
+	<select id="selectByProductId" parameterType="Integer" resultType="OrderDetailVue">
+		select d_id AS id, order_id, product_id, quantity
+		from t_order_detail
+		where product_id= #{productId}
+	</select>
+	
+	<!-- order_id의 모든 주문 상세 리스트를 조회 -->
+	<select id="selectByOrderId" parameterType="Integer" resultType="OrderDetailVue">
+		select d_id AS id, order_id, product_id, quantity
+		from t_order_detail
+		where order_id= #{order_id}
+	</select>
+
+	<!-- 주문 상세를 삭제 -->
+	<delete id="delete" parameterType="Integer">
+		delete from t_order_detail
+		where d_id = #{detailId}
+	</delete>
+</mapper>
