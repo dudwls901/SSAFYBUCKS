@@ -8,10 +8,7 @@ import com.ssafy.smartstore.util.Network.GET_ORDER_DAY
 import com.ssafy.smartstore.util.Network.GET_ORDER_MONTH
 import com.ssafy.smartstore.util.Network.ORDER
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface OrderService {
 
@@ -26,6 +23,10 @@ interface OrderService {
 
     @GET("${ORDER}/detail")
     suspend fun getAllOrderDetail() : Response<List<OrderDetail>>
+
+    @PATCH(ORDER)
+    suspend fun changeOrderComplete(@Query("order_id") order_id: Int) : Response<String>
+
 
 //    @GET("${GET_PRODUCT}/{productId}")
 //    suspend fun getProduct(@Path("productId") productId: Int): Response<List<MutableMap<String,Any>>>

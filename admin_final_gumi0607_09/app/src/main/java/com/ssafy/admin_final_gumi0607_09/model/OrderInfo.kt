@@ -10,6 +10,7 @@ data class OrderInfo(
     val id: Int,
     val orderProductList: List<OrderProduct>,
     val date: String,
-    val name: String,
+    val user_name: String,
+    val user_id: String,
     val completed: String
 ):Parcelable

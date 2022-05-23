@@ -66,5 +66,7 @@ public interface OrderService {
 	List<Map<String, Object>> getDayOrder(String date);
 
 	
+	void changeOrderComplete(int order_id);
+	
 	List<OrderDetail> getAllOrderDetail();
 }

@@ -1,6 +1,7 @@
 package com.ssafy.admin_final_gumi0607_09.viewmodel
 
 import android.os.Build
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,6 +14,8 @@ import com.ssafy.smartstore.data.remote.dto.OrderDetail
 import com.ssafy.smartstore.data.remote.dto.OrderInfoResponse
 import com.ssafy.smartstore.data.remote.repository.OrderRepository
 import com.ssafy.smartstore.data.remote.repository.ProductRepository
+import com.ssafy.smartstore.data.remote.repository.TokenRepository
+import com.ssafy.smartstore.event.Event
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -38,6 +41,10 @@ class OrderViewModel : ViewModel() {
     val loading: LiveData<Boolean>
     get() = _loading
 
+    // 토스트 메시지 내용
+    private val _toastMessage = MutableLiveData<Event<String>>()
+    val toastMessage: LiveData<Event<String>> = _toastMessage
+
     private var _orderInfoResponse = MutableLiveData<List<OrderInfoResponse>>()
     val orderInfoResponse: LiveData<List<OrderInfoResponse>>
         get() = _orderInfoResponse
@@ -45,6 +52,10 @@ class OrderViewModel : ViewModel() {
     private var _orderInfoList = MutableLiveData<List<OrderInfo>>()
     val orderInfoList: LiveData<List<OrderInfo>>
         get() = _orderInfoList
+
+    private var _selectedDate = MutableLiveData<String>()
+    val selectedDate: LiveData<String>
+        get() = _selectedDate
 
     fun getOrderInfoResponse(date: String) = viewModelScope.launch{
         _loading.postValue(true)
@@ -141,14 +152,69 @@ class OrderViewModel : ViewModel() {
                     id = order.o_id,
                     date = order.order_time,
                     orderProductList = orderProductList,
-                    name = order.user_name,
-                    completed = order.completed
+                    user_name = order.user_name,
+                    completed = order.completed,
+                    user_id = order.user_id
                 )
             )
         }
         return orderInfoList
-//        orderInfoList = if (orderInfoList.size > 5) orderInfoList.subList(0, 4) else orderInfoList
+    }
 
+    fun changeOrderComplete(orderId: Int, userId: String, title: String, body: String) = viewModelScope.launch{
+        _loading.postValue(true)
+        var response: Response<String>? = null
+        job = launch(Dispatchers.Main + exceptionHandler) {
+            response = OrderRepository.INSTANCE.changeOrderComplete(orderId)
+        }
+        job?.join()
+        response?.let {
+            if(it.isSuccessful){
+                it.body()?.let{ result->
+                    when(it.code()){
+                        200 -> {
+                            sendMessageTo(userId, title, body)
+                            _loading.postValue(false)
+                        }
+                        else -> onError(it.message())
+                    }
+                }
+            }else {
+                it.errorBody()?.let { errorBody ->
+                    RetrofitClient.getErrorResponse(errorBody)?.let {
+                        onError(it.message)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun sendMessageTo(userId: String, title: String, body: String) = viewModelScope.launch{
+        _loading.postValue(true)
+        var response: Response<String>? = null
+        job = launch(Dispatchers.Main + exceptionHandler) {
+            response = TokenRepository.INSTANCE.sendMessageTo(userId,title,body)
+        }
+        job?.join()
+        response?.let {
+            if(it.isSuccessful){
+                it.body()?.let{ result->
+                    when(it.code()){
+                        200 -> {
+                            _toastMessage.postValue(Event("음료(스낵) 제작 완료 메시지를 전송하였습니다."))
+                            _loading.postValue(false)
+                        }
+                        else -> onError(it.message())
+                    }
+                }
+            }else {
+                it.errorBody()?.let { errorBody ->
+                    RetrofitClient.getErrorResponse(errorBody)?.let {
+                        onError(it.message)
+                    }
+                }
+            }
+        }
     }
 
 

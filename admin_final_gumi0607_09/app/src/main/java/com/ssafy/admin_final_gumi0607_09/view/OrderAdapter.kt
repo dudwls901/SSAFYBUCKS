@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.view.menu.MenuAdapter
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ListAdapter
@@ -19,7 +21,7 @@ import com.ssafy.smartstore.util.ImageConverter
 
 private const val TAG = "MenuDetailAdapter___"
 
-class OrderAdapter(val onExpandClicked: (Boolean, Int) -> Unit) : ListAdapter<OrderInfo, OrderAdapter.ItemViewHolder>(diffUtil) {
+class OrderAdapter(val onSendPushClicked: (Int, String, String,String) -> Unit) : ListAdapter<OrderInfo, OrderAdapter.ItemViewHolder>(diffUtil) {
 
 
     override fun onCreateViewHolder(
@@ -84,6 +86,17 @@ class OrderAdapter(val onExpandClicked: (Boolean, Int) -> Unit) : ListAdapter<Or
 
             adapter.submitList(orderInfo.orderProductList)
 
+
+            binding.btnItem.setOnClickListener {
+                onSendPushClicked(orderInfo.id,orderInfo.user_id, "싸피벅스", "주문하신 상품이 나왔어요!!")
+            }
+            Log.d(TAG, "bind: ${orderInfo.completed}")
+            if(orderInfo.completed=="Y") {
+                binding.btnItem.visibility = View.GONE
+            }
+            else{
+                binding.btnItem.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -91,11 +104,11 @@ class OrderAdapter(val onExpandClicked: (Boolean, Int) -> Unit) : ListAdapter<Or
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<OrderInfo>() {
             override fun areItemsTheSame(oldItem: OrderInfo, newItem: OrderInfo): Boolean {
-                TODO("Not yet implemented")
+                return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(oldItem: OrderInfo, newItem: OrderInfo): Boolean {
-                TODO("Not yet implemented")
+                return oldItem == newItem
             }
 
         }

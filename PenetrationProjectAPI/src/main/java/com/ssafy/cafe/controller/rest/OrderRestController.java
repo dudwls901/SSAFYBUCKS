@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.cafe.model.dto.Order;
@@ -63,4 +65,12 @@ public class OrderRestController {
 	public List<OrderDetail> getAllOrderDetail() {
 		return oService.getAllOrderDetail();
 	}
+	
+
+    @PatchMapping("")
+    @ApiOperation(value = "order_id에 해당하는 order의 completed를 Y로 바꾼댜")
+    public void changeOrderComplete(@RequestParam("order_id") int order_id) {
+    	oService.changeOrderComplete(order_id);
+    }
+	
 }

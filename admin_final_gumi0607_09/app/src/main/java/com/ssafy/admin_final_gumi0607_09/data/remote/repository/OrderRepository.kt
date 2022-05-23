@@ -28,6 +28,10 @@ class OrderRepository {
         return RetrofitClient.orderService.getAllOrderDetail()
     }
 
+    suspend fun changeOrderComplete(orderId: Int): Response<String>{
+        return RetrofitClient.orderService.changeOrderComplete(orderId)
+    }
+
 //    suspend fun getProduct(productId: Int): Response<List<MutableMap<String,Any>>> {
 //        Log.d("repository", "getProduct: $productId")
 //        return RetrofitClient.productService.getProduct(productId)

@@ -16,15 +16,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
+<!--android:visibility="@{orderInfo.completed.equals('Y')? View.GONE : View.VISIBLE}"-->
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/iv_item"
+            android:id="@+id/btn_item"
             android:layout_width="84dp"
             android:layout_height="84dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/background_coffee_menu_oval"
-            android:visibility="@{orderInfo.completed ==`Y`? View.GONE : View.VISIBLE}"
             android:text="@string/send_alarm"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,7 +36,7 @@
             app:cardBackgroundColor="@color/coffee_menu_back"
             app:cardCornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iv_item"
+            app:layout_constraintStart_toEndOf="@id/btn_item"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,7 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="@{@string/customer(orderInfo.name)}"
+                    android:text="@{@string/customer(orderInfo.user_name)}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="닉네임 : 김싸피" />

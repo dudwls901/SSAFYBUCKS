@@ -117,5 +117,10 @@ public class OrderServiceImpl implements OrderService {
 	public List<Map<String, Object>> getDayOrder(String date){
 		return oDao.getDayOrder(date);
 	}
+	
+	@Override
+	public void changeOrderComplete(int order_id) {
+		oDao.changeOrderComplete(order_id);
+	}
 
 }

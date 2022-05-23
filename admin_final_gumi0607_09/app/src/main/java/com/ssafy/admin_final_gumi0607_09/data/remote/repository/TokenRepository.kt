@@ -13,4 +13,9 @@ class TokenRepository {
     suspend fun uploadToken(userId: String, token: String): Response<String> {
         return RetrofitClient.tokenService.uploadToken(userId, token);
     }
+
+    // Token 정보 서버로 전송
+    suspend fun sendMessageTo(userId: String,body: String, title: String): Response<String> {
+        return RetrofitClient.tokenService.sendMessageTo(userId,body, title);
+    }
 }

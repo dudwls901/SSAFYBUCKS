@@ -102,4 +102,8 @@
 		ORDER BY o.o_id DESC, d.d_id DESC
 	</select>
 	
+		<update id="changeOrderComplete" parameterType="int">
+		UPDATE t_order SET completed = 'Y' WHERE o_id = #{order_id}
+	</update>
+	
 </mapper>
