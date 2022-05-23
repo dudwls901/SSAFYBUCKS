@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:gravity="center"
-            android:text="@{orderProduct.product.name}"
+            android:text="@{@string/product_name_with_count(orderProduct.product.name, orderProduct.quantity)}"
             tools:text="아메리카노" />
 
 

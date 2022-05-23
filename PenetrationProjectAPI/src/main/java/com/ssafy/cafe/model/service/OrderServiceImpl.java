@@ -112,5 +112,10 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderDetail> getAllOrderDetail() {
 		return dDao.selectAll();
 	}
+	
+	@Override
+	public List<Map<String, Object>> getDayOrder(String date){
+		return oDao.getDayOrder(date);
+	}
 
 }

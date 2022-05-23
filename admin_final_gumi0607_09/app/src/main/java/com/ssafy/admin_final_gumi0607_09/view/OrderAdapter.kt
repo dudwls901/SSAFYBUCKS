@@ -1,5 +1,7 @@
 package com.ssafy.admin_final_gumi0607_09.view
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +19,8 @@ import com.ssafy.smartstore.util.ImageConverter
 
 private const val TAG = "MenuDetailAdapter___"
 
-class OrderAdapter() : ListAdapter<OrderInfo, OrderAdapter.ItemViewHolder>(diffUtil) {
+class OrderAdapter(val onExpandClicked: (Boolean, Int) -> Unit) : ListAdapter<OrderInfo, OrderAdapter.ItemViewHolder>(diffUtil) {
+
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -26,6 +29,13 @@ class OrderAdapter() : ListAdapter<OrderInfo, OrderAdapter.ItemViewHolder>(diffU
         RvOrderInfoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
 
+//    private var context: Context? = null
+    //context 가져오기
+//    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+//        super.onAttachedToRecyclerView(recyclerView)
+//        context = recyclerView.context
+//    }
+
     override fun onBindViewHolder(holder: OrderAdapter.ItemViewHolder, position: Int) {
         holder.bind(currentList[position])
 
@@ -33,6 +43,7 @@ class OrderAdapter() : ListAdapter<OrderInfo, OrderAdapter.ItemViewHolder>(diffU
 
     inner class ItemViewHolder(private val binding: RvOrderInfoBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun bind(orderInfo: OrderInfo) {
             binding.orderInfo=orderInfo
             binding.isExpanded = false
@@ -52,9 +63,10 @@ class OrderAdapter() : ListAdapter<OrderInfo, OrderAdapter.ItemViewHolder>(diffU
 
             val adapter = MenuAdapter()
 
-            binding.tvContent.text = orderText
-            binding.tvPrice.text = price.toString()
-            binding.tvDate.text = orderInfo.date.substring(0, orderInfo.date.indexOf('T'))
+            binding.tvContent.text = "주문 내역 : ${orderText}"
+            binding.tvPrice.text = "주문 금액 : ${price}원"
+            val yymm = orderInfo.date.substring(orderInfo.date.indexOf('T')+1,orderInfo.date.indexOf('T')+6 ).split(":")
+            binding.tvDate.text = "주문 시간 : ${yymm[0]}시 ${yymm[1]}분"
             binding.rvMenu.adapter = adapter
             (binding.rvMenu.layoutManager as GridLayoutManager).apply {
                 if(orderInfo.completed=="N")
@@ -62,22 +74,19 @@ class OrderAdapter() : ListAdapter<OrderInfo, OrderAdapter.ItemViewHolder>(diffU
                 else
                     spanCount=4
             }
+            binding.ibExpand.setOnClickListener {
 
-//            binding.rvMenu.layoutManager = GridLayoutManager()
+                when(binding.isExpanded){
+                    true -> binding.isExpanded = false
+                    false -> binding.isExpanded = true
+                }
+            }
+
             adapter.submitList(orderInfo.orderProductList)
-//            ImageConverter.imageMap[product.img]?.let {
-//                binding.rvImage.setImageResource(
-//                    it
-//                )
-//            }
-//            binding.rvName.text = product.name
-//            binding.tvPrice.text = "${product.price}원"
+
         }
     }
 
-    interface ItemOnClickListener {
-        fun onClick(view: View, position: Int)
-    }
 
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<OrderInfo>() {

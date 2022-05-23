@@ -16,6 +16,10 @@ class OrderRepository {
         return RetrofitClient.orderService.getOrderMonth(id)
     }
 
+    suspend fun getOrderDay(date: String): Response<List<OrderInfoResponse>> {
+        return RetrofitClient.orderService.getOrderDay(date)
+    }
+
     suspend fun makeOrder(map: HashMap<String, Any>): Response<Int> {
         return RetrofitClient.orderService.makeOrder(map)
     }

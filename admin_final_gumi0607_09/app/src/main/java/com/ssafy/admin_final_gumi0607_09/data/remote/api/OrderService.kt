@@ -4,6 +4,7 @@ import com.ssafy.smartstore.data.remote.dto.Order
 import com.ssafy.smartstore.data.remote.dto.OrderDetail
 import com.ssafy.smartstore.data.remote.dto.OrderInfoResponse
 import com.ssafy.smartstore.util.Network
+import com.ssafy.smartstore.util.Network.GET_ORDER_DAY
 import com.ssafy.smartstore.util.Network.GET_ORDER_MONTH
 import com.ssafy.smartstore.util.Network.ORDER
 import retrofit2.Response
@@ -16,6 +17,9 @@ interface OrderService {
 
     @GET(GET_ORDER_MONTH)
     suspend fun getOrderMonth(@Query("id") id: String): Response<List<OrderInfoResponse>>
+
+    @GET(GET_ORDER_DAY)
+    suspend fun getOrderDay(@Query("date") date: String): Response<List<OrderInfoResponse>>
 
     @POST(ORDER)
     suspend fun makeOrder(@Body map: HashMap<String, Any>): Response<Int>

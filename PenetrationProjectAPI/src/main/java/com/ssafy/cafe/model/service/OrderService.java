@@ -57,5 +57,14 @@ public interface OrderService {
 	 */
 	List<Map<String, Object>> getLastMonthOrder(String id);
 	
+	
+	/**
+	 * 해당 날짜의 주문 내역 반환
+	 * @param date
+	 * @return
+	 */
+	List<Map<String, Object>> getDayOrder(String date);
+
+	
 	List<OrderDetail> getAllOrderDetail();
 }

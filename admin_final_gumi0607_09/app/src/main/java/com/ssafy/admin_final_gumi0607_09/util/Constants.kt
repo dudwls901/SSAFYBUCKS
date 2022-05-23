@@ -11,6 +11,7 @@ object Network {
     const val COMMENT = "comment"
     const val TOKEN = "token"
     const val SHOPPING_LIST = "shopping_list"
+    const val GET_ORDER_DAY = "order/"
 }
 
 

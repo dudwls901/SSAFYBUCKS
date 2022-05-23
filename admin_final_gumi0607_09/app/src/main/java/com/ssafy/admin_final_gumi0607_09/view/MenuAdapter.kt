@@ -1,5 +1,6 @@
 package com.ssafy.admin_final_gumi0607_09.view
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,8 +40,6 @@ class MenuAdapter() : ListAdapter<OrderProduct, MenuAdapter.ItemViewHolder>(diff
                     it
                 )
             }
-//            binding.rvName.text = product.name
-//            binding.tvPrice.text = "${product.price}원"
         }
     }
 
