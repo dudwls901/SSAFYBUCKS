@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.cafe.model.dto.Order;
+import com.ssafy.cafe.model.dto.OrderDetail;
 import com.ssafy.cafe.model.service.OrderService;
 
 import io.swagger.annotations.ApiOperation;
@@ -48,5 +49,11 @@ public class OrderRestController {
 			+ "반환 정보는 1차 주문번호 내림차순, 2차 주문 상세 내림차순으로 정렬된다.", response = List.class)
 	public List<Map<String, Object>> getLastMonthOrder(String id) {
 		return oService.getLastMonthOrder(id);
+	}
+	
+	@GetMapping("/detail")
+	@ApiOperation(value = "모든 주문 상세 리스트를 반환한다.", response = List.class)
+	public List<OrderDetail> getAllOrderDetail() {
+		return oService.getAllOrderDetail();
 	}
 }

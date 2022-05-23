@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ssafy.cafe.model.dto.Order;
+import com.ssafy.cafe.model.dto.OrderDetail;
 
 public interface OrderService {
 	/**
@@ -55,4 +56,6 @@ public interface OrderService {
 	 * @return
 	 */
 	List<Map<String, Object>> getLastMonthOrder(String id);
+	
+	List<OrderDetail> getAllOrderDetail();
 }
