@@ -58,7 +58,8 @@ public class UserRestController {
 
 	@PostMapping("/login")
 	@ApiOperation(value = "로그인 처리 후 성공적으로 로그인 되었다면 loginId라는 쿠키를 내려보낸다.", response = User.class)
-	public ResponseEntity<?> login(@RequestBody User user, HttpServletResponse response) throws UnsupportedEncodingException {
+	public ResponseEntity<?> login(@RequestBody User user, HttpServletResponse response)
+			throws UnsupportedEncodingException {
 		System.out.println(user);
 		User selected = uService.login(user.getId(), user.getPass());
 		if (selected != null) {
@@ -71,6 +72,32 @@ public class UserRestController {
 		return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
 	}
 
+	// 모든 유저의 스탬프 등급 반환
+	@GetMapping("/info")
+	@ApiOperation(value = "모든 유적의 등급 정보를 반환한다.", response = Map.class)
+	public List<Map<String, Object>> getInfoList() {
+		List<Map<String, Object>> resultList = new ArrayList<Map<String,Object>>();
+		List<User> userList = uService.selectAll();
+		for (User user : userList) {
+			Map<String, Object> result = new HashMap<String, Object>();
+			int total = 0;
+			List<Order> orders = oService.getOrdreByUser(user.getId());
+			for (Order order : orders) {
+				List<Map> mapList = oService.selectOrderTotalInfo(order.getId());
+				for (Map<String, Object> map : mapList) {
+					System.out.println(map.get("totalprice"));
+					total += Integer.parseInt(String.valueOf(map.get("totalprice")));
+				}
+			}
+			result.put("id", user.getId());
+			result.put("name", user.getName());
+			result.put("total", total);
+			result.put("grade", getGrade(user.getStamps()));
+			resultList.add(result);
+		}
+		return resultList;
+	}
+
 	// android app 에서 사용자 정보 확인시 비밀번호 확인은 아닌것 같아 수정
 	@PostMapping("/info")
 	@ApiOperation(value = "사용자의 정보와 함께 사용자의 주문 내역, 사용자 등급 정보를 반환한다.", response = Map.class)
@@ -79,8 +106,7 @@ public class UserRestController {
 		User selected = uService.info(id);
 		if (selected == null) {
 			return null;
-		}
-		else {
+		} else {
 			Map<String, Object> info = new HashMap<>();
 			info.put("user", selected);
 			List<Order> orders = oService.getOrdreByUser(id);
@@ -98,16 +124,16 @@ public class UserRestController {
 				grade.put("title", level.title);
 				grade.put("limit", level.unit);
 				grade.put("img", level.img);
+				grade.put("stamp", stamp);
 				if (!level.title.equals("커피나무")) {
 					int step = (stamp - pre) / level.unit + ((stamp - pre) % level.unit > 0 ? 1 : 0);
 					grade.put("step", step);
 					int to = level.unit - (stamp - pre) % level.unit;
-					grade.put("current", level.unit-to);
+					grade.put("current", level.unit - to);
 					grade.put("to", to);
 				}
 				break;
-			}
-			else {
+			} else {
 				pre = level.max;
 			}
 		}

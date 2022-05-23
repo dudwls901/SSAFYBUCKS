@@ -23,4 +23,7 @@ interface UserService {
     @POST("$USER/info")
     suspend fun getInfo(@Query("id") id: String): Response<Map<String, Any>>
 
+    // 모든 유저의 스탬프 등급 반환
+    @GET("$USER/info")
+    suspend fun getInfos(): Response<List<HashMap<String, Any>>>
 }

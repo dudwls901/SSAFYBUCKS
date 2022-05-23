@@ -1,60 +1,83 @@
 package com.ssafy.admin_final_gumi0607_09.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.admin_final_gumi0607_09.R
+import com.ssafy.admin_final_gumi0607_09.adapter.UserAdapter
+import com.ssafy.admin_final_gumi0607_09.databinding.FragmentCustomerBinding
+import com.ssafy.admin_final_gumi0607_09.viewmodel.UserViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.Comparator
+import kotlin.collections.HashMap
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class CustomerFragment : Fragment(), CoroutineScope {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CustomerFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class CustomerFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private val job = Job()
+    override val coroutineContext = Dispatchers.Main + job
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentCustomerBinding
+    private lateinit var adapter: UserAdapter
+
+    private val userViewModel: UserViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_customer, container, false)
+        binding = FragmentCustomerBinding.inflate(inflater, container, false)
+
+        observeDatas()
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CustomerFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CustomerFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        userViewModel.getUserList()
+
+        initViews()
+    }
+
+    private fun observeDatas() {
+        userViewModel.userList.observe(viewLifecycleOwner) {
+            updateUserList(it)
+        }
+    }
+
+    //뷰들 초기화
+    private fun initViews() = with(binding) {
+        // 유적 리사이클러뷰 어댑터 연결
+        adapter = UserAdapter().apply {
+            setHasStableIds(true)
+
+            rvUser.adapter = this
+            rvUser.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        }
+    }
+
+    //유적 리스트 데이터 업데이트
+    private fun updateUserList(userList: List<HashMap<String, Any>>) {
+        //어댑터 갱신
+        Log.d("TAG", "${userList}: ")
+        Collections.sort(
+            userList,
+            Comparator { t: Map<String, Any>, t2: Map<String, Any> ->
+                val item1 = t.get("grade") as Map<String, Any>
+                val item2 = t2.get("grade") as Map<String, Any>
+                (item2.get("stamp") as Double - item1.get("stamp") as Double).toInt()
+            })
+        adapter.submitList(userList)
     }
 }

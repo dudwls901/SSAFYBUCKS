@@ -35,6 +35,7 @@
 	
 	<select id="selectAll" resultType="User">
 		SELECT * FROM t_user
+		where not id="admin"
 	</select>
 	
 </mapper>
