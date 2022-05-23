@@ -126,8 +126,8 @@ class HomeFragment : Fragment(), CoroutineScope, OrderListClickListener, NotiDel
     //주문 리스트 데이터 업데이트
     private fun updateOrderList(orderInfoList: List<OrderInfo>) {
         //어댑터 갱신
-        orderAdapter.submitList(orderInfoList)
-        binding.rvRecentOrder.adapter = orderAdapter
+        Log.d(TAG, "updateOrderList: 여기 계속 호출되니!!!!!!!!!!!!!${orderInfoList}")
+        orderAdapter.submitList(orderInfoList.toMutableList())
 
     }
 

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,15 +62,12 @@ class MyPageFragment : Fragment(), CoroutineScope, OrderListClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        userRepo = UserRepository.getInstance(requireContext())
-//        orderRepo = OrderRepository.getInstance(requireContext())
         prefs = requireActivity().getSharedPreferences("data", MODE_PRIVATE)
         editor = prefs.edit()
         user_id = prefs.getString("id", "") ?: ""
-//        user_name = prefs.getString("name", "") ?: ""
 
 
-//        Log.d(TAG, "onViewCreated: ${user_id}")
+        initListView()
 
         observeDatas()
 
@@ -88,6 +86,7 @@ class MyPageFragment : Fragment(), CoroutineScope, OrderListClickListener {
 
                 response?.let {
                     userInfo = it
+                    //todo 여기 로직 수정해야 리사이클러뷰 깜빡이는 것도 해결
                     initViews()
 
                 }
@@ -145,6 +144,7 @@ class MyPageFragment : Fragment(), CoroutineScope, OrderListClickListener {
         ivLogout.setOnClickListener {
             logout()
         }
+
     }
 
     //주문 리스트 데이터 초기화
@@ -157,7 +157,8 @@ class MyPageFragment : Fragment(), CoroutineScope, OrderListClickListener {
     private fun initOrderList() {
         launch {
             getOrderInfoList()
-            initListView()
+            Log.d(TAG, "initOrderList: 여기계속호출되니 ${orderInfoList}")
+            adapter.submitList(orderInfoList)
         }
     }
 
@@ -172,8 +173,7 @@ class MyPageFragment : Fragment(), CoroutineScope, OrderListClickListener {
 
         // 주문 내역 리사이클러뷰 어댑터 연결
         adapter = OrderListAdapter(MYPAGE, this@MyPageFragment).apply {
-            setHasStableIds(true)
-            submitList(orderInfoList)
+//            setHasStableIds(true)
 
             rvOrderlist.adapter = this
             rvOrderlist.layoutManager =
