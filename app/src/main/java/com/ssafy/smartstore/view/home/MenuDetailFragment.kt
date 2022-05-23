@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -21,7 +22,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.smartstore.R
-import com.ssafy.smartstore.StoreApplication
 import com.ssafy.smartstore.adapter.CommentAdapter
 import com.ssafy.smartstore.data.remote.dto.Comment
 import com.ssafy.smartstore.databinding.FragmentMenuDetailBinding
@@ -34,6 +34,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+
 
 private const val TAG = "MenuDetailFragment_싸피"
 
@@ -204,6 +205,7 @@ class MenuDetailFragment : Fragment(), CoroutineScope {
                     requireActivity().findViewById<MovableFloatingActionButton>(R.id.fab_cart)
                         .hide()
                     btnPut.visibility = View.GONE
+                    ivArrow.tag = "down"
                     ivArrow.setImageResource(R.drawable.ic_baseline_keyboard_double_arrow_down_40)
                     commentAdapter.state = true
                     commentAdapter.submitList(arrayListOf())
@@ -212,6 +214,7 @@ class MenuDetailFragment : Fragment(), CoroutineScope {
                     requireActivity().findViewById<MovableFloatingActionButton>(R.id.fab_cart)
                         .show()
                     btnPut.visibility = View.VISIBLE
+                    ivArrow.tag = "up"
                     ivArrow.setImageResource(R.drawable.ic_baseline_keyboard_double_arrow_up_40)
                     etComment.apply {
                         clearFocus()
@@ -226,6 +229,14 @@ class MenuDetailFragment : Fragment(), CoroutineScope {
             override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {}
 
         })
+
+        // 코멘트 열고 닫기 버튼
+        ivArrow.setOnClickListener {
+            when (it.tag) {
+                "down" -> containerInfo.transitionToStart()
+                "up" -> containerInfo.transitionToEnd()
+            }
+        }
     }
 
     // 키보드 내리기

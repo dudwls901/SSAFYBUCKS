@@ -229,6 +229,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:src="@drawable/ic_baseline_keyboard_double_arrow_up_40"
+                    android:tag="up"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"></ImageView>
@@ -278,7 +279,6 @@
                     android:id="@+id/rv_comment"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_marginTop="20dp"
                     android:nestedScrollingEnabled="false"
                     app:layout_constraintBottom_toTopOf="@id/btn_put"
                     app:layout_constraintEnd_toEndOf="parent"
