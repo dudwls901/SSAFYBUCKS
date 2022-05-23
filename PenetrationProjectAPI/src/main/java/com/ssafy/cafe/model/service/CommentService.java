@@ -36,4 +36,6 @@ public interface CommentService {
 	 * @return
 	 */
 	List<Comment> selectByProduct(Integer productId);
+	
+	List<Comment> selectAll();
 }

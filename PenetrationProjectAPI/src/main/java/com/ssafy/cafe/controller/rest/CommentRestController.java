@@ -72,4 +72,19 @@ public class CommentRestController {
 		List<Comment> comments = cService.selectByProduct(comment.getProductId());
 		return new ResponseEntity<List<Comment>>(comments, HttpStatus.CREATED);
 	}
+
+	// 모든 코멘트 리스트 가져옴
+	@ApiOperation(value = "모든 코멘트 리스트 가져온다", response = List.class)
+	@GetMapping("")
+	public ResponseEntity<?> selectAll() {
+
+		List<Comment> comments = cService.selectAll();
+
+		if (comments != null && !comments.isEmpty()) {
+			return new ResponseEntity<List<Comment>>(comments, HttpStatus.OK);
+		}
+
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+	}
+
 }
