@@ -78,6 +78,7 @@ create table t_order_type(
     constraint fk_order_type_order foreign key(order_id) references t_order(o_id) on delete cascade
 );
 
+INSERT INTO t_user (id, name, pass, stamps) VALUES ('admin', '관리자', 'admin', 0);
 INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy01', '김싸피', 'pass01', 5);
 INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy02', '황원태', 'pass02', 0);
 INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy03', '한정일', 'pass03', 3);
@@ -152,8 +153,6 @@ INSERT INTO t_user_token (user_id, token) VALUES ('ssafy01', 'dErQv4F1ReePgYf5xX
 INSERT INTO t_shopping_list (user_id, product_id, quantity) VALUES ('ssafy01', 1 ,1);
 INSERT INTO t_shopping_list (user_id, product_id, quantity) VALUES ('ssafy01', 2 ,1);
 INSERT INTO t_shopping_list (user_id, product_id, quantity) VALUES ('ssafy01', 3 ,1);
-INSERT INTO t_shopping_list (user_id, product_id, quantity) VALUES ('ssafy01', 4 ,1);
-INSERT INTO t_shopping_list (user_id, product_id, quantity) VALUES ('ssafy01', 5 ,1);
 
 INSERT INTO t_order_type (order_id, type) VALUES (1 ,'in');
 INSERT INTO t_order_type (order_id) VALUES (2);
