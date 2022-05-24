@@ -49,6 +49,11 @@ class OrderListAdapter(val state: String, val listener: OrderListClickListener) 
                 } else {
                     "${order.orderProductList[0].product.name}외 ${sumQuantity - 1}잔"
                 }
+
+                if (order.completed == "N") {
+                    binding.btnState.text = "주문 접수중"
+                } else binding.btnState.text = "주문 완료"
+
                 binding.tvOrderName.text = orderText
                 binding.tvOrderPrice.text = price.toString()
                 binding.tvOrderDate.text = order.date.substring(0, order.date.indexOf('T'))

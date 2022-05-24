@@ -53,15 +53,18 @@ class SalesFragment : Fragment(), CoroutineScope {
     }
 
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
-        override fun getItemCount(): Int = 2
+        override fun getItemCount(): Int = 3
 
         override fun createFragment(position: Int): Fragment {
             when (position) {
                 0 -> {
                     return ChartVerticalFragment()
                 }
-                else -> {
+                1 -> {
                     return ChartTagCloudFragment()
+                }
+                else -> {
+                    return ChartRatingFragment()
                 }
             }
         }

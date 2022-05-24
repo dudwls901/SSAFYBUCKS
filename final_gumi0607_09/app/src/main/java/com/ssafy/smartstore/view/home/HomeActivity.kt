@@ -121,6 +121,7 @@ class HomeActivity : AppCompatActivity(), CoroutineScope, BeaconConsumer {
                 homeViewModel.updateNotiList(notiList)
 
             }
+            orderViewModel.getOrderMonth(userId)
         }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED

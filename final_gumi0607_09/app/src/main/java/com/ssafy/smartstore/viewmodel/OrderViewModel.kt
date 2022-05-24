@@ -210,7 +210,8 @@ class OrderViewModel : ViewModel() {
                 OrderInfo(
                     id = order.o_id,
                     date = order.order_time,
-                    orderProductList = orderProductList
+                    orderProductList = orderProductList,
+                    completed = order.completed
                 )
             )
         }
