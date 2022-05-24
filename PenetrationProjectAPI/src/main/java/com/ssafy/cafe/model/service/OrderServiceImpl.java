@@ -1,5 +1,6 @@
 package com.ssafy.cafe.model.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +38,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	OrderTypeDao otDao;
+	
+	@Autowired
+    FirebaseCloudMessageService fService;
 
 	@Override
 	@Transactional
@@ -79,6 +83,14 @@ public class OrderServiceImpl implements OrderService {
 		// 사용자 정보 업데이트
 		User user = User.builder().id(order.getUserId()).stamps(stamp.getQuantity()).build();
 		uDao.updateStamp(user);
+		
+		// 관리자에게 메시지 전송
+		try {
+			fService.sendMessageTo("admin", "주문 알림", user.getId() + "님이 주문을 하였습니다");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return order.getId();
 	}

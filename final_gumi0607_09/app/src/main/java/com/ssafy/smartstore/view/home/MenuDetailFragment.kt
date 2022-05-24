@@ -264,7 +264,7 @@ class MenuDetailFragment : Fragment(), CoroutineScope {
         val et: EditText = view.findViewById(R.id.et_comment)
 
         et.setText(comment.comment)
-        ratingBar.rating = comment.rating
+        ratingBar.rating = comment.rating * 2
 
         // findViewById를 통해 view를 가져와서 사용
         val listener = DialogInterface.OnClickListener { dialog, which ->
@@ -275,7 +275,7 @@ class MenuDetailFragment : Fragment(), CoroutineScope {
                         comment.id,
                         userId,
                         productViewModel.product.value!!.id,
-                        ratingBar.rating,
+                        ratingBar.rating * 2,
                         et.text.toString()
                     )
                 )
@@ -334,7 +334,7 @@ class MenuDetailFragment : Fragment(), CoroutineScope {
         val listener = DialogInterface.OnClickListener { dialog, which ->
             when (which) {
                 DialogInterface.BUTTON_POSITIVE -> {
-                    comment.rating = ratingBar.rating
+                    comment.rating = ratingBar.rating * 2
                     launch {
                         productViewModel.insertComment(
                             comment
