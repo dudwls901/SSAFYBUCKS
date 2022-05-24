@@ -99,6 +99,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope  {
 
 
         mainIbNoti.setOnClickListener {
+            Log.d(TAG, "initViews: ${orderViewModel.notiList.value!!}")
             val bundle = Bundle()
             bundle.putParcelableArray("notiList", orderViewModel.notiList.value!!.toTypedArray())
             startActivity(Intent(this@MainActivity, NotiListActivity::class.java).apply {
@@ -107,11 +108,14 @@ class MainActivity : AppCompatActivity(), CoroutineScope  {
         }
     }
 
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-        Log.d(TAG, "onTouchEvent: $event")
-        orderViewModel.updateTouchCount()
-        return super.onTouchEvent(event)
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        if(orderViewModel.notiList.value!!.size != orderViewModel.tempNotiList.value?.size) {
+            orderViewModel.updateTouchCount()
+        }
+        return super.dispatchTouchEvent(ev)
+
     }
+
 
     private fun observeDatas(){
         orderViewModel.notiList.observe(this){
@@ -122,20 +126,10 @@ class MainActivity : AppCompatActivity(), CoroutineScope  {
             }
         }
         orderViewModel.touchCount.observe(this){
-            Log.d(TAG, "observeDatas: ${it}")
-            if(it%10==0){
-                Log.d(TAG, "observeDatas in : ${it}")
+            if(it%30==0){
                 val shake  = AnimationUtils.loadAnimation(this, R.anim.shake)
                 binding.mainIbNoti.startAnimation(shake)
             }
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if(orderViewModel.notiList.value?.size != orderViewModel.tempNotiList.value?.size){
-            val shake  = AnimationUtils.loadAnimation(this, R.anim.shake)
-            binding.mainIbNoti.startAnimation(shake)
         }
     }
 

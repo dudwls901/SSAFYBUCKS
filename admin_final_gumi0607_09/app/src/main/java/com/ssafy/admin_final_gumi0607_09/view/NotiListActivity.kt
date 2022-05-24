@@ -27,10 +27,11 @@ class NotiListActivity : AppCompatActivity() {
         val bundle = intent.getBundleExtra("notiList")
         val list = bundle?.getParcelableArray("notiList")
 //        Log.d("aaaa", "onCreate: ${list?.javaClass?.simpleName}")
-//        Log.d("aaaa", "onCreate: $list")
+
         var notiList = mutableListOf<Noti>()
         list?.let {
             it.forEach {
+                Log.d("aaaa", "onCreate: $it")
                 notiList.add(it as Noti)
             }
         }
