@@ -401,14 +401,14 @@ class OrderViewModel : ViewModel() {
                             )
                         )
                 } else { // 결제 가능
-//                    _canCallBootPay.postValue(Event(true))
-                    updateOrderDetails("ssafy01")
+                    _canCallBootPay.postValue(Event(true))
+//                    updateOrderDetails("ssafy01")
                 }
             }
             // 테이크 아웃인 경우
             else {
-//                _canCallBootPay.postValue(Event(true))
-                updateOrderDetails("ssafy01")
+                _canCallBootPay.postValue(Event(true))
+//                updateOrderDetails("ssafy01")
             }
 
         } else { //결제 불가
