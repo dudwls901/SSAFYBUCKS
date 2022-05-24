@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.google.android.material.snackbar.Snackbar
 import com.ssafy.admin_final_gumi0607_09.data.local.respositroy.NotiRepository
 import com.ssafy.admin_final_gumi0607_09.databinding.FragmentOrderBinding
 import com.ssafy.admin_final_gumi0607_09.model.OrderInfo
@@ -62,7 +63,8 @@ class OrderFragment : Fragment(){
         }
         orderViewModel.toastMessage.observe(viewLifecycleOwner, EventObserver {
             if (it.isNotEmpty()) {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                Snackbar.make(binding.root,it,Snackbar.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                 orderViewModel.getOrderInfoResponse(orderViewModel.selectedDate.value!!)
             }
         })
@@ -116,7 +118,6 @@ class OrderFragment : Fragment(){
                 Log.d(TAG, "showDate $ymd")
             }, y+2000, m-1, d
         )
-        datePickerDialog.setMessage("날짜 선택")
         datePickerDialog.show()
     }
 
