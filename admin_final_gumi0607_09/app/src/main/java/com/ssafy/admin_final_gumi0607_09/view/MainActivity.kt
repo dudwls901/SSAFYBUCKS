@@ -82,7 +82,6 @@ class MainActivity : AppCompatActivity(), CoroutineScope  {
                     notiRepo.insert(Noti(userName, message))
                 }
                 val notiList = notiRepo.select()
-                Log.d(TAG, "onCreate: ${notiList}")
                 orderViewModel.updateNotiList(notiList)
             }
         }
@@ -101,13 +100,21 @@ class MainActivity : AppCompatActivity(), CoroutineScope  {
 
 
         mainIbNoti.setOnClickListener {
-            val tempNotiSize = orderViewModel.tempNotiList.value!!.size
+            Log.d(TAG, "observe initViews: ${orderViewModel.newNotiCount.value} ${orderViewModel.notiList.value!!.size} ${orderViewModel.tempNotiList.value!!.size}")
             launch {
 
-                withContext(Dispatchers.IO) {
-                    orderViewModel.notiList.value?.forEach {
-                        if (it.id > tempNotiSize) {
-                            notiRepo.insertTemp(TempNoti(it.u_id, it.data))
+                withContext(Dispatchers.Main) {
+                    orderViewModel.notiList.value?.let{
+                        label@for(noti in it){
+                            for(tempNoti in orderViewModel.tempNotiList.value!!){
+                                if( tempNoti.data == noti.data &&
+                                    tempNoti.id == noti.id &&
+                                    tempNoti.u_id == noti.u_id){
+                                    continue@label
+                                }
+                            }
+                            notiRepo.insertTemp(TempNoti(noti.id, noti.u_id, noti.data ))
+                            orderViewModel.updateTempNotiList(notiRepo.selectTemp())
                         }
                     }
                 }
@@ -131,18 +138,29 @@ class MainActivity : AppCompatActivity(), CoroutineScope  {
 
     private fun observeDatas(){
         orderViewModel.notiList.observe(this){
-            Log.d(TAG, "observeDatas: ${it.size} ${orderViewModel.tempNotiList.value?.size}")
-            if(it.size != orderViewModel.tempNotiList.value?.size){
-                val shake  = AnimationUtils.loadAnimation(this, R.anim.shake)
-                binding.mainIbNoti.startAnimation(shake)
-            }
+            orderViewModel.updateNewNotiCount()
         }
+
+        orderViewModel.tempNotiList.observe(this){
+//            Log.d(TAG, "observeDatas: temp noti ${it.size} ${orderViewModel.newNotiCount.value}")
+            orderViewModel.updateNewNotiCount()
+        }
+
         orderViewModel.touchCount.observe(this){
             if(it%30==0 && it!=0){
                 val shake  = AnimationUtils.loadAnimation(this, R.anim.shake)
                 binding.mainIbNoti.startAnimation(shake)
             }
         }
+
+        orderViewModel.newNotiCount.observe(this){
+//            Log.d(TAG, "observeDatas: $it ${orderViewModel.tempNotiList.value?.size} ${orderViewModel.tempNotiList.value?.size}")
+            if(it!=0){
+                val shake  = AnimationUtils.loadAnimation(this, R.anim.shake)
+                binding.mainIbNoti.startAnimation(shake)
+            }
+        }
+
 
         orderViewModel.loading.observe(this){
             if(it){
@@ -189,7 +207,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope  {
         notiData?.let {
             launch {
                 withContext(Dispatchers.Main) {
-                    notiRepo.insert(Noti(it.substring(0, it!!.indexOf("님")), it))
+                    notiRepo.insert(Noti(it.substring(0, it.indexOf("님")), it))
                 }
                 notiRepo.select()
 

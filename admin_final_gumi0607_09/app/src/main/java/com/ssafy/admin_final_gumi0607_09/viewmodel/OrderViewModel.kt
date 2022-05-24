@@ -1,6 +1,7 @@
 package com.ssafy.admin_final_gumi0607_09.viewmodel
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -61,7 +62,9 @@ class OrderViewModel : ViewModel() {
         get() = _totalPrice
 
 
-    private val _notiList = MutableLiveData<List<Noti>>()
+    private val _notiList = MutableLiveData<List<Noti>>().apply{
+        value = listOf()
+    }
     val notiList: LiveData<List<Noti>>
         get() = _notiList
 
@@ -71,6 +74,12 @@ class OrderViewModel : ViewModel() {
     val tempNotiList: LiveData<List<TempNoti>>
         get() = _tempNotiList
 
+    private val _newNotiCount = MutableLiveData<Int>().apply{
+        value = 0
+    }
+    val newNotiCount: LiveData<Int>
+        get() = _newNotiCount
+
     private val _touchCount = MutableLiveData<Int>().apply {
         value = 0
     }
@@ -79,6 +88,11 @@ class OrderViewModel : ViewModel() {
 
     fun updateTouchCount(){
         _touchCount.value = _touchCount.value!!+1
+    }
+
+    fun updateNewNotiCount(){
+        Log.d("observe", "updateNewNotiCount: ${notiList.value!!.size} ${tempNotiList.value!!.size}")
+        _newNotiCount.postValue(notiList.value!!.size - tempNotiList.value!!.size)
     }
 
     fun updateNotiList(list: List<Noti>) {
