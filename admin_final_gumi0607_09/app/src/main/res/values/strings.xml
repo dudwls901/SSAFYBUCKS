@@ -8,4 +8,5 @@
     <string name="product_name_with_count">%s %d잔</string>
     <string name="no_order">오늘은 주문이 없어요!</string>
     <string name="total_price">일 매출 : %s원</string>
+    <string name="ssafybucks">SSAFYBUCKS</string>
 </resources>

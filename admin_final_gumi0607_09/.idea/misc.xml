@@ -21,9 +21,12 @@
         <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/viewpager.xml" value="0.25" />
         <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/drawable/ic_baseline_notifications_24.xml" value="0.2065" />
         <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/drawable/ic_baseline_notifications_none_24.xml" value="0.2065" />
-        <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/activity_main.xml" value="0.17346014492753623" />
+        <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/activity_main.xml" value="0.4" />
         <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/activity_noti_list.xml" value="0.1875" />
         <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/activity_splash.xml" value="0.264" />
+        <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/fragment_chart_rating.xml" value="0.19895833333333332" />
+        <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/fragment_chart_tag_cloud.xml" value="0.19895833333333332" />
+        <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/fragment_chart_vertical.xml" value="0.19895833333333332" />
         <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/fragment_noti.xml" value="0.15104166666666666" />
         <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/fragment_noti_list.xml" value="0.15104166666666666" />
         <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/fragment_order.xml" value="0.2" />

@@ -247,7 +247,6 @@ class OrderViewModel : ViewModel() {
                     when(it.code()){
                         200 -> {
                             sendMessageTo(userId, title, body)
-                            _loading.postValue(false)
                         }
                         else -> onError(it.message())
                     }

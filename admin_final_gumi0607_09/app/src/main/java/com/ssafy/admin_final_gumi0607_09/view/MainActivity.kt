@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
+import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -110,7 +111,6 @@ class MainActivity : AppCompatActivity(), CoroutineScope  {
                         }
                     }
                 }
-                Log.d(TAG, "initViews: ${orderViewModel.notiList.value!!}")
                 val bundle = Bundle()
                 bundle.putParcelableArray("notiList", orderViewModel.notiList.value!!.toTypedArray())
                 startActivity(Intent(this@MainActivity, NotiListActivity::class.java).apply {
@@ -141,6 +141,15 @@ class MainActivity : AppCompatActivity(), CoroutineScope  {
             if(it%30==0 && it!=0){
                 val shake  = AnimationUtils.loadAnimation(this, R.anim.shake)
                 binding.mainIbNoti.startAnimation(shake)
+            }
+        }
+
+        orderViewModel.loading.observe(this){
+            if(it){
+                binding.pbLoadingBar.visibility = View.VISIBLE
+            }
+            else{
+                binding.pbLoadingBar.visibility = View.GONE
             }
         }
     }
