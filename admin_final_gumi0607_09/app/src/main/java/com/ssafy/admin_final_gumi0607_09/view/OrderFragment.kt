@@ -1,5 +1,6 @@
 package com.ssafy.admin_final_gumi0607_09.view
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.ssafy.admin_final_gumi0607_09.R
 import com.ssafy.admin_final_gumi0607_09.data.remote.dto.Product
@@ -34,6 +36,7 @@ class OrderFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -47,9 +50,10 @@ class OrderFragment : Fragment() {
 
         initViews()
         observeDatas()
-        getDatas()
+        getDatas(orderViewModel.selectedDate.value!!)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun observeDatas() {
         orderViewModel.orderInfoList.observe(viewLifecycleOwner) {
             it.forEach {
@@ -60,20 +64,36 @@ class OrderFragment : Fragment() {
         orderViewModel.toastMessage.observe(viewLifecycleOwner, EventObserver {
             if (it.isNotEmpty()) {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                orderViewModel.getOrderInfoResponse("20220523")
+                orderViewModel.getOrderInfoResponse(orderViewModel.selectedDate.value!!)
             }
         })
+
+        orderViewModel.selectedDate.observe(viewLifecycleOwner){
+            getDatas(it)
+        }
     }
 
-    private fun getDatas() {
-        orderViewModel.getOrderInfoResponse("20220523")
+    private fun getDatas(date: String) {
+        Log.d(TAG, "getDatas: $date")
+        orderViewModel.getOrderInfoResponse(date)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initViews() = with(binding) {
+        binding.vm = orderViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         adapter = OrderAdapter { orderId, userId, title, body ->
             orderViewModel.changeOrderComplete(orderId, userId, title, body)
         }
         orderRv.adapter = adapter
+
+        orderIbRight.setOnClickListener {
+            orderViewModel.changeSelectedDate("up")
+        }
+        orderIbLeft.setOnClickListener {
+            orderViewModel.changeSelectedDate("down")
+        }
+
     }
 
     private fun updateListView(list: List<OrderInfo>) {

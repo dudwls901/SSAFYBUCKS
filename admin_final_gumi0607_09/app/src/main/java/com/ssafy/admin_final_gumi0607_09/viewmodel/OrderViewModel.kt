@@ -1,7 +1,7 @@
 package com.ssafy.admin_final_gumi0607_09.viewmodel
 
 import android.os.Build
-import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,10 +10,8 @@ import com.ssafy.admin_final_gumi0607_09.data.remote.dto.Product
 import com.ssafy.admin_final_gumi0607_09.model.OrderInfo
 import com.ssafy.admin_final_gumi0607_09.model.OrderProduct
 import com.ssafy.smartstore.data.remote.RetrofitClient
-import com.ssafy.smartstore.data.remote.dto.OrderDetail
 import com.ssafy.smartstore.data.remote.dto.OrderInfoResponse
 import com.ssafy.smartstore.data.remote.repository.OrderRepository
-import com.ssafy.smartstore.data.remote.repository.ProductRepository
 import com.ssafy.smartstore.data.remote.repository.TokenRepository
 import com.ssafy.smartstore.event.Event
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -21,6 +19,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 
 class OrderViewModel : ViewModel() {
 
@@ -53,9 +53,42 @@ class OrderViewModel : ViewModel() {
     val orderInfoList: LiveData<List<OrderInfo>>
         get() = _orderInfoList
 
-    private var _selectedDate = MutableLiveData<String>()
+    @RequiresApi(Build.VERSION_CODES.O)
+    private var _selectedDate = MutableLiveData<String>().apply {
+        val date = Date()
+        val simpleDateFormat = SimpleDateFormat("yy.MM.dd")
+        value = simpleDateFormat.format(date)
+    }
     val selectedDate: LiveData<String>
+        @RequiresApi(Build.VERSION_CODES.O)
         get() = _selectedDate
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun changeSelectedDate(type: String){
+
+        val cal = Calendar.getInstance()
+        val (y,m,d) = _selectedDate.value!!.split('.').map{it.toInt()}
+        cal.set(y,m,d)
+        val df = SimpleDateFormat("yy.MM.dd")
+        cal.add(Calendar.MONTH, -1)
+
+        when(type){
+            "up" -> {
+                cal.add(Calendar.DATE, 1)
+                val newDate = df.format(cal.time)
+                _selectedDate.value = newDate
+            }
+            "down" -> {
+                cal.add(Calendar.DATE, -1)
+                val newDate = df.format(cal.time)
+                _selectedDate.value = newDate
+            }
+            else -> {
+
+            }
+        }
+    }
 
     fun getOrderInfoResponse(date: String) = viewModelScope.launch{
         _loading.postValue(true)
