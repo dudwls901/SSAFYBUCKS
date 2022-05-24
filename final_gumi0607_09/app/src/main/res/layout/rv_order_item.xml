@@ -101,7 +101,7 @@
         android:background="@drawable/background_brown_radius_10"
         android:fontFamily="@font/cafe24_ssurround"
         android:paddingHorizontal="10dp"
-        android:text="픽업완료"
+        android:text="주문 접수"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

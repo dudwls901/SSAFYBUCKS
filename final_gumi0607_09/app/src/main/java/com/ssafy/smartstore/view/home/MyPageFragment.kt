@@ -75,7 +75,9 @@ class MyPageFragment : Fragment(), CoroutineScope, OrderListClickListener {
 
         getUserInfo()
 
-
+        user_id?.let {
+            orderViewModel.getOrderMonth(it)
+        }
     }
 
     private fun observeDatas() {
