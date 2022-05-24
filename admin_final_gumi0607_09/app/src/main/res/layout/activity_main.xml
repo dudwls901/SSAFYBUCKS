@@ -47,7 +47,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/ic_baseline_notifications_none_24" />
+                    android:src="@{vm.notiList.size()-(vm.tempNotiList.size())==0 ? @drawable/ic_baseline_notifications_none_24 : @drawable/ic_baseline_notifications_active_24}" />
 
                 <TextView
                     android:id="@+id/main_tv_noti"
@@ -56,9 +56,11 @@
                     android:layout_marginStart="36dp"
                     android:layout_marginTop="4dp"
                     android:fontFamily="@font/maplestory_bold"
-                    android:text="@{String.valueOf(vm.notiList.size())}"
-                    android:visibility="@{vm.notiList.size()==0 ? View.GONE : View.VISIBLE}"
+                    android:text="@{String.valueOf(vm.notiList.size()-(vm.tempNotiList.size()))}"
+                    android:visibility="@{vm.notiList.size()-(vm.tempNotiList.size())==0 ? View.GONE : View.VISIBLE}"
                     android:textColor="#FF0300" />
+
+
             </FrameLayout>
 
 

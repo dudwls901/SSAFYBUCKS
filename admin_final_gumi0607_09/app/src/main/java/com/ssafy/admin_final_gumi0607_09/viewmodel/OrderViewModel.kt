@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.admin_final_gumi0607_09.data.local.entity.Noti
+import com.ssafy.admin_final_gumi0607_09.data.local.entity.TempNoti
 import com.ssafy.admin_final_gumi0607_09.data.remote.dto.Product
 import com.ssafy.admin_final_gumi0607_09.model.OrderInfo
 import com.ssafy.admin_final_gumi0607_09.model.OrderProduct
@@ -64,12 +65,28 @@ class OrderViewModel : ViewModel() {
     val notiList: LiveData<List<Noti>>
         get() = _notiList
 
+    private val _tempNotiList = MutableLiveData<List<TempNoti>>()
+    val tempNotiList: LiveData<List<TempNoti>>
+        get() = _tempNotiList
+
+    private val _touchCount = MutableLiveData<Int>().apply {
+        value = 0
+    }
+    val touchCount: LiveData<Int>
+        get() = _touchCount
+
+    fun updateTouchCount(){
+        _touchCount.value = _touchCount.value!!+1
+    }
 
     fun updateNotiList(list: List<Noti>) {
         _loading.postValue(false)
         _notiList.value = list
     }
 
+    fun updateTempNotiList(list: List<TempNoti>){
+        _tempNotiList.value = list
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private var _selectedDate = MutableLiveData<String>().apply {

@@ -10,11 +10,13 @@ import androidx.room.RoomDatabase
 import com.ssafy.admin_final_gumi0607_09.AdminApplication
 import com.ssafy.admin_final_gumi0607_09.data.local.dao.NotiDao
 import com.ssafy.admin_final_gumi0607_09.data.local.entity.Noti
+import com.ssafy.admin_final_gumi0607_09.data.local.entity.TempNoti
 
 @Database(entities = arrayOf(
-    Noti::class
+    Noti::class,
+    TempNoti::class
 ),
-    version = 1
+    version = 2
 )
 abstract class StoreDatabase: RoomDatabase() {
 

@@ -3,6 +3,7 @@ package com.ssafy.admin_final_gumi0607_09.data.local.respositroy
 import android.content.Context
 import android.util.Log
 import com.ssafy.admin_final_gumi0607_09.data.local.entity.Noti
+import com.ssafy.admin_final_gumi0607_09.data.local.entity.TempNoti
 import com.ssafy.smartstore.data.local.database.StoreDatabase
 
 
@@ -21,6 +22,16 @@ class NotiRepository(context: Context) {
 
     suspend fun select(): List<Noti> {
         return nDao.select()
+    }
+
+    suspend fun insertTemp(tempNoti: TempNoti): Int {
+        nDao.insertTemp(tempNoti)
+        return 0
+    }
+
+
+    suspend fun selectTemp(): List<TempNoti> {
+        return nDao.selectTemp()
     }
 
     companion object {

@@ -9,6 +9,8 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
+import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
@@ -59,12 +61,6 @@ class MainActivity : AppCompatActivity(), CoroutineScope  {
             setFCMChannel()
         }
 
-        // 바텀 네비게이션 초기 설정
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.main_nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.navController
-        NavigationUI.setupWithNavController(binding.bottomNavi, navController)
-
         //background push 데이터 받기
         Log.d("notidata", "${intent?.extras}")
         if (intent?.extras != null) {
@@ -94,6 +90,14 @@ class MainActivity : AppCompatActivity(), CoroutineScope  {
 
 
     private fun initViews() = with(binding){
+
+        // 바텀 네비게이션 초기 설정
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.main_nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
+        NavigationUI.setupWithNavController(binding.bottomNavi, navController)
+
+
         mainIbNoti.setOnClickListener {
             val bundle = Bundle()
             bundle.putParcelableArray("notiList", orderViewModel.notiList.value!!.toTypedArray())
@@ -103,16 +107,45 @@ class MainActivity : AppCompatActivity(), CoroutineScope  {
         }
     }
 
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        Log.d(TAG, "onTouchEvent: $event")
+        orderViewModel.updateTouchCount()
+        return super.onTouchEvent(event)
+    }
+
     private fun observeDatas(){
         orderViewModel.notiList.observe(this){
             Log.d(TAG, "observeDatas: $it")
+            if(it.size != orderViewModel.tempNotiList.value?.size){
+                val shake  = AnimationUtils.loadAnimation(this, R.anim.shake)
+                binding.mainIbNoti.startAnimation(shake)
+            }
+        }
+        orderViewModel.touchCount.observe(this){
+            Log.d(TAG, "observeDatas: ${it}")
+            if(it%10==0){
+                Log.d(TAG, "observeDatas in : ${it}")
+                val shake  = AnimationUtils.loadAnimation(this, R.anim.shake)
+                binding.mainIbNoti.startAnimation(shake)
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(orderViewModel.notiList.value?.size != orderViewModel.tempNotiList.value?.size){
+            val shake  = AnimationUtils.loadAnimation(this, R.anim.shake)
+            binding.mainIbNoti.startAnimation(shake)
         }
     }
 
     private fun getNotiList(){
         launch {
             val notiList = notiRepo.select()
+            val tempNotiList = notiRepo.selectTemp()
+            orderViewModel.updateTempNotiList(tempNotiList)
             orderViewModel.updateNotiList(notiList)
+
         }
     }
 
