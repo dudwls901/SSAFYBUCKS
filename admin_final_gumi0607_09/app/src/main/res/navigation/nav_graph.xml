@@ -20,4 +20,8 @@
         android:name="com.ssafy.admin_final_gumi0607_09.view.SalesFragment"
         android:label="fragment_sales"
         tools:layout="@layout/fragment_sales" />
+    <fragment
+        android:id="@+id/notiListFragment"
+        android:name="com.ssafy.admin_final_gumi0607_09.view.NotiListFragment"
+        android:label="NotiListFragment" />
 </navigation>

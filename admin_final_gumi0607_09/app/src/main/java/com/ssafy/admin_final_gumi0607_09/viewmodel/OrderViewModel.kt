@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ssafy.admin_final_gumi0607_09.data.local.entity.Noti
 import com.ssafy.admin_final_gumi0607_09.data.remote.dto.Product
 import com.ssafy.admin_final_gumi0607_09.model.OrderInfo
 import com.ssafy.admin_final_gumi0607_09.model.OrderProduct
@@ -58,6 +59,16 @@ class OrderViewModel : ViewModel() {
     val totalPrice: LiveData<String>
         get() = _totalPrice
 
+
+    private val _notiList = MutableLiveData<List<Noti>>()
+    val notiList: LiveData<List<Noti>>
+        get() = _notiList
+
+
+    fun updateNotiList(list: List<Noti>) {
+        _loading.postValue(false)
+        _notiList.value = list
+    }
 
 
     @RequiresApi(Build.VERSION_CODES.O)

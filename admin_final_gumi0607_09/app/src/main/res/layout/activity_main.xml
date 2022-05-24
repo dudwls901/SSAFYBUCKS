@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.ssafy.admin_final_gumi0607_09.viewmodel.OrderViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -53,7 +56,8 @@
                     android:layout_marginStart="36dp"
                     android:layout_marginTop="4dp"
                     android:fontFamily="@font/maplestory_bold"
-                    android:text="13"
+                    android:text="@{String.valueOf(vm.notiList.size())}"
+                    android:visibility="@{vm.notiList.size()==0 ? View.GONE : View.VISIBLE}"
                     android:textColor="#FF0300" />
             </FrameLayout>
 

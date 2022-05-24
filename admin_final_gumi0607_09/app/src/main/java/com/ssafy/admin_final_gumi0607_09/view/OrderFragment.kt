@@ -12,18 +12,26 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.ssafy.admin_final_gumi0607_09.data.local.respositroy.NotiRepository
 import com.ssafy.admin_final_gumi0607_09.databinding.FragmentOrderBinding
 import com.ssafy.admin_final_gumi0607_09.model.OrderInfo
+import com.ssafy.admin_final_gumi0607_09.view.MainActivity.Companion.userId
 import com.ssafy.admin_final_gumi0607_09.viewmodel.OrderViewModel
 import com.ssafy.smartstore.event.EventObserver
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 
-class OrderFragment : Fragment() {
+class OrderFragment : Fragment(){
 
     private lateinit var binding: FragmentOrderBinding
     private lateinit var adapter: OrderAdapter
-    private val orderViewModel: OrderViewModel by viewModels()
+
+    private val orderViewModel: OrderViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -70,6 +78,7 @@ class OrderFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun initViews() = with(binding) {
+
         binding.vm = orderViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         adapter = OrderAdapter { orderId, userId, title, body ->
