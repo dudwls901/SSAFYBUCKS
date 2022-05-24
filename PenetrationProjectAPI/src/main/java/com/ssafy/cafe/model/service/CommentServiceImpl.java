@@ -8,13 +8,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.cafe.model.dao.CommentDao;
+import com.ssafy.cafe.model.dao.UserDao;
 import com.ssafy.cafe.model.dto.Comment;
+import com.ssafy.cafe.model.dto.User;
 
 @Service
 public class CommentServiceImpl implements CommentService {
 
 	@Autowired
 	CommentDao cDao;
+	
+	@Autowired
+	UserDao uDao;
 
 	@Autowired
 	FirebaseCloudMessageService fService;
@@ -23,10 +28,13 @@ public class CommentServiceImpl implements CommentService {
 	@Transactional
 	public void addComment(Comment comment) {
 		cDao.insert(comment);
+		
+		User user = uDao.select(comment.getUserId());
+		
 		// 관리자에게 메시지 전송
 		try {
 			fService.sendMessageTo("admin", "코멘트 알림",
-					comment.getUserId() + "님의 새로운 코멘트(" + "★" + comment.getRating() + "): " + comment.getComment());
+					user.getName() + "님의 새로운 코멘트(" + "★" + comment.getRating() + "): " + comment.getComment());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

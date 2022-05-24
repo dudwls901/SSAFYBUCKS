@@ -82,7 +82,7 @@ public class OrderServiceImpl implements OrderService {
 
 		// 관리자에게 메시지 전송
 		try {
-			fService.sendMessageTo("admin", "주문 알림", user.getId() + "님이 주문을 하였습니다");
+			fService.sendMessageTo("admin", "주문 알림", user.getName() + "님이 주문을 하였습니다");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
