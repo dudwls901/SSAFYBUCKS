@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.ssafy.admin_final_gumi0607_09.data.remote.dto.Product
 import com.ssafy.admin_final_gumi0607_09.model.OrderInfo
 import com.ssafy.admin_final_gumi0607_09.model.OrderProduct
+import com.ssafy.admin_final_gumi0607_09.util.DecimalConverter.priceConvert
 import com.ssafy.smartstore.data.remote.RetrofitClient
 import com.ssafy.smartstore.data.remote.dto.OrderInfoResponse
 import com.ssafy.smartstore.data.remote.repository.OrderRepository
@@ -53,6 +54,12 @@ class OrderViewModel : ViewModel() {
     val orderInfoList: LiveData<List<OrderInfo>>
         get() = _orderInfoList
 
+    private var _totalPrice = MutableLiveData<String>()
+    val totalPrice: LiveData<String>
+        get() = _totalPrice
+
+
+
     @RequiresApi(Build.VERSION_CODES.O)
     private var _selectedDate = MutableLiveData<String>().apply {
         val date = Date()
@@ -85,7 +92,7 @@ class OrderViewModel : ViewModel() {
                 _selectedDate.value = newDate
             }
             else -> {
-
+                _selectedDate.value = type
             }
         }
     }
@@ -126,7 +133,9 @@ class OrderViewModel : ViewModel() {
         var orderList = orderInfoResponseList
 //        val productMap = mutableMapOf<Int, MutableMap<Int, Product>>()
         val productList = ArrayList<Pair<Int, Product>>()
+        var priceSum = 0
         for (order in orderList) {
+            priceSum += order.price*order.quantity
             if (quantityMap[order.o_id].isNullOrEmpty()) {
                 quantityMap[order.o_id] = mutableMapOf()
             }
@@ -191,6 +200,7 @@ class OrderViewModel : ViewModel() {
                 )
             )
         }
+        _totalPrice.postValue(priceSum.priceConvert())
         return orderInfoList
     }
 

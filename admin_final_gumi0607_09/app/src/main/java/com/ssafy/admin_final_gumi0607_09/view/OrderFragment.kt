@@ -1,22 +1,23 @@
 package com.ssafy.admin_final_gumi0607_09.view
 
+import android.R.attr.y
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.ssafy.admin_final_gumi0607_09.R
-import com.ssafy.admin_final_gumi0607_09.data.remote.dto.Product
 import com.ssafy.admin_final_gumi0607_09.databinding.FragmentOrderBinding
 import com.ssafy.admin_final_gumi0607_09.model.OrderInfo
-import com.ssafy.admin_final_gumi0607_09.model.OrderProduct
 import com.ssafy.admin_final_gumi0607_09.viewmodel.OrderViewModel
 import com.ssafy.smartstore.event.EventObserver
+
 
 class OrderFragment : Fragment() {
 
@@ -40,14 +41,6 @@ class OrderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var b = 498
-        var c = 998
-        while(b<c){
-            c-=b
-            b*=2
-            Log.e(TAG, "onViewCreated: b: ${b}   c: $c", )
-        }
-
         initViews()
         observeDatas()
         getDatas(orderViewModel.selectedDate.value!!)
@@ -56,9 +49,6 @@ class OrderFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun observeDatas() {
         orderViewModel.orderInfoList.observe(viewLifecycleOwner) {
-            it.forEach {
-                Log.d(TAG, "observeDatas: $it")
-            }
             updateListView(it)
         }
         orderViewModel.toastMessage.observe(viewLifecycleOwner, EventObserver {
@@ -93,11 +83,30 @@ class OrderFragment : Fragment() {
         orderIbLeft.setOnClickListener {
             orderViewModel.changeSelectedDate("down")
         }
-
+        orderTvDate.setOnClickListener {
+            showDate()
+        }
     }
 
     private fun updateListView(list: List<OrderInfo>) {
         adapter.submitList(list)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun showDate() {
+        var (y,m,d) = orderViewModel.selectedDate.value!!.split('.').map{it.toInt()}
+        Log.d(TAG, "showDate $y $m $d")
+        val datePickerDialog = DatePickerDialog(requireContext(),
+            OnDateSetListener { view, year, month, dayOfMonth ->
+                Log.d(TAG, "showDate: ${year} $month $dayOfMonth")
+
+                val ymd = (year%100).toString()+"." +(month+1).toString()+"."+dayOfMonth.toString()
+                orderViewModel.changeSelectedDate(ymd)
+                Log.d(TAG, "showDate $ymd")
+            }, y+2000, m-1, d
+        )
+        datePickerDialog.setMessage("날짜 선택")
+        datePickerDialog.show()
     }
 
     companion object {
