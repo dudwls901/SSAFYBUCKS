@@ -65,12 +65,21 @@ class ChartRatingFragment : Fragment() {
                 product.id == it.key
             }!!.name
             val max = (it.value.maxByOrNull { it.rating }?.rating ?: 0).toFloat() * 10
-            val min = (it.value.minByOrNull { it.rating }?.rating ?: 0).toFloat() *10
-            val diff = max - min
-            val q1 = diff * 0.25
-            val q3 = diff * 0.75
+            val min = (it.value.minByOrNull { it.rating }?.rating ?: 0).toFloat() * 10
             val mid = it.value.map { it.rating }.average() * 10
-            data.add(CustomBoxDataEntry(name,min.toInt(),q1.toInt(),mid.toInt(),q3.toInt(),max.toInt(),null))
+            val q1 = (max - mid) / 2 + mid
+            val q3 = mid - ((mid - min) / 2)
+            data.add(
+                CustomBoxDataEntry(
+                    name,
+                    min.toInt(),
+                    q1.toInt(),
+                    mid.toInt(),
+                    q3.toInt(),
+                    max.toInt(),
+                    null
+                )
+            )
         }
 
         val box: Box = boxChart.box(data)
