@@ -141,7 +141,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope  {
         notiData?.let {
             launch {
                 withContext(Dispatchers.Main) {
-                    notiRepo.insert(Noti(userId, it))
+                    notiRepo.insert(Noti(it.substring(0, it!!.indexOf("님")), it))
                 }
                 notiRepo.select()
 
