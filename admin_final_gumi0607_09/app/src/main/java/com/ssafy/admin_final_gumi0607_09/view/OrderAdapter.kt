@@ -72,9 +72,9 @@ class OrderAdapter(val onSendPushClicked: (Int, String, String,String) -> Unit) 
             binding.rvMenu.adapter = adapter
             (binding.rvMenu.layoutManager as GridLayoutManager).apply {
                 if(orderInfo.completed=="N")
-                     spanCount=3
+                     spanCount=2
                 else
-                    spanCount=4
+                    spanCount=3
             }
             binding.ibExpand.setOnClickListener {
 

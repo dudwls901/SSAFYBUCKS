@@ -45,10 +45,11 @@ class UserAdapter : ListAdapter<HashMap<String, Any>, UserAdapter.ItemViewHolder
             if (gradeItem.get("title") as String == "커피나무") {
                 binding.tvGrade.text =
                     gradeItem.get("title") as String
-
+                binding.ivVip.rotation = 30.0f
             } else {
                 binding.tvGrade.text =
                     gradeItem.get("title") as String + " " + (gradeItem.get("step") as Double).toInt()
+                binding.ivVip.visibility = View.GONE
             }
         }
     }
