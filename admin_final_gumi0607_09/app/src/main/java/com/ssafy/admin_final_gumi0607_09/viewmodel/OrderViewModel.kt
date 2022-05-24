@@ -65,7 +65,9 @@ class OrderViewModel : ViewModel() {
     val notiList: LiveData<List<Noti>>
         get() = _notiList
 
-    private val _tempNotiList = MutableLiveData<List<TempNoti>>()
+    private val _tempNotiList = MutableLiveData<List<TempNoti>>().apply{
+        value = listOf()
+    }
     val tempNotiList: LiveData<List<TempNoti>>
         get() = _tempNotiList
 

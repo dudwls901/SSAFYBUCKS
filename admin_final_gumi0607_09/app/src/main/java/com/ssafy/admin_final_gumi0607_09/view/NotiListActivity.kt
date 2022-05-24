@@ -33,6 +33,7 @@ class NotiListActivity : AppCompatActivity() {
             it.forEach {
                 Log.d("aaaa", "onCreate: $it")
                 notiList.add(it as Noti)
+
             }
         }
 //        Log.d("aaaa", "onCreate: $notiList")

@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ssafy.admin_final_gumi0607_09.R
 import com.ssafy.admin_final_gumi0607_09.data.local.entity.Noti
+import com.ssafy.admin_final_gumi0607_09.data.local.entity.TempNoti
 import com.ssafy.admin_final_gumi0607_09.data.local.respositroy.NotiRepository
 import com.ssafy.admin_final_gumi0607_09.databinding.ActivityMainBinding
 import com.ssafy.admin_final_gumi0607_09.viewmodel.OrderViewModel
@@ -99,12 +100,23 @@ class MainActivity : AppCompatActivity(), CoroutineScope  {
 
 
         mainIbNoti.setOnClickListener {
-            Log.d(TAG, "initViews: ${orderViewModel.notiList.value!!}")
-            val bundle = Bundle()
-            bundle.putParcelableArray("notiList", orderViewModel.notiList.value!!.toTypedArray())
-            startActivity(Intent(this@MainActivity, NotiListActivity::class.java).apply {
-                putExtra("notiList",bundle)
-            })
+            val tempNotiSize = orderViewModel.tempNotiList.value!!.size
+            launch {
+
+                withContext(Dispatchers.IO) {
+                    orderViewModel.notiList.value?.forEach {
+                        if (it.id > tempNotiSize) {
+                            notiRepo.insertTemp(TempNoti(it.u_id, it.data))
+                        }
+                    }
+                }
+                Log.d(TAG, "initViews: ${orderViewModel.notiList.value!!}")
+                val bundle = Bundle()
+                bundle.putParcelableArray("notiList", orderViewModel.notiList.value!!.toTypedArray())
+                startActivity(Intent(this@MainActivity, NotiListActivity::class.java).apply {
+                    putExtra("notiList",bundle)
+                })
+            }
         }
     }
 
@@ -119,14 +131,14 @@ class MainActivity : AppCompatActivity(), CoroutineScope  {
 
     private fun observeDatas(){
         orderViewModel.notiList.observe(this){
-            Log.d(TAG, "observeDatas: $it")
+            Log.d(TAG, "observeDatas: ${it.size} ${orderViewModel.tempNotiList.value?.size}")
             if(it.size != orderViewModel.tempNotiList.value?.size){
                 val shake  = AnimationUtils.loadAnimation(this, R.anim.shake)
                 binding.mainIbNoti.startAnimation(shake)
             }
         }
         orderViewModel.touchCount.observe(this){
-            if(it%30==0){
+            if(it%30==0 && it!=0){
                 val shake  = AnimationUtils.loadAnimation(this, R.anim.shake)
                 binding.mainIbNoti.startAnimation(shake)
             }

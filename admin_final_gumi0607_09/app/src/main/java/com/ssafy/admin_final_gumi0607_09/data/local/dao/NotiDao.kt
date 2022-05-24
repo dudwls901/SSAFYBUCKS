@@ -18,7 +18,7 @@ interface NotiDao {
     @Insert(onConflict = REPLACE)
     suspend fun insertTemp(noti: TempNoti): Long
 
-    @Query("SELECT * FROM t_temp_noti")
+    @Query("SELECT * FROM t_temp_noti ORDER BY id DESC")
     suspend fun selectTemp(): List<TempNoti>
 
 //    @Query("DELETE FROM t_noti WHERE id = :id")
