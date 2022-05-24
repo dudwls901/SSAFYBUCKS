@@ -86,6 +86,15 @@ class ChartRatingFragment : Fragment() {
 
         box.whiskerWidth("20%")
 
+        boxChart.tooltip().format(
+            """function() {
+            var percentOfTotal = (this.getData("value")*100)/this.getStat("sum");
+                return '최고 평점: ' + this.getData("high")/10 +
+                  '\n' + '평균 평점: ' + this.getData("median")/10 +
+                  '\n' + '최저 평점: ' + this.getData("low")/10 ;
+        }"""
+        )
+
         binding.chart.setChart(boxChart)
     }
 

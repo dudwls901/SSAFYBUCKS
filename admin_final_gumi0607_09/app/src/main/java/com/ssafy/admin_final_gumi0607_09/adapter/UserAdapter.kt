@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.admin_final_gumi0607_09.databinding.RvUserBinding
+import com.ssafy.admin_final_gumi0607_09.util.DecimalConverter.priceConvert
 import com.ssafy.smartstore.util.ImageConverter
 
 class UserAdapter : ListAdapter<HashMap<String, Any>, UserAdapter.ItemViewHolder>(diffUtil) {
@@ -41,7 +42,7 @@ class UserAdapter : ListAdapter<HashMap<String, Any>, UserAdapter.ItemViewHolder
             binding.tvId.text = item.get("id") as String
             binding.tvName.text = item.get("name") as String
             binding.tvStamp.text = "총 " + (gradeItem.get("stamp") as Double).toInt() + "잔"
-            binding.tvTotal.text = "총 " + (item.get("total") as Double).toInt() + "원"
+            binding.tvTotal.text = "총 " + (item.get("total") as Double).toInt().priceConvert() + "원"
             if (gradeItem.get("title") as String == "커피나무") {
                 binding.tvGrade.text =
                     gradeItem.get("title") as String

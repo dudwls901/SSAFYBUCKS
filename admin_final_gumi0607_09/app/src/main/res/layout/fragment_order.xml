@@ -73,6 +73,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
+            android:paddingHorizontal="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/ll_total_price"
             app:layout_constraintEnd_toEndOf="parent"

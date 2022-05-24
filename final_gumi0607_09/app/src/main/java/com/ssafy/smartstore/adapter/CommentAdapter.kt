@@ -56,7 +56,7 @@ class CommentAdapter(val user_id: String, var state: Boolean = false) :
         fun bindUser(comment: Comment) {
             bind(comment)
             binding.tvId.text = comment.userId
-            binding.ratingBar.rating = comment.rating
+            binding.ratingBar.rating = comment.rating / 2
         }
     }
 

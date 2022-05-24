@@ -37,8 +37,6 @@ class ChartTagCloudFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        salesViewModel.getCommentList()
     }
 
     private fun observeDatas() {
@@ -57,19 +55,24 @@ class ChartTagCloudFragment : Fragment() {
 
         tagCloud.animation(true)
 
+//        var customColorScale = LinearColor.instantiate()
+//        customColorScale.colors(arrayOf("#ffcc00", "#00ccff"))
+//        tagCloud.colorScale(customColorScale)
+
+
         val ordinalColor = OrdinalColor.instantiate()
         ordinalColor.colors(
             arrayOf(
-                "#26959f",
-                "#f18126",
-                "#3b8ad8",
-                "#60727b",
-                "#e24b26",
-                "#26959f",
-                "#f18126",
-                "#3b8ad8",
-                "#60727b",
-                "#e24b26"
+                "#BC2221",
+                "#EE710B",
+                "#FDD600",
+                "#BC2221",
+                "#007538",
+                "#006B70",
+                "#0067A3",
+                "#292E57",
+                "#67307A",
+                "#871B4D"
             )
         )
         tagCloud.colorScale(ordinalColor)

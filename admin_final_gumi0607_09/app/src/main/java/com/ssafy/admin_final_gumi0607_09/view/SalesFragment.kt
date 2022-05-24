@@ -38,6 +38,7 @@ class SalesFragment : Fragment(), CoroutineScope {
         super.onViewCreated(view, savedInstanceState)
 
         salesViewModel.getProductANDDeatilList()
+        salesViewModel.getCommentList()
 
         initViews()
     }
