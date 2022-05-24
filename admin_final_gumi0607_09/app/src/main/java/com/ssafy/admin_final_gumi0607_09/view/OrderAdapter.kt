@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.admin_final_gumi0607_09.data.remote.dto.Product
 import com.ssafy.admin_final_gumi0607_09.databinding.RvOrderInfoBinding
 import com.ssafy.admin_final_gumi0607_09.model.OrderInfo
+import com.ssafy.admin_final_gumi0607_09.util.DecimalConverter.priceConvert
 
 import com.ssafy.smartstore.util.ImageConverter
 
@@ -66,7 +67,7 @@ class OrderAdapter(val onSendPushClicked: (Int, String, String,String) -> Unit) 
             val adapter = MenuAdapter()
 
             binding.tvContent.text = "주문 내역 : ${orderText}"
-            binding.tvPrice.text = "주문 금액 : ${price}원"
+            binding.tvPrice.text = "주문 금액 : ${price.priceConvert()}원"
             val yymm = orderInfo.date.substring(orderInfo.date.indexOf('T')+1,orderInfo.date.indexOf('T')+6 ).split(":")
             binding.tvDate.text = "주문 시간 : ${yymm[0]}시 ${yymm[1]}분"
             binding.rvMenu.adapter = adapter

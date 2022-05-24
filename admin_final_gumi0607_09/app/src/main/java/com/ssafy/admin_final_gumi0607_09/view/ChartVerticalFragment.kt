@@ -99,7 +99,7 @@ class ChartVerticalFragment : Fragment() {
 
         vertical.xAxis(true)
         vertical.yAxis(true)
-        vertical.yAxis(0).labels().format("{%Value} 원")
+        vertical.yAxis(0).labels().format("{%Value}{groupsSeparator:\\,} 원")
 
         binding.chart.setChart(vertical)
     }

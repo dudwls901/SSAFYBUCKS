@@ -56,7 +56,7 @@ class ProductViewModel : ViewModel() {
             total += it.rating
         }
 
-        Math.round((total / it.size) * 10) / 10F
+        Math.round((total / 2 / it.size) * 10) / 10F
     }
     val ratingAvg: LiveData<Float>
         get() = _ratingAvg

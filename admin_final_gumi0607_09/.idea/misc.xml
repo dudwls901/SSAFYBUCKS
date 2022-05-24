@@ -12,26 +12,28 @@
         <entry key="..\:/SSAFY/gumi06_07th_kimyeongjin/admin_final_gumi0607_09/app/src/main/res/layout/fragment_order.xml" value="0.1875" />
         <entry key="..\:/SSAFY/gumi06_07th_kimyeongjin/admin_final_gumi0607_09/app/src/main/res/layout/fragment_sales.xml" value="0.358695652173913" />
         <entry key="..\:/SSAFY/gumi06_07th_kimyeongjin/admin_final_gumi0607_09/app/src/main/res/menu/bottom_navi_menu.xml" value="0.1875" />
+        <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/drawable/background_box_coffee_menu_top_radius.xml" value="0.261" />
+        <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/drawable/background_box_coffee_top_radius.xml" value="0.261" />
         <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/drawable/background_box_white.xml" value="0.1125" />
+        <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/drawable/background_box_white_top_radius.xml" value="0.1285" />
+        <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/drawable/background_button.xml" value="0.112" />
+        <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/drawable/background_coffee_menu_oval.xml" value="0.1725" />
+        <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/drawable/background_menu_verti.xml" value="0.112" />
+        <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/drawable/background_menu_verti2.xml" value="0.1115" />
+        <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/drawable/background_menu_verti_no_grad.xml" value="0.112" />
+        <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/fragment_chart_fragment.xml" value="0.13508771929824562" />
+        <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/fragment_chart_rating.xml" value="0.13508771929824562" />
         <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/fragment_chart_tag_cloud.xml" value="0.20380434782608695" />
         <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/fragment_chart_vertical.xml" value="0.2644736842105263" />
         <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/fragment_customer.xml" value="0.36614583333333334" />
+        <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/fragment_order.xml" value="0.1600877192982456" />
         <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/fragment_sales.xml" value="0.18802083333333333" />
-        <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/rv_user.xml" value="0.18009118541033434" />
+        <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/rv_noti_list.xml" value="0.11684782608695653" />
+        <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/rv_order_info.xml" value="0.33" />
+        <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/rv_order_info_menu.xml" value="0.33" />
+        <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/rv_user.xml" value="0.33" />
         <entry key="..\:/SSAFY/mobile_through/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/viewpager.xml" value="0.25" />
-        <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/drawable/ic_baseline_notifications_24.xml" value="0.2065" />
-        <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/drawable/ic_baseline_notifications_none_24.xml" value="0.2065" />
-        <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/activity_main.xml" value="0.4" />
-        <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/activity_noti_list.xml" value="0.1875" />
-        <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/activity_splash.xml" value="0.264" />
-        <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/fragment_chart_rating.xml" value="0.19895833333333332" />
-        <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/fragment_chart_tag_cloud.xml" value="0.19895833333333332" />
-        <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/fragment_chart_vertical.xml" value="0.19895833333333332" />
-        <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/fragment_noti.xml" value="0.15104166666666666" />
-        <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/fragment_noti_list.xml" value="0.15104166666666666" />
-        <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/fragment_order.xml" value="0.2" />
-        <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/rv_noti_list.xml" value="0.264" />
-        <entry key="..\:/SSAFY/through_homework/final_gumi0607_09/admin_final_gumi0607_09/app/src/main/res/layout/rv_order_info_menu.xml" value="0.17346014492753623" />
       </map>
     </option>
   </component>

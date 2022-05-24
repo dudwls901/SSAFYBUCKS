@@ -26,7 +26,7 @@
             android:layout_width="84dp"
             android:layout_height="84dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/background_button"
             android:elevation="2dp"
             android:fontFamily="@font/maplestory_bold"
@@ -36,7 +36,8 @@
             android:translationZ="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
@@ -105,12 +106,14 @@
             <ImageButton
                 android:id="@+id/ib_expand"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:src="@{isExpanded? @drawable/ic_baseline_keyboard_arrow_up_24 : @drawable/ic_baseline_keyboard_arrow_down_24}"
-                app:layout_constraintBottom_toBottomOf="@id/tv_date"
+                app:layout_constraintBottom_toBottomOf="@id/tv_customer_name"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_customer_name" />
+                app:layout_constraintTop_toTopOf="@id/tv_customer_name"
+
+                tools:src="@drawable/ic_baseline_keyboard_arrow_down_24" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/container"
