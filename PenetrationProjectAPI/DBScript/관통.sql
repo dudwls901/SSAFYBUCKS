@@ -82,13 +82,13 @@ INSERT INTO t_user (id, name, pass, stamps) VALUES ('admin', '관리자', 'admin
 INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy01', '김싸피', 'pass01', 26);
 INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy02', '황원태', 'pass02', 9);
 INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy03', '한정일', 'pass03', 26);
-INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy04', '반장운', 'pass04', 4);
-INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy05', '박하윤', 'pass05', 5);
-INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy06', '정비선', 'pass06', 6);
-INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy07', '김병관', 'pass07', 7);
-INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy08', '강석우', 'pass08', 8);
-INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy09', '견본무', 'pass09', 9);
-INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy10', '전인성', 'pass10', 20);
+INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy04', '반장운', 'pass04', 17);
+INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy05', '박하윤', 'pass05', 16);
+INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy06', '정비선', 'pass06', 75);
+INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy07', '김병관', 'pass07', 57);
+INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy08', '강석우', 'pass08', 28);
+INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy09', '견본무', 'pass09', 249);
+INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy10', '전인성', 'pass10', 420);
 
 INSERT INTO t_product (name, type, price, img) VALUES ('아메리카노', 'coffee', 4100, 'coffee1.png');
 INSERT INTO t_product (name, type, price, img) VALUES ('카페라떼', 'coffee', 4500, 'coffee2.png');
@@ -285,9 +285,6 @@ INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy10', 
 
 
 
-
-
-
 INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy01', 'order_table 01', '2022-05-22', 'Y');
 INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (11, 1, 2);
 INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (11, 2, 4);
@@ -306,26 +303,143 @@ INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy
 INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (14, 9, 1);
 INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (14, 10, 1);
 INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (14, 1, 1);
-INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy02', 11, 3);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy02', 14, 3);
 INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy02', 'order_table 01', '2022-05-20', 'Y');
 INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (15, 2, 3);
 INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (15, 3, 1);
-INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy02', 12, 4);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy02', 15, 4);
 INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy02', 'order_table 01', '2022-05-18', 'Y');
 INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (16, 4, 2);
-INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy02', 13, 2);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy02', 16, 2);
 
 INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy03', 'order_table 01', '2022-05-18', 'Y');
 INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (17, 5, 1);
 INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (17, 6, 1);
 INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (17, 7, 1);
-INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy03', 11, 3);
-INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy03', 'order_table 01', '2022-05-29', 'Y');
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy03', 17, 3);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy03', 'order_table 01', '2022-05-19', 'Y');
 INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (18, 8, 5);
 INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (18, 9, 10);
-INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy03', 12, 15);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy03', 18, 15);
 INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy03', 'order_table 01', '2022-05-20', 'Y');
 INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (19, 10, 5);
-INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy03', 13, 5);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy03', 19, 5);
+
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy04', 'order_table 01', '2022-05-17', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (20, 1, 1);
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (20, 2, 1);
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (20, 3, 1);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy04', 20, 3);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy04', 'order_table 01', '2022-05-18', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (21, 4, 2);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy04', 21, 2);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy04', 'order_table 01', '2022-05-19', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (22, 5, 8);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy04', 22, 8);
+
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy05', 'order_table 01', '2022-05-17', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (23, 1, 1);
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (23, 2, 1);
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (23, 3, 1);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy05', 23, 3);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy05', 'order_table 01', '2022-05-18', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (24, 4, 3);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy05', 24, 3);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy05', 'order_table 01', '2022-05-19', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (25, 5, 5);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy05', 25, 5);
+
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy06', 'order_table 01', '2022-05-14', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (26, 6, 5);
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (26, 7, 5);
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (26, 8, 5);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy06', 26, 15);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy06', 'order_table 01', '2022-05-15', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (27, 9, 3);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy06', 27, 3);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy06', 'order_table 01', '2022-05-16', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (28, 10, 1);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy06', 28, 1);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy06', 'order_table 01', '2022-05-21', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (27, 1, 10);
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (27, 2, 10);
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (27, 3, 10);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy06', 27, 30);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy06', 'order_table 01', '2022-05-22', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (28, 4, 10);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy06', 28, 10);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy06', 'order_table 01', '2022-05-24', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (29, 5, 10);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy06', 29, 10);
+
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy07', 'order_table 01', '2022-05-10', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (30, 6, 10);
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (30, 7, 10);
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (30, 8, 10);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy07', 30, 30);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy07', 'order_table 01', '2022-05-11', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (31, 9, 10);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy07', 31, 10);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy07', 'order_table 01', '2022-05-12', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (32, 10, 10);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy07', 32, 10);
+
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy08', 'order_table 01', '2022-05-9', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (33, 1, 5);
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (33, 2, 5);
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (33, 3, 5);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy08', 33, 15);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy08', 'order_table 01', '2022-05-10', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (34, 4, 1);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy08', 34, 1);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy08', 'order_table 01', '2022-05-14', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (35, 5, 4);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy08', 35, 4);
+
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy09', 'order_table 01', '2022-05-24', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (36, 1, 20);
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (36, 2, 20);
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (36, 3, 20);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy09', 36, 60);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy09', 'order_table 01', '2022-05-23', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (37, 4, 30);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy09', 37, 30);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy09', 'order_table 01', '2022-05-22', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (38, 5, 30);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy09', 38, 30);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy09', 'order_table 01', '2022-05-21', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (39, 6, 20);
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (39, 7, 20);
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (39, 8, 20);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy09', 39, 60);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy09', 'order_table 01', '2022-05-20', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (40, 9, 30);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy09', 40, 30);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy09', 'order_table 01', '2022-05-19', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (41, 10, 30);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy09', 41, 30);
+
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy10', 'order_table 01', '2022-05-24', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (42, 1, 40);
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (42, 2, 40);
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (42, 3, 40);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy10', 42, 120);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy10', 'order_table 01', '2022-05-23', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (43, 4, 40);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy10', 43, 40);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy10', 'order_table 01', '2022-05-22', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (44, 5, 40);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy10', 44, 40);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy10', 'order_table 01', '2022-05-21', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (45, 6, 40);
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (45, 7, 40);
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (45, 8, 40);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy10', 45, 120);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy10', 'order_table 01', '2022-05-20', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (46, 9, 40);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy10', 46, 40);
+INSERT INTO t_order (user_id, order_table, order_time, completed) VALUES ('ssafy10', 'order_table 01', '2022-05-19', 'Y');
+INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (47, 10, 40);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy10', 47, 40);
 
 commit;

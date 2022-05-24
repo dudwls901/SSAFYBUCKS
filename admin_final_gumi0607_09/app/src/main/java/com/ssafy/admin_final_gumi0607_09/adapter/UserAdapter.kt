@@ -42,8 +42,14 @@ class UserAdapter : ListAdapter<HashMap<String, Any>, UserAdapter.ItemViewHolder
             binding.tvName.text = item.get("name") as String
             binding.tvStamp.text = "총 " + (gradeItem.get("stamp") as Double).toInt() + "잔"
             binding.tvTotal.text = "총 " + (item.get("total") as Double).toInt() + "원"
-            binding.tvGrade.text =
-                gradeItem.get("title") as String + " " + (gradeItem.get("step") as Double).toInt()
+            if (gradeItem.get("title") as String == "커피나무") {
+                binding.tvGrade.text =
+                    gradeItem.get("title") as String
+
+            } else {
+                binding.tvGrade.text =
+                    gradeItem.get("title") as String + " " + (gradeItem.get("step") as Double).toInt()
+            }
         }
     }
 
