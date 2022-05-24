@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.ssafy.admin_final_gumi0607_09.data.local.respositroy.NotiRepository
 import com.ssafy.admin_final_gumi0607_09.databinding.FragmentOrderBinding
 import com.ssafy.admin_final_gumi0607_09.model.OrderInfo
@@ -85,6 +86,7 @@ class OrderFragment : Fragment(){
             orderViewModel.changeOrderComplete(orderId, userId, title, body)
         }
         orderRv.adapter = adapter
+        orderRv.addItemDecoration(DividerItemDecoration(context, 1))
 
         orderIbRight.setOnClickListener {
             orderViewModel.changeSelectedDate("up")

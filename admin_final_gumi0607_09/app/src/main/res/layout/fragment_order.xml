@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="vm"
             type="com.ssafy.admin_final_gumi0607_09.viewmodel.OrderViewModel" />
@@ -13,6 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         tools:context=".view.OrderFragment">
 
         <LinearLayout
@@ -36,10 +39,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:fontFamily="@font/maplestory_light"
+                android:fontFamily="@font/maplestory_bold"
                 android:gravity="center"
-                android:textSize="18sp"
                 android:text="@{vm.selectedDate}"
+                android:textSize="22sp"
                 tools:text="2022.05.23" />
 
 
@@ -56,46 +59,47 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/no_order"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/order_ll_date"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:textSize="24sp"
             android:fontFamily="@font/maplestory_light"
+            android:text="@string/no_order"
+            android:textSize="24sp"
             android:visibility="@{vm.orderInfoList.empty ? View.VISIBLE : View.GONE}"
-            />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/order_ll_date" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/order_rv"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/order_ll_date"
-            app:layout_constraintBottom_toTopOf="@id/ll_total_price"
-            tools:listitem="@layout/rv_order_info"
-            android:id="@+id/order_rv"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
-            />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/ll_total_price"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/order_ll_date"
+            tools:listitem="@layout/rv_order_info" />
 
         <LinearLayout
             android:id="@+id/ll_total_price"
             android:layout_width="0dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_box_white_top_radius"
+            android:elevation="20dp"
+            android:paddingVertical="16dp"
+            android:translationZ="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:paddingVertical="8dp"
-            >
+            app:layout_constraintStart_toStartOf="parent">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginVertical="4dp"
+                android:fontFamily="@font/maplestory_bold"
                 android:gravity="center"
                 android:text="@{@string/total_price(vm.totalPrice)}"
-                android:textSize="24sp"
-                />
+                android:textSize="20sp" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
