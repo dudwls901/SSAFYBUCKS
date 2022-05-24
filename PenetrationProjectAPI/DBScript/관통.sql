@@ -184,6 +184,107 @@ INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy01', 
 INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy01', 8, 8, '좋아요');
 INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy01', 9, 6, '안뇽하세요');
 INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy01', 10, 3, '쿠키 맛없어요');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy02', 1, 9.2, '굳');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy02', 2, 10, '너무 맛있어');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy02', 3, 4.2, '맛이 좋아');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy02', 4, 5.2, '아주 맛이 좋아');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy02', 5, 4.2, '엑 맛없어~');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy02', 6, 9.2, '으으 졸려');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy02', 7, 8.8, '너무 맛있는데?');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy02', 8, 9.2, '굳~.~');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy02', 9, 9.2, '굳뜨!!');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy02', 10, 9.2, '난 이게 좋아');
+
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy03', 1, 9.2, '굳');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy03', 2, 10, '맛이 있어유!');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy03', 3, 4.2, '맛이 좋아');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy03', 4, 6.2, '알라뷰');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy03', 5, 4.2, '엑 맛없어~');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy03', 6, 9.2, '으으 졸려');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy03', 7, 8.8, '시원하니 좋구만');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy03', 8, 9.2, '굳~.~');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy03', 9, 2.2, '굳뜨!!');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy03', 10, 4.4, '난 이게 좋아');
+
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy04', 1, 9.2, '굳');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy04', 2, 10, '맛이 있어유!');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy04', 3, 4.2, '맛이 좋아');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy04', 4, 6.2, '알라뷰');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy04', 5, 4.2, '엑 맛없어~');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy04', 6, 9.2, '으으 졸려');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy04', 7, 8.8, '시원하니 좋구만');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy04', 8, 9.2, '굳~.~');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy04', 9, 2.2, '굳뜨!!');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy04', 10, 4.4, '난 이게 좋아');
+
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy05', 1, 1.2, '굳');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy05', 2, 2.2, '맛이 있어유!');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy05', 3, 10, '맛이 좋아');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy05', 4, 4.4, '맛있어요!');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy05', 5, 5.6, '오늘 같은 날에는 최고지');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy05', 6, 2.2, '으으 졸려');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy05', 7, 9, '시원하니 좋구만');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy05', 8, 9.2, '굳~.~');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy05', 9, 2.2, '굳뜨!!');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy05', 10, 10, '난 이게 좋아');
+
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy06', 1, 9.2, '굳');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy06', 2, 10, '싸벅 최고..');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy06', 3, 4.2, '맛이 좋아');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy06', 4, 6.2, '알라뷰');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy06', 5, 4.2, '맛만 좋구만');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy06', 6, 9.2, '나른하네~');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy06', 7, 8.8, '시원하니 좋구만');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy06', 8, 9.2, '싸피벅스 좋아요!');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy06', 9, 2.2, '싸피벅스 최고');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy06', 10, 4.4, '난 이게 좋아');
+
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy07', 1, 9.2, '굳');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy07', 2, 10, '후 잠 깬다.!');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy07', 3, 4.2, '맛이 좋아');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy07', 4, 6.2, '알라뷰');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy07', 5, 4.2, '맛이 좀 그래~');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy07', 6, 9.2, '으으 졸려');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy07', 7, 8.8, '시원하니 최고!!');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy07', 8, 9.2, '맛있어!');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy07', 9, 2.2, '엑 별로');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy07', 10, 2.4, '난 이거 별로');
+
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy08', 1, 9.2, '마이 페이보릿');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy08', 2, 10, '이거 맛있어요 여러분');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy08', 3, 4.2, '맛이 좋아');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy08', 4, 6.2, '알라뷰');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy08', 5, 4.2, '헐 맛있어..');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy08', 6, 9.2, '으으 졸려');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy08', 7, 8.8, '시원하니 좋구만');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy08', 8, 9.2, '알라뷰 쏘마치');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy08', 9, 2.2, '굳뜨!!');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy08', 10, 4.4, '난 이게 좋아');
+
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy09', 1, 9.2, '굳');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy09', 2, 10, '감사합니다!');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy09', 3, 4.2, '맛이 좋아');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy09', 4, 6.2, '알라뷰');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy09', 5, 4.2, '난 맛있는데');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy09', 6, 9.2, '오늘 날씨 좋네');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy09', 7, 8.8, '음료 맛이 끝내줘요');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy09', 8, 9.2, '굳~.~');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy09', 9, 2.2, '굳뜨!!');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy09', 10, 4.4, '맛있다...');
+
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy10', 1, 1.2, '별로..');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy10', 2, 2, '별로예요!!');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy10', 3, 1.2, '맛이 좋아');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy10', 4, 6.2, '먹을만 하네');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy10', 5, 7.2, '맛있는데??');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy10', 6, 2.2, '에에엑 안 먹어');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy10', 7, 9.8, '이게 제일 맛있어');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy10', 8, 4.2, '오우예~');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy10', 9, 5.2, '맛은 있네~');
+INSERT INTO t_comment (user_id, product_id, rating, comment) VALUES ('ssafy10', 10, 2.8, '난 이게 좋당게');
+
+
+
 
 
 
