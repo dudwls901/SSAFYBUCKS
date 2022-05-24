@@ -72,7 +72,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/order_ll_date"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/ll_total_price"
             tools:listitem="@layout/rv_order_info"
             android:id="@+id/order_rv"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -80,6 +80,7 @@
             />
 
         <LinearLayout
+            android:id="@+id/ll_total_price"
             android:layout_width="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
