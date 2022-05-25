@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -133,7 +134,7 @@ class HomeFragment : Fragment(), CoroutineScope, OrderListClickListener, NotiDel
 
     private fun updateNotiList(list: List<Noti>) {
         Log.d(TAG, "onCreateView: noti change ${list.joinToString()}")
-        list.forEach{
+        list.forEach {
             Log.d(TAG, "updateNotiList: ${it.id} ${it.u_id} ${it.data}")
         }
         notiAdapter.submitList(list.toMutableList())
@@ -146,8 +147,23 @@ class HomeFragment : Fragment(), CoroutineScope, OrderListClickListener, NotiDel
         findNavController().navigate(action)
     }
 
+    // 장바구니 버튼
     override fun onOrderListCartClickListener(orderInfo: OrderInfo) {
         orderViewModel.addItem(orderInfo, userId, "list")
+        var sumQuantity = 0
+        for (orderProduct in orderInfo.orderProductList) {
+            sumQuantity += orderProduct.quantity
+        }
+        val orderText = if (sumQuantity == 1) {
+            "${orderInfo.orderProductList[0].product.name} ${sumQuantity}잔"
+        } else {
+            "${orderInfo.orderProductList[0].product.name}외 ${sumQuantity - 1}잔"
+        }
+        Toast.makeText(
+            requireContext(),
+            "${orderText}을 장바구니에 담았습니다",
+            Toast.LENGTH_SHORT
+        ).show()
         val action = HomeFragmentDirections.actionHomeFragmentToShoppingListFragment()
         findNavController().navigate(action)
     }

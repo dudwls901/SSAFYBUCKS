@@ -182,6 +182,11 @@ class MenuDetailFragment : Fragment(), CoroutineScope {
                 val orderProduct = OrderProduct(quantity, productViewModel.product.value!!)
                 orderViewModel.addItem(orderProduct, userId, "list")
                 findNavController().popBackStack()
+                Toast.makeText(
+                    requireContext(),
+                    "${productViewModel.product.value!!.name} ${quantity}개를 장바구니에 담았습니다",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 Toast.makeText(requireContext(), "상품을 담아주세요", Toast.LENGTH_SHORT)
                     .show()
