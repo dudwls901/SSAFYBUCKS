@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:fontFamily="@font/eland_choice_b"
-            android:text="유저 정보"
+            android:text="유저 등급 정보"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"

@@ -7,11 +7,11 @@
         android:title="Order" />
     <item
         android:id="@+id/customerFragment"
-        android:icon="@drawable/logo"
-        android:title="Customer" />
+        android:icon="@drawable/baseline_military_tech_24"
+        android:title="Grade" />
     <item
         android:id="@+id/salesFragment"
-        android:icon="@drawable/logo"
+        android:icon="@drawable/baseline_bar_chart_24"
         android:title="Sales" />
 
 </menu>
