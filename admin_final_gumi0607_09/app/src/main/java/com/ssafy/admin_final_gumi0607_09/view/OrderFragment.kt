@@ -26,6 +26,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.util.*
 
 
 class OrderFragment : Fragment(){
@@ -102,6 +103,7 @@ class OrderFragment : Fragment(){
     }
 
     private fun updateListView(list: List<OrderInfo>) {
+        Collections.sort(list)
         adapter.submitList(list)
     }
 
