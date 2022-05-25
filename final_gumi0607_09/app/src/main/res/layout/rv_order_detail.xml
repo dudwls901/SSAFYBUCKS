@@ -37,7 +37,7 @@
         android:id="@+id/container_content"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:paddingHorizontal="60dp"
+        android:paddingHorizontal="40dp"
         android:paddingVertical="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,11 +46,15 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_order_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:fontFamily="@font/eland_choice_b"
             android:text="아메리카노"
             android:textSize="16sp"
+            app:flow_firstHorizontalBias="0"
+            app:layout_constraintEnd_toStartOf="@id/tv_order_quantitiy"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,7 +62,7 @@
             android:id="@+id/tv_order_quantitiy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="20dp"
             android:fontFamily="@font/eland_choice_b"
             android:text="2잔"
             android:textSize="16sp"
@@ -79,7 +83,7 @@
             android:id="@+id/tv_total_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="20dp"
             android:fontFamily="@font/eland_choice_b"
             android:text="8000원"
             android:textSize="12sp"

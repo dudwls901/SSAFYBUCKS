@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.smartstore.databinding.RvOrderItemBinding
 import com.ssafy.smartstore.model.OrderInfo
 import com.ssafy.smartstore.listener.OrderListClickListener
+import com.ssafy.smartstore.util.DecimalConverter.priceConvert
 import com.ssafy.smartstore.util.ImageConverter
 import com.ssafy.smartstore.util.WindowState.HOME
 import com.ssafy.smartstore.util.WindowState.MYPAGE
@@ -55,7 +56,7 @@ class OrderListAdapter(val state: String, val listener: OrderListClickListener) 
                 } else binding.btnState.text = "주문 완료"
 
                 binding.tvOrderName.text = orderText
-                binding.tvOrderPrice.text = price.toString()
+                binding.tvOrderPrice.text = "\uD83D\uDCB0"+price.priceConvert()
                 binding.tvOrderDate.text = order.date.substring(0, order.date.indexOf('T'))
                 ImageConverter.imageMap[order.orderProductList[0].product.img]?.let {
                     binding.ivImage.setImageResource(

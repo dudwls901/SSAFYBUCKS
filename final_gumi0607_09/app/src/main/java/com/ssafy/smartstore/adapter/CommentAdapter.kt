@@ -36,6 +36,7 @@ class CommentAdapter(val user_id: String, var state: Boolean = false) :
             if (!state) {
                 binding.tvId.visibility = View.GONE
                 binding.ratingBar.visibility = View.GONE
+                binding.tvComment.isSingleLine = true
             }
 
             if (user_id != comment.userId) {

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.smartstore.databinding.RvMenuItemBinding
 import com.ssafy.smartstore.data.local.dto.Product
+import com.ssafy.smartstore.util.DecimalConverter.priceConvert
 import com.ssafy.smartstore.util.ImageConverter
 
 private const val TAG = "MenuDetailAdapter___"
@@ -39,7 +40,7 @@ class OrderAdapter() : ListAdapter<Product, OrderAdapter.ItemViewHolder>(diffUti
                 )
             }
             binding.rvName.text = product.name
-            binding.tvPrice.text = "${product.price}원"
+            binding.tvPrice.text = "${product.price.priceConvert()}원"
         }
     }
 

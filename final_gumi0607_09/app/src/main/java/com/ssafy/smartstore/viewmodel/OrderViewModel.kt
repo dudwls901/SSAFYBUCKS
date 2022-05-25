@@ -16,6 +16,7 @@ import com.ssafy.smartstore.data.remote.repository.ShoppingListRepository
 import com.ssafy.smartstore.data.remote.repository.UserRepository
 import com.ssafy.smartstore.event.Event
 import com.ssafy.smartstore.model.OrderProduct
+import com.ssafy.smartstore.util.DecimalConverter.priceConvert
 import kotlinx.coroutines.*
 import retrofit2.Response
 
@@ -84,7 +85,7 @@ class OrderViewModel : ViewModel() {
             orderCount += orderProduct.quantity
             priceSum += orderProduct.quantity * orderProduct.product.price
         }
-        "${priceSum}원"
+        "총 ${priceSum.priceConvert()}원"
     }
     val priceSum: LiveData<String>
         get() = _priceSum

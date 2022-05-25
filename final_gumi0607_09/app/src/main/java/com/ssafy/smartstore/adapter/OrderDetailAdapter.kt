@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.smartstore.databinding.RvOrderDetailBinding
 import com.ssafy.smartstore.model.OrderProduct
 import com.ssafy.smartstore.listener.ShoppingListDeleteClickListener
+import com.ssafy.smartstore.util.DecimalConverter.priceConvert
 import com.ssafy.smartstore.util.ImageConverter
 import com.ssafy.smartstore.util.WindowState.ORDERDETAIL
 import com.ssafy.smartstore.util.WindowState.SHOPPINGLIST
@@ -30,9 +31,9 @@ class OrderDetailAdapter(val state: String, val shoppingListDeleteClickListener:
         RecyclerView.ViewHolder(binding.root) {
         fun bind(orderProduct: OrderProduct, position: Int) {
             binding.tvOrderName.text = orderProduct.product.name
-            binding.tvOrderPrice.text = orderProduct.product.price.toString()
+            binding.tvOrderPrice.text = ""+orderProduct.product.price.priceConvert()
             binding.tvOrderQuantitiy.text = orderProduct.quantity.toString()
-            binding.tvTotalPrice.text = (orderProduct.quantity * orderProduct.product.price).toString()
+            binding.tvTotalPrice.text = "\uD83D\uDCB0" + (orderProduct.quantity * orderProduct.product.price).priceConvert()
 
             ImageConverter.imageMap[orderProduct.product.img]?.let {
                 binding.ivItem.setImageResource(

@@ -13,6 +13,7 @@ import com.ssafy.smartstore.databinding.FragmentOrderDetailBinding
 import com.ssafy.smartstore.listener.ShoppingListDeleteClickListener
 import com.ssafy.smartstore.model.OrderDetail
 import com.ssafy.smartstore.model.OrderInfo
+import com.ssafy.smartstore.util.DecimalConverter.priceConvert
 import com.ssafy.smartstore.util.WindowState
 
 class OrderDetailFragment : Fragment(), ShoppingListDeleteClickListener {
@@ -57,7 +58,7 @@ class OrderDetailFragment : Fragment(), ShoppingListDeleteClickListener {
         orderInfo.orderProductList.forEach { orderProduct->
             totalPrice += orderProduct.quantity * orderProduct.product.price
         }
-        tvPrice.text = "${totalPrice}원"
+        tvPrice.text = "총 ${totalPrice.priceConvert()}원"
 
         // 주문 상세 리사이클러뷰 연결
         adapter = OrderDetailAdapter(WindowState.ORDERDETAIL,this@OrderDetailFragment).apply {
