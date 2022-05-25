@@ -85,6 +85,7 @@ public class OrderServiceImpl implements OrderService {
 		uDao.updateStamp(user);
 		
 		// 관리자에게 메시지 전송
+		user = uDao.select(order.getUserId());
 		try {
 			fService.sendMessageTo("admin", "주문 알림", user.getName() + "님이 주문을 하였습니다");
 		} catch (IOException e) {

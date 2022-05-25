@@ -2,6 +2,7 @@ package com.ssafy.smartstore.view.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.ssafy.smartstore.databinding.FragmentOrderDetailBinding
 import com.ssafy.smartstore.listener.ShoppingListDeleteClickListener
 import com.ssafy.smartstore.model.OrderDetail
 import com.ssafy.smartstore.model.OrderInfo
+import com.ssafy.smartstore.util.DateFormatter.formatDate
 import com.ssafy.smartstore.util.DecimalConverter.priceConvert
 import com.ssafy.smartstore.util.WindowState
 
@@ -53,7 +55,7 @@ class OrderDetailFragment : Fragment(), ShoppingListDeleteClickListener {
     @SuppressLint("SetTextI18n")
     private fun initViews() = with(binding) {
 
-        tvDate.text = orderInfo.date
+        tvDate.text = orderInfo.date.formatDate()
         var totalPrice = 0
         orderInfo.orderProductList.forEach { orderProduct->
             totalPrice += orderProduct.quantity * orderProduct.product.price
