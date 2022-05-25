@@ -79,9 +79,9 @@ create table t_order_type(
 );
 
 INSERT INTO t_user (id, name, pass, stamps) VALUES ('admin', '관리자', 'admin', 0);
-INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy01', '김싸피', 'pass01', 27);
+INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy01', '김싸피', 'pass01', 26);
 INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy02', '황원태', 'pass02', 11);
-INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy03', '한정일', 'pass03', 26);
+INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy03', '한정일', 'pass03', 27);
 INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy04', '반장운', 'pass04', 17);
 INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy05', '박하윤', 'pass05', 16);
 INSERT INTO t_user (id, name, pass, stamps) VALUES ('ssafy06', '정비선', 'pass06', 155);
@@ -462,9 +462,9 @@ INSERT INTO t_order (user_id, order_table) VALUES ('ssafy02', 'order_table 01');
 INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (52, 2, 2);
 INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy02', 52, 2);
 
-INSERT INTO t_order (user_id, order_table) VALUES ('ssafy01', 'order_table 01');
+INSERT INTO t_order (user_id, order_table) VALUES ('ssafy03', 'order_table 01');
 INSERT INTO t_order_detail (order_id, product_id, quantity) VALUES (53, 1, 1);
-INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy01', 53, 1);
+INSERT INTO t_stamp (user_id, order_id, quantity) VALUES ('ssafy03', 53, 1);
 
 
 commit;

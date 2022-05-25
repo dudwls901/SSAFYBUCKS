@@ -181,7 +181,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        android:text='@{productVM.ratingAvg.isNaN() ? "없음" : productVM.ratingAvg+"점"}'
+                        android:text='@{productVM.ratingAvg.isNaN() ? "없음" : (productVM.ratingAvg)*2+"점"}'
                         android:textColor="#8B8E93"
                         android:textSize="20sp"
                         app:layout_constraintBottom_toBottomOf="parent"
