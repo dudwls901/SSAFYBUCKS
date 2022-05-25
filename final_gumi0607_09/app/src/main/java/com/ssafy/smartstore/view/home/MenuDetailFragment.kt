@@ -256,7 +256,7 @@ class MenuDetailFragment : Fragment(), CoroutineScope {
     private fun updateComment(comment: Comment) {
         val builder = AlertDialog.Builder(requireContext(), R.style.MyDialogTheme)
         builder.setTitle("코멘트 수정")
-        builder.setIcon(R.mipmap.ic_launcher)
+        builder.setIcon(R.mipmap.ic_launcher_logo)
 
         val view = layoutInflater.inflate(R.layout.dialog_update_comment, null)
         builder.setView(view)
@@ -296,7 +296,7 @@ class MenuDetailFragment : Fragment(), CoroutineScope {
         val builder = AlertDialog.Builder(requireContext(), R.style.MyDialogTheme)
         builder.setTitle("코멘트 삭제")
         builder.setMessage("정말 삭제하시겠습니까?")
-        builder.setIcon(R.mipmap.ic_launcher)
+        builder.setIcon(R.mipmap.ic_launcher_logo)
 
         val listener = DialogInterface.OnClickListener { dialog, which ->
             when (which) {
@@ -324,7 +324,7 @@ class MenuDetailFragment : Fragment(), CoroutineScope {
         val builder = AlertDialog.Builder(requireContext(), R.style.MyDialogTheme)
         builder.setTitle("코멘트 등록")
         builder.setMessage("평점을 입력해주세요")
-        builder.setIcon(R.mipmap.ic_launcher)
+        builder.setIcon(R.mipmap.ic_launcher_logo)
 
         val view = layoutInflater.inflate(R.layout.dialog_add_comment, null)
         builder.setView(view)

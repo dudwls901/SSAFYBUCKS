@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">smartstore_admin</string>
+    <string name="app_name">싸피벅스_관리자</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="customer">닉네임 : %s</string>

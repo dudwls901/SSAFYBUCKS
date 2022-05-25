@@ -161,7 +161,7 @@ class ShoppingListFragment : Fragment(), CoroutineScope, ShoppingListDeleteClick
             AlertDialog.Builder(requireContext(), R.style.MyDialogTheme)
         builder.setTitle(message.get("title") as String)
         builder.setMessage(message.get("message") as String)
-        builder.setIcon(R.mipmap.ic_launcher)
+        builder.setIcon(R.mipmap.ic_launcher_logo)
 
         builder.setPositiveButton("확인", null)
         builder.show()
