@@ -44,7 +44,6 @@ class IntroActivity : AppCompatActivity() {
 
         Log.d("notidata", "${intent?.extras}")
         val bundle = Bundle()
-        //백그라운드 데이터 수신은 noti 말고 data에 값 담아서 푸시 보내야 하므로 서버 구현해야 함
         if (intent?.extras != null) {
             for (key: String in intent!!.extras!!.keySet()) {
                 val value = intent!!.extras!!.get(key)
