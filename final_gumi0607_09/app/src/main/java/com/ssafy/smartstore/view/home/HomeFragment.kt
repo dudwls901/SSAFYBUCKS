@@ -54,6 +54,7 @@ class HomeFragment : Fragment(), CoroutineScope, OrderListClickListener, NotiDel
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d(TAG, "onCreateView: $")
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         val prefs = requireActivity().getSharedPreferences("data", Context.MODE_PRIVATE)
@@ -72,7 +73,7 @@ class HomeFragment : Fragment(), CoroutineScope, OrderListClickListener, NotiDel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        Log.d(TAG, "onViewCreated: ")
         binding.homeVM = homeViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
