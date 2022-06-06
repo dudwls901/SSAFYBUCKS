@@ -25,7 +25,7 @@
 - 부트페이 API 연동
 - REST API 추가
 ## 개발 환경
-### PairProgramming
+### Agile-PairProgramming
 ### Android
 + Android Studio
 + Kotlin
