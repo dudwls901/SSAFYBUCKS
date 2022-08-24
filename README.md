@@ -30,7 +30,7 @@
 ### Android
 + Android Studio
 + Kotlin
-+ MVVM-Repository
++ MVVM
 
 + Retrofit2, OkHttp3 - 네트워크 통신
 + Room - 로컬 DB 저장
